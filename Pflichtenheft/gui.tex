@@ -1,0 +1,32 @@
+\section{Graphische Benutzerschnittstelle}
+\label{sec:gui}
+
+\Mist{} besteht aus verschiedenen Komponenten, die ihrerseits mit dem
+Benutzer interagieren. Es soll eine übergeordnete Schnittstelle geben, die
+folgende Aufgaben bewältigt:
+
+
+\begin{itemize}
+\item\textbf{Start:} Beim Start einer \Mist-Session erscheint ein Fenster,
+  von wo aus es möglich ist, verschiedene Komponenten des Systems
+  aufzurufen.
+\item\textbf{Abhängigkeitsverwaltung:} Eine Simulation kann erst dann
+  aufgerufen werden, wenn das Programm syntaktisch korrekt.  Das gleiche
+  gilt für die Codegenerierung. Die Aufgabe besteht darin, eine Definition
+  der Abhängigkeiten zwischen den Komponenten  festzulegen und sie im Tool
+  zu implementieren.
+\item\textbf{Sessionsverwaltung:} Es soll möglich sein, eine Session
+  (geöffnete Fenster, geladene Dateien, gewählte Optionen) zu speichern.
+  Eine gespeicherte Session sollte wieder hergestellt werden können.
+\end{itemize}
+
+Die Benutzeroberfläche \emph{integriert} alle anderen Komponenten, aus
+diesem Grund ist hier besonders auf die \emph{Konsistenz} bzw.\ Verletzung
+der Konsistenz zu achten.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "handout1"
+%%% End: 

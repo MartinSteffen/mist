@@ -2,28 +2,31 @@
 
 \usepackage[english, german]{babel}
 \usepackage{hevea}
+
 \usepackage{handout}
+\usepackage[latin1]{inputenc}
 
 \begin{latexonly}
-  \uebungfalse
-  \handoutfalse
-  \freeformtrue
+\uebungfalse
+\handoutfalse
+\freeformtrue
 \end{latexonly}
 
-\begin{htmlonly}
+%\begin{htmlonly}
 \htmlfoot{\copyright Public License}
 \renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
-\title{Pflichtenheft}
-\end{htmlonly}
+\title{Pflichtenheft(1):  \Mist}
+%\end{htmlonly}
 
 \input{../tex/inputs/macros}
 
 
 
 \begin{document}
-\begin{latexonly}
-  \ausgabe{Mai 2000}
-  \maketitle{1}{Pflichtenheft: \Mist}
+\begin{latexonly}  % Doesn't work
+  \ausgabe{22.\ Mai 2000}
+  \abgabe{}
+  \maketitle{Pflichtenheft (1): \Mist}{}
 \end{latexonly}
 \begin{htmlonly}
   \maketitle{}
@@ -33,115 +36,27 @@
 \thispagestyle{empty}
 
 
+
+\input{einleitung}
+\input{gui}
+\input{editor}
+\input{platzierung}
+\input{parser}
+\input{simulator}
+\input{checks}
+\input{assert}
+\input{codegenerierung}
 \appendix
 
 
-\section{Konkrete Syntax}
-\label{sec:KonkreteSyntax}
+\input{syntax}
+\input{absynt}
 
 
-\begin{tabular}{rcll}
-  program
-  & \bnfdef &
-  processes
-  \\
-  processes 
-  & \bnfdef &
-  process
-  \\
-  & \bnfbar &
-  processes process
-  \\
-  process & \bnfdef &
-  'Process' vardec \{ stmt \}
-  \\
-  expr
-  &
-  \bnfdef
-  &
-  const
-  \\
-  &
-  \bnfbar
-  &
-  expr
-  '+'
-  expr
-  \\
-  &
-  \bnfbar
-  &
-  expr
-  '-'
-  expr
-  \\
-  &
-  \bnfbar
-  &
-  expr
-  '*'
-  expr
-  \\
-  &
-  \bnfbar
-  &
-  expr
-  '/'
-  expr
-  \\
-  &
-  \bnfbar
-  &
-  '('expr')'
-  \\
-  stmt
-  & \bnfdef &
-  varref 
-  ':='
-  expr
-  \\
-  & \bnfbar &
-  ASSERT expr
-  \\
-  & \bnfbar &
-  stmt ';' stmt
-  \\
-  &\bnfbar&
-  '\{' stmt '\}'
-  \\
-  & \bnfbar &
-  stop
-  \\
-  &\bnfbar&
-  IF options FI
-  \\
-  & \bnfbar &
-  DO options OD
-  \\
-  & \bnfbar &
-  BREAK 
-  \\
-  options
-  &\bnfdef &
-  option
-  \\
-  &\bnfbar &
-  option options
-  \\
-  option
-  &\bnfdef&
-  '::' cond '-$>$' stmt
-\end{tabular}
+%\input{literatur}
 
 
-\section{Abstrakte Syntax}
-\label{sec:AbstrakteSyntax}
 
-\begin{tabular}{rcll}
-  Program :: events
-
-\end{tabular}
-\input{literatur}
 
 \end{document}
 

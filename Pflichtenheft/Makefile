@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.1 2000-05-19 14:47:00 softtech Exp $
+## $Id: Makefile,v 1.2 2000-05-22 11:09:11 softtech Exp $
 ########################################################
 
 
@@ -7,9 +7,9 @@ HEVEA       = hevea
 HEVEAOPTS   = -fix
 HACHA       = hacha
 
-DOC         = main-web
+DOC         = handout1
 CODEDIR     = 
-WWWDIR      = 
+WWWDIR      = /home/info/www/inf/deRoever/SS00/Java/Mist
 
 index.html: $(DOC).html
 	$(HACHA) -o index.html $(DOC).html
@@ -22,6 +22,7 @@ $(DOC).html: macros.hva $(DOC).tex
 
 html:
 	hevea macros.hva handout1.tex
+	$(HACHA) -o index.html $(DOC).html
 ## 	hacha main-web.html
 
 
@@ -30,4 +31,4 @@ clean:
 	rm -f *.aux *.log *.dvi *.ps *.bbl *.blg *~
 
 www:
-	cp *.ps /home/info/www/inf/deRoever/SS00/Java/Handouts/
+	cp *.html *.ps   $(WWWDIR)

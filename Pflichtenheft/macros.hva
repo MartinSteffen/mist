@@ -1,4 +1,6 @@
 
+
+\newcommand{\Mist}     {\textsc{Mist}}
 \newcommand{\many}     {\ast}
 \newcommand{\to}       {\rightarrow}
 \newcommand{\ocaml}    {\textsc{Ocaml}}
@@ -23,5 +25,5 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: macros.hva,v 1.1 2000-05-19 14:47:01 softtech Exp $
+%% $Id: macros.hva,v 1.2 2000-05-22 11:09:14 softtech Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
