@@ -8,5 +8,10 @@ package simulator;
 
 
 public class SimulatorChannel {
+
+    /** Feld als Array fuer 
+    SimulatorProcess[] writerList; 
+    SimulatorProcess[] readerList; 
+    
     
 }
