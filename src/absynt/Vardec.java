@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Variablendeklaration.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Vardec.java,v 1.3 2000-07-10 13:56:27 unix01 Exp $
+ * @version $Id: Vardec.java,v 1.4 2000-07-10 14:41:39 unix01 Exp $
  */
 
 
@@ -25,10 +25,6 @@ public class Vardec extends Absyn implements Serializable {
    * abstract, ob wir eine Checker-Gruppe bekommen.
    */
 
-  public Vardec (Variable x) {
-    var = x;
-  };
-  
   public Vardec (Variable x, Expr e) {
     var = x;
     val = e;
@@ -60,9 +56,12 @@ public class Vardec extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Vardec.java,v 1.3 2000-07-10 13:56:27 unix01 Exp $
+//	$Id: Vardec.java,v 1.4 2000-07-10 14:41:39 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2000/07/10 13:56:27  unix01
+//	Printmethode eingefuegt
+//	
 //	Revision 1.2  2000/06/04 10:22:04  unix01
 //	Konstruktoren/Felder hunzigefuegt.
 //	

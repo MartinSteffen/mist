@@ -6,7 +6,7 @@ package absynt;
  * Die Klasse soll ein Beispiel fuer ein Programm
  * int abstrakter Syntax bereitstellen.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $	
+ * @version $Id: Example.java,v 1.5 2000-07-10 14:41:36 unix01 Exp $	
  */
 
 public class Example{
@@ -64,16 +64,20 @@ public class Example{
     Variable y  = new Variable ("y3");
 
     
+    Constval e_true   = new Constval (true);;
+    Constval e_false  = new Constval (false);;
+    Constval e_1   = new Constval (1);;
+    
 
     VardecList vl_1 = 
       new VardecList
-	(new Vardec(x1),
+	(new Vardec(x1,e_true),
 	 new VardecList 
-	   (new Vardec (x2),
+	   (new Vardec (x2,e_1),
 	    new VardecList
-	      (new Vardec(x3),
+	      (new Vardec(x3,e_1),
 	       new VardecList
-		 (new Vardec (y), null))));
+		 (new Vardec (y,e_false), null))));
     
     // 4 Zustaende, s_4 ist nicht erreicht
     Initstate s1 = new Initstate("s_1", ass_1);
@@ -160,9 +164,15 @@ public class Example{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $
+//	$Id: Example.java,v 1.5 2000-07-10 14:41:36 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2000/07/03 16:25:05  unix01
+//	Program/Process;  Name als String hinzugefuegt
+//	Entsprechend auch das Beispiel angepa"st.
+//	
+//	[Steffen]
+//	
 //	Revision 1.3  2000/06/26 16:49:38  unix01
 //	Einen expliziten ``Initstate'' fuer jeden Prozess hinzugef"ugt (wie
 //	vor einer Woche besprochen und im Pflichtenheft festgehalten). [Steffen]
