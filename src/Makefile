@@ -1,13 +1,13 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.7 2000-06-27 09:48:27 unix01 Exp $
+# $Id: Makefile,v 1.8 2000-07-03 16:25:04 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
 
 WEBDOCDIR     =/home/info/www/inf/deRoever/SS00/Java/Mist/Doc
 LOCALDOCDIR = Doc
-PACKAGEDIRS = absynt  utils editor gui checks1 parser\
+PACKAGEDIRS = absynt  utils editor editor.einterface gui checks1 parser\
 	      modcheck simulator position1 position2
 
 ################################################

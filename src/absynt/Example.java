@@ -6,7 +6,7 @@ package absynt;
  * Die Klasse soll ein Beispiel fuer ein Programm
  * int abstrakter Syntax bereitstellen.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.3 2000-06-26 16:49:38 unix01 Exp $	
+ * @version $Id: Example.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $	
  */
 
 public class Example{
@@ -144,10 +144,10 @@ public class Example{
 		 (t4,
 		  null))));
     
-    Process p1 =  new Process(vl_1, tl,sl, s1);
+    Process p1 =  new Process("P1",vl_1, tl,sl, s1);
     ProcessList procl = new ProcessList (p1, null);
 
-    Program p = new Program(cl, procl);
+    Program p = new Program("Prog p",cl, procl);
     return p;
   };
 };
@@ -160,9 +160,14 @@ public class Example{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.3 2000-06-26 16:49:38 unix01 Exp $
+//	$Id: Example.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2000/06/26 16:49:38  unix01
+//	Einen expliziten ``Initstate'' fuer jeden Prozess hinzugef"ugt (wie
+//	vor einer Woche besprochen und im Pflichtenheft festgehalten). [Steffen]
+//	Das Beispiel nachgezogen.
+//	
 //	Revision 1.2  2000/06/19 17:06:44  unix01
 //	Die abstrakte Syntax angepa"st (gem"a"s den heutigen Entscheidungen)
 //	
