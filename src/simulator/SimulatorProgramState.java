@@ -15,7 +15,10 @@ public class SimulatorProgramState {
     
     /** Instanzfeld für die Prozesszustände eines Programms als Array
      */
-    SimulatorProcessState[] processStateList;
+    protected SimulatorProcessState[] processStateList;
+
+    protected SimulatorChannel[] channelList;
+
 
     /** Konstruktor zur Generierung eines Objektes, das den Programmzustand 
      * wiederspiegeln können soll. 
