@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.28 2000-07-13 09:37:26 unix01 Exp $
+## $Id: Status,v 1.29 2000-07-13 11:19:46 unix01 Exp $
 ######################################################
 
 
@@ -159,19 +159,6 @@ o parser        scott.andreas, hegener.alexander
 
      - Feature-Request von der editor-Gruppe ausstehend. Da Espression so
        oder so geparst werden mu"ssen, sollte das kein extra-Auffwand sein.
-
-     [?] Zeitplan?
-
-
-     [?] keine R"uckmeldung und keine Anwesenheit bei der gestrigen
-         Besprechung, dh. Ausma"s des Fortschritts/Status nicht ganz 
-	 transparent.
-
-     [?] Beispieldatei zum Testen des parsers?
-
-     [?] Token.java: ist das so standard? mit den ganzen integers?
-	 Vergleiche das mit der Dok und dem Parserbuch?
-	 oder ist das generiert
 
 
 o  check1         nitsche.andree
