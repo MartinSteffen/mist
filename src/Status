@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.31 2000-07-17 13:52:55 unix01 Exp $
+## $Id: Status,v 1.32 2000-07-19 05:16:32 unix01 Exp $
 ######################################################
 
 
@@ -182,7 +182,7 @@ o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
     [?] W"unsche an die checks-Gruppe?,
 	die checksgruppe hat sich anscheindend nicht ger"uhrt.
-
+	
     -  Die Sache mit den U_Expr ist gekl"art
 
     [?] Zeitplan?
@@ -204,9 +204,12 @@ o parser        scott.andreas, hegener.alexander
        oder so geparst werden mu"ssen, sollte das kein extra-Auffwand sein.
 
 
-o  check1         nitsche.andree
+o  checks1         nitsche.andree
 
      -  Code vorhanden
+
+     - ich habe keinen "Uberblick was die Gruppe so macht
+
 
      -  Das Paket ist relativ isoliert momentan, scheint mir.
 	Im wesentliche aus 2 Gr"unden: 
@@ -223,6 +226,11 @@ o  check1         nitsche.andree
 
       [?]  email-Anfrage bzgl. das Status des Pakets losgeschickt,
 	   bisher keine Antwort.
+
+       - das paket wirft null-pointer exception.
+
+       - Typechecks vermutlich nicht implementiert.
+	
 
 
  position1     dietrich.daniel, zahorsky.moritz, buck.christian
@@ -277,7 +285,7 @@ position2:
 	    Zeilenweise.  Idealerweise sollte die Ausgabe f"ur diesen
 	    Zweck mit der konkreten Syntax (parser-Gruppe) "ubereinstimmen.
 
-	  - Feature request: ausgabe der neuen Syntax-bestandteile.
+	  - Feature request: Ausgabe der neuen Syntax-bestandteile.
 
 
 
