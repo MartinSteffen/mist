@@ -1,7 +1,6 @@
-$Id: beispiel.txt,v 1.6 2000-07-17 10:41:03 unix01 Exp $
+$Id: beispiel.txt,v 1.7 2000-07-17 15:03:16 unix01 Exp $
 
 verschiedene Beispiele zum Mist-Parser
 
-===================================
+=====================================
 $Log: not supported by cvs2svn $
-

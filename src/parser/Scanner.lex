@@ -6,9 +6,6 @@ import java_cup.runtime.Symbol;
 %cup
 %line
 %{
-    public int yyline(){
-      return yyline++;
-    }
 %}
 
 comment = ("//".*)
