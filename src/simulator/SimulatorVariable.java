@@ -30,7 +30,7 @@ public class SimulatorVariable{
     }
 
     /** Methode zum Zuweisen eines Wertes an eine existierende Variable */
-    protected setVariable (Object _wert) {
+    protected void setVariable (Object _wert) {
 	this.wert = _wert;
     }
 
