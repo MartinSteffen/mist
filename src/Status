@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.22 2000-07-11 06:31:17 unix01 Exp $
+## $Id: Status,v 1.23 2000-07-12 04:46:10 unix01 Exp $
 ######################################################
 
 
@@ -126,7 +126,7 @@ o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
 o parser        scott.andreas, hegener.alexander
 
-
+    - Todo/Readme file angelegt
     - Lex/Yacc Ger"ust scheint vorhanden, inclusive Makefile
 
      - sehr einfache konkrete Syntax festgelegt,
