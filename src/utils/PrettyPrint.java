@@ -58,18 +58,18 @@ public class PrettyPrint {
 	    output((Vardec)absyn);
 	if(absyn instanceof Variable)
 	    output((Variable)absyn);
-	if(absyn instanceof Expr)
-	    output((Expr)absyn);
+	/*if(absyn instanceof Expr)
+	  output((Expr)absyn);*/
 	if(absyn instanceof B_expr)
 	    output((B_expr)absyn);
 	if(absyn instanceof U_expr)
 	    output((U_expr)absyn);
 	if(absyn instanceof Transition)
-	  output((Transition)absyn);
-	/*if(absyn instanceof Astate)
-	  output((Astate)absyn);
+	    output((Transition)absyn);
+	if(absyn instanceof Astate)
+	    output((Astate)absyn);
 	if(absyn instanceof State)
-	output((State)absyn);*/
+	  output((State)absyn);
 	if(absyn instanceof Label)
 	    output((Label)absyn);
 	if(absyn instanceof Action)
@@ -80,6 +80,8 @@ public class PrettyPrint {
 	    output((Output_action)absyn);
 	if(absyn instanceof Assign_action)
 	    output((Assign_action)absyn);
+	if(absyn instanceof Tau_action)
+	    output((Tau_action)absyn);
 	if(absyn instanceof Constval)
 	    output((Constval)absyn);
     }
@@ -200,7 +202,7 @@ public class PrettyPrint {
 	}
     }
     
-    public void print(Variable variable){
+    public void output(Variable variable){
 	if(variable !=null){
 	    System.out.println(whiteSpace(column) + "[Variable] " + 
 			       variable.name);
@@ -232,7 +234,12 @@ public class PrettyPrint {
 	}
     }
     
-    
+    public void output(Tau_action tau_action){
+	if(tau_action !=null){
+	    System.out.println(whiteSpace(column)+ "[Tau] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	}
+    }
     public void output(Input_action input_action){
 	if(input_action !=null){
 	    System.out.println(whiteSpace(column)+ "[Input_action] ");
@@ -250,13 +257,22 @@ public class PrettyPrint {
 	    prettyprint.print(output_action.val);
 	}
     }
+    
+    public void output(Assign_action assign_action){
+	if(assign_action !=null){
+	    System.out.println(whiteSpace(column)+ "[Assign_action] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(assign_action.var);
+	    prettyprint.print(assign_action.val);
+	}
+    }
+
+    
     public void output(Expr expr){
 	if(expr !=null){
-
-	    System.out.println(whiteSpace(column) + "[Expr] ");
-            PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    System.out.println(whiteSpace(column) + "[Expr] " );
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	}
-	
     }    
     
     public void output(B_expr bexpr){
@@ -264,8 +280,8 @@ public class PrettyPrint {
 	    System.out.println(whiteSpace(column) + "[B_Expr] ");
             PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(bexpr.left_expr);
-	    prettyprint.print(bexpr.right_expr);
 	    prettyprint.print(bexpr.op);
+	    prettyprint.print(bexpr.right_expr);
 	}
 	
     }   
@@ -352,20 +368,21 @@ public class PrettyPrint {
 	}
     }
     
-    private void print(Astate astate){
+    public void output(Astate astate){
 	if(astate !=null){
 	    System.out.println(whiteSpace(column) + "[Astate] " +
 			       astate.name);
 			       
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    /*
 	    prettyprint.print(astate.assert);
 	    prettyprint.print(astate.pos);
-	    
+	    */
 	}
     }
     
     
-    private void print(State state){
+    public void output(State state){
 	if(state !=null){
 	    System.out.println(whiteSpace(column) + "[State] " + 
 			       state.name);
