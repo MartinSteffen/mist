@@ -1,0 +1,18 @@
+program Hallo{
+	
+	process p1{
+		bool jau = true;
+		if (jau){
+		  if(jau2) 
+		    jau2 = 1;
+        	  else
+		    jau2 = 3;
+		  jau = 2;
+		  jau = 3;
+		}
+		else {
+		     jau = 4;
+		     jau = 5;
+		     }
+	}
+}

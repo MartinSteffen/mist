@@ -1,0 +1,12 @@
+program Hallo{
+	
+	process p1{
+		bool jau = true;
+		while(jau){
+		  jau = false;
+		  x = 3;}
+		jau = true;  
+	}
+}
+
+
