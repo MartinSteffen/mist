@@ -18,7 +18,7 @@ public class ProcessWindow extends JInternalFrame {
     Eprocess eprocess;
     Container cpane;
     EditorSelection processselection;
-    ScrollPane scrollpane;
+    JScrollPane scrollpane;
     Dimension size;
     int zoom;
 
@@ -30,9 +30,9 @@ public class ProcessWindow extends JInternalFrame {
         eprocess.setProcessWindow(this);
       }
       processselection = null;
-      scrollpane = new ScrollPane();
       zeichenflaeche = new Zeichenflaeche(this);
-      scrollpane.add(zeichenflaeche);
+      scrollpane = new JScrollPane(zeichenflaeche);
+//      scrollpane.add(zeichenflaeche);
       setTitle(eprocess.getName());
       setSize(new Dimension(300, 300));
       setLocation(10 ,10);
@@ -108,7 +108,9 @@ public class ProcessWindow extends JInternalFrame {
       if (zoom != zoom_percent) {
         zoom = zoom_percent;
         size = getSize();
-        zeichenflaeche.setSize(new Dimension(((zoom * size.width)/100), ((zoom * size.height)/100)));
+        Point location = zeichenflaeche.getLocation();
+        zeichenflaeche.reshape(location.x, location.y, ((zoom * size.width)/100), ((zoom * size.height)/100));
+//        zeichenflaeche.setSize(new Dimension(((zoom * size.width)/100), ((zoom * size.height)/100)));
         refreshDisplay();
         editor.setInfotext("zoom ("+Integer.toString(zoom)+"%) to ("+Integer.toString(((zoom * size.width)/100))+", "+Integer.toString(((zoom * size.height)/100))+")");
       }

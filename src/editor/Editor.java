@@ -145,6 +145,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
         activewindow = null;
       }
       ((ProcessWindow)event.getSource()).removeProcess();
+      topmenu.removeProcessItem(((ProcessWindow)event.getSource()).getTitle());
     }
     public void internalFrameActivated(InternalFrameEvent event) {
       if (debug) debugText("activated : "+event);
@@ -363,6 +364,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       if (activeprocess != null) {
         position1.Position position = null;
         if (method.compareTo("Grav") == 0) position = new position1.PositionGrav();
+        else if (method.compareTo("Emp") == 0) position = new position1.PositionEmp();
 
         if (position != null) {
           System.out.println("calcPosition1 : "+method);
@@ -393,6 +395,17 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       } else System.out.println("no active Process !!");
     }
 
+    void menuSelectProcess(String processname) {
+      if (activeprogram != null) {
+        Eprocess selectprocess = activeprogram.getProcessByName(processname);
+        if (selectprocess != null) {
+          ProcessWindow selectwindow = selectprocess.getProcessWindow();
+          if (selectwindow != null) {
+            selectwindow.winActivation();
+          }
+        }
+      }
+    }
 
 /*
     void newProcessWindow (Eprocess inprocess) {
@@ -520,12 +533,11 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     void guiCloseProcess(String id) {
       if (gui != null) gui.CloseProcess(id);
     }
-    
-// *** Die haetten wir noch gerne    
-    // ***
-    
 
-
+    void addMenuProcessItem(String inname) {
+      topmenu.addProcessItem(inname);
+    }
+    
     String newProcessWindow (Eprocess inprocess) {
       if (debug) debugText("newProcessWindow");
       String outname = "";
@@ -537,6 +549,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       pwin.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       pwin.addInternalFrameListener(this);
       dpane.add(pwin);
+      addMenuProcessItem(outname);
       pwin.fitIn();
       pwin.moveToFront();
       return(outname);

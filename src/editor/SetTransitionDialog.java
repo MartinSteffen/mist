@@ -34,16 +34,16 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
     private JLabel string_in_channel;
     private JLabel string_in_variable;
     private JLabel string_out_channel;
-    private JLabel string_out_variable;
-    private JLabel string_tau_variable;
-    private JLabel string_var1;
-    private JLabel string_var2;
+    private JLabel string_out_expression;
+    private JLabel string_ass_variable;
+    private JLabel string_ass_expression;
+    private JLabel string_tau_message;
     private JTextField field_in_channel;
     private JTextField field_in_variable;
     private JTextField field_out_channel;
-    private JTextField field_out_variable;
-    private JTextField field_var1;
-    private JTextField field_var2;
+    private JTextField field_out_expression;
+    private JTextField field_ass_variable;
+    private JTextField field_ass_expression;
     
     private Container cpane;
 
@@ -57,18 +57,29 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
   
     private JPanel activePanel;
     
+    JRadioButton button_output;
+    JRadioButton button_input;
+    JRadioButton button_assign;
+    JRadioButton button_tau;
+
+    boolean init;
+    Eprocess eprocess;
+    Etransition etransition;   
 
     // Konstuktor SetTransitionDialog
-    SetTransitionDialog (Editor editroot, Etransition etransition) {
+    SetTransitionDialog (Editor editroot, Eprocess inprocess, Etransition etransition, boolean initial) {
       super(editroot, "edit transition parameters", true);
       addWindowListener(this);
       editor = editroot;
+      init = initial;
+      this.eprocess = inprocess;
+      this.etransition = etransition;
 
       // implement radiobuttons
-      JRadioButton button_output = new JRadioButton( "output" );
-      JRadioButton button_input = new JRadioButton( "input" );
-      JRadioButton button_assign = new JRadioButton( "assign" );
-      JRadioButton button_tau = new JRadioButton( "tau" );
+      button_output = new JRadioButton( "output" );
+      button_input = new JRadioButton( "input" );
+      button_assign = new JRadioButton( "assign" );
+      button_tau = new JRadioButton( "tau" );
 
       button_tau.setSelected(true);
 
@@ -104,19 +115,38 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
       field_in_channel = new JTextField( 20 );
       field_in_variable = new JTextField( 20 );
       field_out_channel = new JTextField( 20 );
-      field_out_variable = new JTextField( 20 );
-      field_var1 = new JTextField( 20 );
-      field_var2 = new JTextField( 20 );
+      field_out_expression = new JTextField( 20 );
+      field_ass_variable = new JTextField( 20 );
+      field_ass_expression = new JTextField( 20 );
       string_in_channel = new JLabel( "channel:" );
       string_in_variable = new JLabel( "variable:" );
       string_out_channel = new JLabel( "channel:" );
-      string_out_variable = new JLabel( "variable:" );
-      string_var1 = new JLabel( "variable1:" );
-      string_var2 = new JLabel( "variable2:" );
-      field_in_channel.setText( "initstring_input" );
-      field_in_channel.addActionListener(this);
-      field_out_channel.setText( "initstring_output" );
-      field_out_channel.addActionListener(this);
+      string_out_expression = new JLabel( "Expr:" );
+      string_ass_variable = new JLabel( "variable:" );
+      string_ass_expression = new JLabel( "Expr:" );
+
+      if (etransition != null) {
+        absynt.Label uselabel = etransition.getLabel();
+        if (uselabel != null) {
+          if (uselabel.act != null) {
+            if (uselabel.act instanceof absynt.Input_action) {
+              button_input.setSelected(true);
+              if (((absynt.Input_action)uselabel.act).chan != null) field_in_channel.setText(((absynt.Input_action)uselabel.act).chan.name);
+              if (((absynt.Input_action)uselabel.act).var != null) field_in_variable.setText(((absynt.Input_action)uselabel.act).var.name);
+            } else if (uselabel.act instanceof absynt.Output_action) {
+              button_output.setSelected(true);
+              if (((absynt.Output_action)uselabel.act).chan != null) field_out_channel.setText(((absynt.Output_action)uselabel.act).chan.name);
+            } else if (uselabel.act instanceof absynt.Assign_action) {
+              button_assign.setSelected(true);
+              if (((absynt.Assign_action)uselabel.act).var != null) field_ass_variable.setText(((absynt.Assign_action)uselabel.act).var.name);
+            } else if (uselabel.act instanceof absynt.Tau_action) {
+              button_tau.setSelected(true);
+            }
+          }
+          if (uselabel.guard != null) {
+          }
+        }
+      }
 
       // parameter Panel for INPUT
       paramPanel_input = new JPanel();
@@ -131,24 +161,24 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
       paramPanel_output.setLayout( new GridLayout(2,1) );
       paramPanel_output.add( string_out_channel );
       paramPanel_output.add( field_out_channel );
-      paramPanel_output.add( string_out_variable );
-      paramPanel_output.add( field_out_variable );
+      paramPanel_output.add( string_out_expression );
+      paramPanel_output.add( field_out_expression );
 
       // parameter Panel for ASSIGN
       paramPanel_assign = new JPanel();
       paramPanel_assign.setLayout( new GridLayout(2,1) );
-      paramPanel_assign.add( string_var1 );
-      paramPanel_assign.add( field_var1 );
-      paramPanel_assign.add( string_var2 );
-      paramPanel_assign.add( field_var2 );
+      paramPanel_assign.add( string_ass_variable );
+      paramPanel_assign.add( field_ass_variable );
+      paramPanel_assign.add( string_ass_expression );
+      paramPanel_assign.add( field_ass_expression );
 
       // parameter Panel for TAU
       // -> still yet no parameter, we have to check this
       // -> with the uppergroup unix01 to get sure about this.
       paramPanel_tau = new JPanel();
       paramPanel_tau.setLayout( new GridLayout(0,1) );
-      string_tau_variable = new JLabel( "no parameters, sorry!", JLabel.CENTER );
-      paramPanel_tau.add( string_tau_variable, BorderLayout.CENTER );
+      string_tau_message = new JLabel( "no parameters, sorry!", JLabel.CENTER );
+      paramPanel_tau.add( string_tau_message, BorderLayout.CENTER );
 
       // paramPanel mit initial Panel aufrufen!
       init_paramPanel( paramPanel_tau );
@@ -248,12 +278,24 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
       // System.out.println("SetTransitionDialog: "+event);
       System.out.println( event.getActionCommand() );
 	if( event.getActionCommand() == "cancel" ) {
-		dispose();
-//		System.exit(0);
+          dispose();
         };
 	if( event.getActionCommand() == "ok" ) {
-		dispose();
-//		System.exit(0);
+		
+          if (button_output.isSelected()) {
+            etransition.setOutput(null, field_out_channel.getText(), null);
+          } else if (button_input.isSelected()) {
+            etransition.setInput(null, field_in_channel.getText(), field_in_variable.getText());
+          } else if (button_assign.isSelected()) {
+            etransition.setAssign(null,"" , null);
+          } else if (button_tau.isSelected()) {
+            etransition.setTau(null);
+          }
+		
+          if (this.init) {
+	    if (this.eprocess != null) this.eprocess.addTransition(etransition);
+	  }
+	  dispose();
         };
 /*	if( event.getActionCommand() == "input" ) {
 	}
@@ -265,9 +307,10 @@ public class SetTransitionDialog extends JDialog implements ActionListener, Wind
 	}
 */
     }
-    
-    public static void main (String[] args) {
-      SetTransitionDialog stdialog = new SetTransitionDialog(null, null);
-    }
 
+/*    
+    public static void main (String[] args) {
+      SetTransitionDialog stdialog = new SetTransitionDialog(null, null, null, true);
+    }
+*/
 }

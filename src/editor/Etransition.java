@@ -87,51 +87,59 @@ public class Etransition extends EditorObject {
     if (next != null) next.updateTransition();
   }
 
+  absynt.Label getLabel() {
+    absynt.Label outlabel = null;
+    if (transition != null) {
+      if (transition.lab != null) outlabel = transition.lab;
+    }
+    return(outlabel);
+  }
+
 /**
  * Festlegung des Typs der Transition als Input-Transition
  */  
-  void setInput(absynt.Action action, absynt.Expr expr) {
+  void setInput(absynt.Expr expr, String channel, String variable) {
     if (transition == null) {
-      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, action));
+      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, new absynt.Input_action(new absynt.Channel(channel), new absynt.Variable(variable))));
     } else {
       transition.lab = null;
-      transition.lab = new absynt.Label(expr, action);
+      transition.lab = new absynt.Label(expr, new absynt.Input_action(new absynt.Channel(channel), new absynt.Variable(variable)));
     }
   }
 
 /**
  * Festlegung des Typs der Transition als Output-Transition
  */  
-  void setOutput(absynt.Action action, absynt.Expr expr) {
+  void setOutput(absynt.Expr expr, String channel, absynt.Expr actionexpr) {
     if (transition == null) {
-      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, action));
+      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, new absynt.Output_action(new absynt.Channel(channel), actionexpr)));
     } else {
       transition.lab = null;
-      transition.lab = new absynt.Label(expr, action);
+      transition.lab = new absynt.Label(expr, new absynt.Output_action(new absynt.Channel(channel), actionexpr));
     }
   }
 
 /**
  * Festlegung des Typs der Transition als Assign-Transition
  */  
-  void setAssign(absynt.Action action, absynt.Expr expr) {
+  void setAssign(absynt.Expr expr, String variable, absynt.Expr actionexpr) {
     if (transition == null) {
-      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, action));
+      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, new absynt.Assign_action(new absynt.Variable(variable), actionexpr)));
     } else {
       transition.lab = null;
-      transition.lab = new absynt.Label(expr, action);
+      transition.lab = new absynt.Label(expr, new absynt.Assign_action(new absynt.Variable(variable), actionexpr));
     }
   }
 
 /**
  * Festlegung des Typs der Transition als Tau-Transition
  */  
-  void setTau(absynt.Action action, absynt.Expr expr) {
+  void setTau(absynt.Expr expr) {
     if (transition == null) {
-      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, action));
+      transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), new absynt.Label(expr, new absynt.Tau_action()));
     } else {
       transition.lab = null;
-      transition.lab = new absynt.Label(expr, action);
+      transition.lab = new absynt.Label(expr, new absynt.Tau_action());
     }
   }
 
@@ -219,6 +227,35 @@ public class Etransition extends EditorObject {
     else {
       if (next != null) outtransition = next.getEtransitionWithTransition(intransition);
     }
+    return(outtransition);
+  }
+
+  Etransition getTransitionInRange(float x, float y, float range) {
+    Etransition outtransition = null;
+      float x1_cor = sourcestate.getX();
+      float y1_cor = sourcestate.getY();
+      float x2_cor = targetstate.getX();
+      float y2_cor = targetstate.getY();
+      
+      float x_cor = (x1_cor + x2_cor) / 2;
+      float y_cor = (y1_cor + y2_cor) / 2;
+      
+/*      if ((((x-range) < x_cor) && ((x+range) > x_cor)) && (((y-range) < y_cor) && ((y+range) > y_cor))) outstate = this;
+        else if (next != null) outstate = next.getStateInRange(x, y, range);
+      if (outstate != null) {
+      	System.out.println("state in Range");
+      	Estate statesucher = null;
+      	if (outstate.next != null) statesucher = outstate.next.getStateInRange(x, y, range);
+      	if (statesucher != null) outstate = statesucher;
+      }
+*/
+      if (next != null) outtransition = next.getTransitionInRange(x, y, range);
+      if (outtransition == null) {
+      	if ((((x-range) < x_cor) && ((x+range) > x_cor)) && (((y-range) < y_cor) && ((y+range) > y_cor))) {
+          System.out.println("Transition in Range");
+          outtransition = this;
+        }
+      }
     return(outtransition);
   }
 

@@ -14,6 +14,7 @@ import gui.*;
 public class TopMenuBar extends JMenuBar {
 
     Editor editor;
+    JMenu menu_process;
 
     TopMenuBar (Editor editroot) {
       super();
@@ -34,7 +35,7 @@ public class TopMenuBar extends JMenuBar {
       JMenu menu_program = new JMenu("Program");
       menu_program.setFont(editor.menufont);
 
-      JMenu menu_process = new JMenu("Process");
+      menu_process = new JMenu("Process");
       menu_process.setFont(editor.menufont);
       
       JMenu menu_position = new JMenu("Position");
@@ -116,6 +117,10 @@ public class TopMenuBar extends JMenuBar {
       p_pos1grav.addActionListener(new Position1Listener(editor, "Grav"));
       p_pos1grav.setFont(editor.menufont);
       
+      JMenuItem p_pos1emp = new JMenuItem("pos1 Emp");
+      p_pos1emp.addActionListener(new Position1Listener(editor, "Emp"));
+      p_pos1emp.setFont(editor.menufont);
+      
       JMenuItem p_pos2grav = new JMenuItem("pos2 Grav");
       p_pos2grav.addActionListener(new Position2Listener(editor, "Grav"));
       p_pos2grav.setFont(editor.menufont);
@@ -135,6 +140,9 @@ public class TopMenuBar extends JMenuBar {
       menu_file.add(f_save);
       menu_file.add(f_close);
       menu_file.add(f_exit);
+      f_open.setEnabled(false);
+      f_close.setEnabled(false);
+      f_save.setEnabled(false);
       
       menu_edit.add(e_copy);
       menu_edit.add(e_paste);
@@ -147,13 +155,16 @@ public class TopMenuBar extends JMenuBar {
       menu_program.add(p_programrename);
       menu_program.add(p_prettyprint);
       menu_program.addSeparator();
+      p_programrename.setEnabled(false);
       
       menu_process.add(p_setvariables);
       menu_process.add(p_newprocess);
       menu_process.add(p_processrename);
       menu_process.addSeparator();
+      p_processrename.setEnabled(false);
 
       menu_position.add(p_pos1grav);
+      menu_position.add(p_pos1emp);
       menu_position.addSeparator();
       menu_position.add(p_pos2grav);
       menu_position.add(p_pos2fr);
@@ -169,6 +180,71 @@ public class TopMenuBar extends JMenuBar {
       add(menu_program);
       add(menu_process);
       add(menu_position);
+    }
+
+    void addProcessItem (String inname) {
+      int n = menu_process.getItemCount();
+//      System.out.println("(add MenuItem) items found : "+Integer.toString(n));
+      JMenuItem newprocessitem = new JMenuItem(inname);
+      newprocessitem.addActionListener(new ProcessItemListener(editor));
+      newprocessitem.setFont(editor.menufont);
+      menu_process.add(newprocessitem);
+    }
+    
+    void removeProcessItem (String inname) {
+      JMenuItem msucher = null;
+      boolean found = false;
+      int n = menu_process.getItemCount();
+//      System.out.println("(remove MenuItem) items found : "+Integer.toString(n));
+      if (n > 4) {
+      	int i = 4;
+        while (i <= n-1 && !found) {
+//          System.out.println("(remove MenuItem) current position : "+Integer.toString(i));
+          msucher = menu_process.getItem(i);
+//          System.out.println("(remove MenuItem) current text : "+msucher.getText());
+          if (inname.compareTo(msucher.getText()) == 0){
+//             System.out.println("fount MenuItem : "+inname+" at : "+Integer.toString(i));
+             found = true;
+          }
+          i++;
+        }
+        if (found) {
+//          System.out.println("(remove MenuItem) found MenuItem : "+msucher.getText());
+          menu_process.remove(msucher);
+        }
+      }
+    }
+
+    void renameProcessItem (String oldname, String newname) {
+      JMenuItem msucher = null;
+      boolean found = false;
+      int n = menu_process.getItemCount();
+//            System.out.println("(rename MenuItem) items found : "+Integer.toString(n));
+      if (n > 4) {
+      	int i = 4;
+        while (i <= n-1 && !found) {
+//          System.out.println("(rename MenuItem) current position : "+Integer.toString(i));
+          msucher = menu_process.getItem(i);
+//          System.out.println("(rename MenuItem) current text : "+msucher.getText());
+          if (oldname.compareTo(msucher.getText()) == 0) found = true;
+          i++;
+        }
+        if (found) {
+//          System.out.println("(rename MenuItem) fount at : "+Integer.toString(i));
+          msucher.setText(newname);
+        }
+      }
+    }
+
+    class ProcessItemListener implements ActionListener {
+      Editor editor;
+      
+      public ProcessItemListener(Editor editroot) {
+        editor = editroot;
+      }
+      public void actionPerformed(ActionEvent event) {
+        editor.menuSelectProcess(((JMenuItem)event.getSource()).getText());
+      }
     }
     
     class Position1Listener implements ActionListener {

@@ -109,6 +109,7 @@ public class Eprocess {
       processwindow.addInternalFrameListener(editroot);
       System.out.println("adding window to dpane");
       dpane.add(processwindow);
+      editroot.addMenuProcessItem(processwindow.getTitle());
       System.out.println("moving window to front");
       processwindow.moveToFront();
       System.out.println("... ready");
@@ -235,6 +236,12 @@ public class Eprocess {
     Estate outstate = null;
     if (statelist != null) outstate = statelist.getStateInRange(x, y, range);
     return(outstate);
+  }
+
+  public Etransition getTransitionInRange(float x, float y, float range) {
+    Etransition outtransition = null;
+    if (translist != null) outtransition = translist.getTransitionInRange(x, y, range);
+    return(outtransition);
   }
 
 /**
