@@ -6,7 +6,7 @@ package absynt;
  * Die Klasse soll ein Beispiel fuer ein Programm
  * int abstrakter Syntax bereitstellen.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.7 2000-07-14 10:00:36 unix01 Exp $	
+ * @version $Id: Example.java,v 1.8 2001-05-27 13:10:38 swprakt Exp $	
  */
 
 public class Example{
@@ -166,9 +166,12 @@ public class Example{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.7 2000-07-14 10:00:36 unix01 Exp $
+//	$Id: Example.java,v 1.8 2001-05-27 13:10:38 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.7  2000/07/14 10:00:36  unix01
+//	ok
+//	
 //	Revision 1.6  2000/07/12 05:23:49  unix01
 //	Das Beispiel an die Aenderung mit den Typen angepasst [Steffen]
 //	
@@ -198,6 +201,7 @@ public class Example{
 //	
 //	
 //---------------------------------------------------------------------
+
 
 
 
