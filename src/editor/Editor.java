@@ -15,7 +15,7 @@ import gui.*;
  * class Editor zum Bearbeiten eines ubergebenen Projects
  * bis jetzt nur roh
  * @author Alexander Eckloff, Finn Jacobs.
- * @version  $Id: Editor.java,v 1.3 2000-06-16 09:51:59 unix01 Exp $
+ * @version  $Id: Editor.java,v 1.4 2000-06-25 17:43:32 unix01 Exp $
  */
 
 public class Editor extends javax.swing.JFrame {
@@ -25,8 +25,8 @@ public class Editor extends javax.swing.JFrame {
     int editor_id;                              // id-Nummer dieses Editors
 //    DebugWindow debugwindow;                    // Debugwindow
     boolean debug;
-
-    EdInterface edinterface;
+    // Die Klasse EdInterface ist gestorben; Helge Kraas
+    // EdInterface edinterface; 
     String editorname = "Editor";
     
     /**
@@ -39,7 +39,7 @@ public class Editor extends javax.swing.JFrame {
       setSize(set_width, set_height);
       setLocation(set_x, set_y);
       setTitle(editorname);
-      edinterface = null;
+      // edinterface = null;
       setVisible(true);
       show();
     }
@@ -47,18 +47,13 @@ public class Editor extends javax.swing.JFrame {
     public Editor(absynt.Program program) {
       this("unnamed", program, 0, 0, 500, 500);
     }
-
-    public Editor(EdInterface inedinterface) {
-      this(inedinterface.name, null, inedinterface.x, inedinterface.x ,inedinterface.width, inedinterface.height);
-      edinterface = inedinterface;
-    }
-
+    
     /**
      * Editor schliessen
      */
     void exitEditor () {
       closeEditor();
-      if (editor_count == 0) System.exit(0);
+      if (editor_count == 0) ; //  System.exit(0); huestel, wir beenden das Programm ; Helge Kraas
     }
 
     /**
@@ -73,25 +68,28 @@ public class Editor extends javax.swing.JFrame {
      * Methode zum schliessen des Editors ueber die GUI
      */   
     public void destroy() {
-      if (edinterface != null) {
-	edinterface.x = this.getX();
-	edinterface.y = this.getY();
-	edinterface.width = this.getWidth();
-	edinterface.height = this.getHeight();
-        exitEditor();
-      }
+	/*   
+	if (edinterface != null) {
+	    edinterface.x = this.getX();
+	    edinterface.y = this.getY();
+	    edinterface.width = this.getWidth();
+	    edinterface.height = this.getHeight();
+	    }
+	*/
+	exitEditor();
+	
     }
 
     public void highlightState(absynt.Astate state, absynt.Process process, absynt.Program program) {
-//      zeichenflaeche.highlightState(state, process, program);
+	//      zeichenflaeche.highlightState(state, process, program);
     }
     public void unhighlightState(absynt.Astate state, absynt.Process process, absynt.Program program) {
-//      zeichenflaeche.unhighlightState(state, process, program);
+	//      zeichenflaeche.unhighlightState(state, process, program);
     }
     public void highlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
-//      zeichenflaeche.highlightState(transition, process, program);
+	//      zeichenflaeche.highlightState(transition, process, program);
     }
     public void unhighlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
-//      zeichenflaeche.highlightState(transition, process, program);
+	//      zeichenflaeche.highlightState(transition, process, program);
     }    
 }
