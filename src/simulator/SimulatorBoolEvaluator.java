@@ -16,10 +16,6 @@ public class SimulatorBoolEvaluator {
     */
     private SimulatorProcess process;
 
-    /** Instanzfeld, besagt ob, Prozesskontext für Auswertung zur Verfügung steht 
-     */
-    private boolean withContext;
-
     /** Instanzfeld für Referenz auf den zu evaluierenden Ausdruck
      */
     private Expr expr;
@@ -38,17 +34,6 @@ public class SimulatorBoolEvaluator {
     protected SimulatorBoolEvaluator(SimulatorProcess _process, Expr _expr) {
 	process = _process;
 	expr = _expr;
-	withContext = true;
-    }
-
-
-    /** Konstruktor für einen Expression Evaluator ohne Prozesskontext
-     * 
-     * @param _expr Referenz auf die zu evaluierende Expression
-     */
-    protected SimulatorBoolEvaluator(Expr _expr) {
-	expr = _expr;
-	withContext = false;
     }
 
 

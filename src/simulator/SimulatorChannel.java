@@ -30,10 +30,10 @@ public class SimulatorChannel {
      */
 
     protected void addWriter(Transition writerTrans){
-	writerList.add(writerProcess);
+	writerList.add(writerTrans);
     }
 
     protected void addReader(Transition readerTrans){
-	readerList.add(readerProcess);
+	readerList.add(readerTrans);
     }
 }
