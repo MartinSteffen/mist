@@ -1,15 +1,13 @@
 #----------------------------------------------------------------------
-#	Editor Makefile
-#	------------------------------------
+#	Utilities Makefile
+#     $Id: Makefile,v 1.2 2000-07-02 09:21:35 unix01 Exp $
 #
-#
-#	$Log: not supported by cvs2svn $
-#	
 #----------------------------------------------------------------------
 
 ################################################
 
 LOCALDOCDIR=Doc
+#WEBDIR     = /home/info/www/inf/deRoever/SS00/Java/Mist/absynt/
 
 ################################################
 
@@ -24,10 +22,14 @@ debug:	; make JAVACOPTS="-g" all
 
 clean:
 	\rm -f *.class *~
+	\rm -f undo/*.class *~
+	\rm -f einterface/*.class
 
 localdoc:	;
 	javadoc  -version -author -d $(LOCALDOCDIR) *.java
 
+###www:
+###	cp $(LOCALDOCDIR)/*.html $(WEBDIR)
 
 
 

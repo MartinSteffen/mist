@@ -1,0 +1,61 @@
+##############################################
+#### Makefile
+#### Ein sehr banale Makefile k"onnte so aussehen:
+##   
+
+
+compile:
+	javac undo/UndoStepPart.java
+	javac undo/USP_RemVertex.java
+	javac undo/UndoStep.java
+	javac undo/UndoBuffer.java
+
+	javac Editor.java
+
+run:
+	java 
+
+all:
+	javac 
+	java 
+
+clean:
+	rm -f *.class *~
+	rm -f undo/*.class *~
+	rm -f einterface/*.class *~
+
+############################# Kommentar ########################
+##  Oberes sind drei sogenannte Regeln
+##
+##  Allgemeine Form
+##
+##     TARGET ... : PREREQUISITES ...
+##             COMMAND
+
+##  1. Zeile sogenanntes target (mit doppelpunkt)
+##  ``Prerequisites'' besitzt dieses einfachen Beispiel keine
+##  2. Zeile Befehl.
+##  der Aufruf von make compile  kompiliert Main.java, javac findet
+##  selbst weitere Abh"angigkeiten. 
+
+##  Beachte: die 2te Zeile Beginn mit einem (unsichtbaren) <TAB>!
+##
+##  bei mehrere targets: der Aufruf von ``make'' alleine f"uhrt
+##  immer das erste target aus, hier <compile>
+
+##  F"ur unsere Aufgaben: das erste Target sollte immer 
+##  den Code der Aufgabe kompilieren (au"serdem sehen wir
+##  gleich was das Hauptfile ist (bei Standaloneprogrammen
+##  w"are es eh klar, aber ansonsten m"u"s es ja nicht
+##  Main hei"sen.)
+
+##  Andere n"utzliche Targetnamen f"ur die Aufgaben k"onnten
+##  sein: make aufgabe1 etc.
+
+
+## Man kann noch weit komplexere Sachen machen, bzw die Target
+## voneinander abh"angig machen etc. (PREREQUISITES), das
+## brauchen wir f"ur's erste 
+## nicht, wen's interessiert, der sollte in die entsprechende
+## Dok' schauen
+
