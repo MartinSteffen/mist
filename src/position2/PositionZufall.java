@@ -7,6 +7,8 @@
  */
 package position2;
 
+import absynt.Process;
+
 public class PositionZufall implements Position {
 
   public PositionZufall() {
