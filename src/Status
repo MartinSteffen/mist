@@ -1,20 +1,119 @@
 ##################################################
-## $Id: Status,v 1.2 2000-06-04 12:11:52 unix01 Exp $
+## $Id: Status,v 1.3 2000-06-26 10:08:31 unix01 Exp $
 ##################################################
 
 
 
 
+Stand: 26. Juni, Mittag
+=======================
 
-o Global:
 
-	- globales Makefile: fehlt.
 
-o absynt:  
-	- kompiliert. 
-        - Makefile inklusive java-doc-Generierung.
-	- vollst"andiges Beispiel
-	- Serializable: nicht realisiert
+o  gui           kraas.helge, schuemann.broder
 
-o util:
-	- Pretty-printer: fehlt.	 
+   - kompilierbar, allerdings mit ``deprecated warning!''
+   - mehr als nur Stubcode
+   -  kein Makefile.
+
+   scheint bereits mit editor zusammenzupassen, zumindest beim kompilieren.
+
+
+o   editor        jacobs.finn, eckloff.alexander
+
+    - komilierbar
+    - kein Makefile
+
+
+
+o simulator     goemann.michael, nimser.michael
+
+    - funktionierendes Makefile (make all geht)
+                              make localdoc geht auch (ich habe ein Verzeichnis: ``editor/Doc'' angelegt
+	                      damit ging es dann.
+
+    + Textuelle Spezifikation + Fragenverwaltung: das ist ein sehr gutes Organisationsmittel.
+
+    - keine "Anderung seit 19.6
+
+o modcheck      neumann.frank, kuemper.aneta, schulz.eike
+
+    + kompilierbarer Stubcode
+    - kein Makefile
+    - keine Neuigkeiten seit letzter Woche
+	
+
+
+
+o parser        scott.andreas, hegener.alexander
+
+    + compilierbarer Stubcode
+    + Makefile
+    + Docu vorrbereitet
+    - keine "Anderung seit letzter Woche
+
+
+
+  check1         nitsche.andree
+
+     -  Stub code
+     -  kein Makefile 
+     --  javac *.java kompiliert nicht!
+
+
+  check2         dagefoerde.jonas, lukosch.andreas, 
+
+    - kein Code, 
+    - keinerlei R"uckmeldung.
+	ohne eindeutige Reaktion bis morgen fr"uh ist die Gruppe raus.
+
+
+
+ position1     dietrich.daniel, zahorsky.moritz, buck.christian
+
+
+      +  stub code
+      +  compilierbar
+      -  kein Makefile
+
+
+ position2     thoehle.ralf, mallach.paul
+
+      + Code
+      + Makefile
+      -- nicht kompilierbar (s.u)
+
+      - kein Fortschritt seit 19.
+
+    Komplilationsfehler (bei make all)
+
+   PositionGrav.java:9: class position2.PositionGrav must be declared abstract. It does not define void positioniere(absynt.Process) from interface position2.Position.
+
+   Grund: es k"onnte daran liegen, da"s ich die Abstrakte Syntax um die Klasse Position (nach der heutigen
+   Besprechung erweitert habe, und da"s es damit interferiert. Am besten sich das Problem anschauen, und
+   mir (unter unix01) bescheid sagen, was das Problem ist.
+
+
+
+ integration   kyas.marcel, stahl.karsten, steffen.Martin
+	 
+
+          -   globale Gesamtkompilation unbekannt, wir haben bisher nur
+	      die Verzeichnisse einzeln testen k"onnen
+          
+
+
+ utils/pp     kraus.oliver, labenda.holger
+
+	  + kompilierf"ahiger stubcode, 
+
+          + Makefile
+
+	  -- allerding keine "Anderung seit dem 4 Juni (bzgl. dessen, was
+	     wir vorgegeben haben).
+
+    	     Da pp f"ur alle n"utzlich ist, bitte bezeiten sich and den Code setzen.
+
+     
+
+
