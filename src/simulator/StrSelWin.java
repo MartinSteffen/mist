@@ -1,9 +1,4 @@
-/*
- * StrSelWin.java
- *
- * Created on July 10, 2000, 5:03 PM
- */
-
+package simulator;
 
 
 /** 
