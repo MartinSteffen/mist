@@ -1,20 +1,54 @@
 #######################################################
-# $Id: Todo,v 1.3 2000-05-28 13:01:10 unix01 Exp $
+# $Id: Todo,v 1.4 2000-06-26 14:47:42 unix01 Exp $
 #######################################################
 
       
+Eine Liste von Dingen, die getan werden mu"s.
 
- o  Merge it with the requirement spec. 
 
+o integration:     
 
- o To make it a CD'able package: 
-     +	add jar-files 
-     +  tools +
-     +   generated web-pages
-     + tars
-     + an own Readme
+   -globales makefile, das alles kompiliert.
 
-   (compare the readme on the old CD.)
+      status:  im prinzip vorhanden, einzelpakete sind aber noch
+	       nicht kompilierbar
+   - makefile f"ur globales javadoc
+
+      status:  nicht vorhanden
+   
+
+gui:
+
+editor:
+
+simulator:   
+
+modcheck:
+
+parser:    
+
+	- Parsen eines Strings in eine Expression
+	  status: bislang keine Stellungnahme von parsergruppe,
+	          schnittstelle noch nicht festgelegt.
+	
+
+checks1:    
+
+checks2:  
+
+	- R"uckmeldung der Teilnehmer?
+          status: keine R"uckmeldung
+
+position1:
+
+position2:   
+
+absynt:    
+
+utils/pp  
+        - Wir brauchen bald Code!
+	  status: keine R"uckmeldung
+
 
 
 
