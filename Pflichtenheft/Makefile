@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.6 2000-06-08 14:08:01 unix01 Exp $
+## $Id: Makefile,v 1.7 2000-06-19 17:32:17 unix01 Exp $
 ########################################################
 
 
@@ -10,7 +10,7 @@ HACHA       = hacha
 DOC         = handout1
 CODEDIR     = 
 ############# Achtung: die Versionen ändern sich!
-WWWDIR      = /home/info/www/inf/deRoever/SS00/Java/Mist/Pflichtenheft2
+WWWDIR      = /home/info/www/inf/deRoever/SS00/Java/Mist/Pflichtenheft3
 
 
 index.html: $(DOC).html
