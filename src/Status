@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.12 2000-07-10 05:33:13 unix01 Exp $
+## $Id: Status,v 1.13 2000-07-10 05:37:43 unix01 Exp $
 ######################################################
 
 
@@ -28,16 +28,19 @@ o  gui           kraas.helge, schuemann.broder
     -   noch keine vollst"andige ``Abh"angigkeitsanalyse'' (simulieren nur nach
         checken...)?
 
+    [?] Wenn die GUI-Leute nichts mehr zu tun haben sollten: dann k"onnen sie
+	"uberlegen, was auf die CD kommt? Doku?
+
 o   editor        jacobs.finn, eckloff.alexander
 
      - einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
        noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
        den Transitionen). 
 
-     
 
-
-    [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art
+    [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art, vielleicht
+	m"ussen die gif-bilder einfach in das current directory? geht
+	vermutlich auch nicht.
 
     - Integration mit dem PrettyPrinter zum Debuggen vorhanden.
 
@@ -56,12 +59,18 @@ o simulator     goemann.michael, nimser.michael
 
     [?] etwas hinter dem eigenen Zeitplan (laut eigenen Angaben)
 
+    [?] was sind die Fortschritte seit letzter Woche?
+	
+    [?] gibt es W"unsche an die checks-Gruppe?
+
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
     - ein wenig Code vohanden, aber noch nicht testf"ahig
     - Planung f"ur Datenstrukturen
-    [?] Momentan plan f"ur Model-checking eines Prozesses
+
+    [?] Momentan Plan f"ur Model-checking eines Prozesses
+
     [?] Feature request => absynt: das Zeug soll cloneable sein (zumindest
 	VarDec)
   
