@@ -1,4 +1,6 @@
 
+
+
 /**
  * Title:        <p>
  * Description:  Diese Klasse fuehrt Checks ueber die Variablen eines Programmes
