@@ -1,0 +1,15 @@
+Fragen:
+-------
+
+
+- Channels:  Semantik von Channels ? ( Pipe / Bitstreams ? )
+	     Input ist gefragt, Channel jedoch bleibt leer. Was nun ?
+
+- Kommunikation mit Editor: Falls mehrere Editoren:
+			    Highlightmethoden als static mit Parameter EditorID
+			    so dass Verteilung der Nachrichten an jeweilige Editor-
+			    instanz moeglich wird. => Kuemmert sich also die
+			    Editorgruppe drum.
+
+- Fehlerbehandlung: Eventuelle Exeptions muessen irgendwie Output loswerden
+		    Zentrale Schnittstelle erwuernscht

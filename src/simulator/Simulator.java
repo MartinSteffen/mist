@@ -1,3 +1,5 @@
+package simulator;
+
 import absynt.*;
 
 /**
