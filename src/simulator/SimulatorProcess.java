@@ -57,7 +57,7 @@ public class SimulatorProcess{
 	/* boolesche Variable für while-Schleifen-Logik */
 	boolean go = false;
 
-	if (pointer != null) // checken, ob Variable in VardecList exist.
+	if (pointer != null) // checken, ob Variable in VardecList existiert
 	    go = true;
 
 	while (go) {
@@ -65,7 +65,8 @@ public class SimulatorProcess{
 	    if (pointer.head.val == null) {
 		/* Variable als SimulatorVariable ins Leben rufen und nur DEKLARIEREN,
 		   da es hier keine auszuwertende (und zuzuweisende) Expression
-		   gibt.
+		   gibt. Man weiß hier auch noch nichts über den Typ der Variablen,
+		   da in Absynt nur ungetypte Variablen vorkommen.
 		 */
 		result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var) );
 	    }
@@ -74,25 +75,39 @@ public class SimulatorProcess{
 		   also muß die Expression der Initialisierung ausgewertet und der 
 		   Variablen zugeordnet werden.
 		   Die Auswertung einer Expression muß noch realisiert werden in
-		   Klasse SimulatorExprEvaluator (???).
+		   Klasse SimulatorExprEvaluator.
 		*/
-		java.lang.Object value;
-		/* hier sollte jetzt der Aufruf zur Berechnung des Ausdruckswertes 
-		   stehen:
-		   SimulatorExprEvaluator exprEval = new SimulatorExprEvaluator(this, pointer.head.val);
-		   value = exprEval.evalExpression();
-		   
-		   bisher aber erst:
+
+		SimulatorExprEvaluator exprEval = new SimulatorExprEvaluator(this, pointer.head.val);
+		// Objekt fuer Ausdrucksauswertung ins Leben rufen
+		exprEval.evalExpression();  // Ausdruck auswerten
+
+		/* Wegen den ungetypten Variablen und somit Ausdrücken, kann erst zur nach 
+		   der Auswertung eines Ausdrucks dessen Datentyp festgestellt werden.
+		   Unschön, aber somit Fallunterscheidung notwendig :
 		*/
-		value = null;
-		result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var,value) );
-	    }
+
+		if (exprEval.isInt()){
+		    /* Ausdruck evaluiert zu einem Integerwert */
+		       result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var, exprEval.getIntVal() ) );
+		}
+		else {
+		    /* Ausdruck evaluiert zu einem booleschen Wert */ 
+		    result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var, exprEval.getBoolVal() ) );
+		}
+
+	    } 
+	    /* Die Variable wurde nun in die ArrayList der Prozessvariablen aufgenommen,
+	       also weiter ....
+	    */
+
 	    if (pointer.hasMoreElements()) {
 		// wenn es noch eine Variable hinter der aktuellen gibt
 		pointer = pointer.next;
 		// dann pointer auf Nachfolger versetzen
 	    }
-	    else 
+	    else
+		/* Abbruchbedingung für While-Schleife setzen */
 		go = false;
 
 	}// ------ end while -------

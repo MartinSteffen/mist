@@ -14,26 +14,48 @@ public class SimulatorVariable{
     /** Instanzfeld fuer Namen der Variable, muss identisch zu entsprechenden 
      * Variablennamen aus abstrakter Syntax sein.
      */
-    protected String name;
-
-    /** Instanzfeld zur Aufnahme des Variablenwertes
-     */
-    protected Object wert;
+    private String name;
 
     /** Instanzfeld für Referenz auf Variable aus zu simulierendem 
      * Prozess.
      */
-    protected Variable progVariable;
+    private Variable progVariable;
 
-    /** Konstruktor fuer INITIALISIERUNG einer neuen Variablen
-     * @param _name Name der Variablen 
-     * @param _wert Wert der Variablen
-     * @param _variable Referenz auf Variable aus zu simulierenden Programm
+    /** Boolesches Instanzfeld , zeigt an, ob der Typ der Variablen feststeht.
      */
-    protected SimulatorVariable (String _name, Variable _variable, Object _wert) {
+    private boolean typeSet;
+
+    /** Boolesches Instanzfeld , für den Fall, daß die Variable vom Typ boolean ist. 
+     */
+    private boolean boolValue;
+
+    /** Integer Instanzfeld, für den Fall, daß die Variable vom Typ int ist. 
+     */
+    private int intValue;
+
+
+    /** Konstruktor fuer INITIALISIERUNG einer neuen Variablen mit INTEGERwert
+     * @param _name Name der Variablen 
+     * @param _wert zuzuweisender Integerwert 
+     * @param _variable Referenz auf Variable aus zu simulierendem Program
+     */
+    protected SimulatorVariable (String _name, Variable _variable, int _wert) {
        this.name = _name;
-       this.wert = _wert;
        this.progVariable = _variable;
+       this.typeSet = true;
+       this.intValue = _wert;
+    }
+
+    /** Konstruktor fuer INITIALISIERUNG einer neuen Variablen mit BOOLESCHEM Wert
+     * @param _name Name der Variablen 
+     * @param _wert zuzuweisender Integerwert 
+     * @param _variable Referenz auf Variable aus zu simulierendem Program
+     */
+    protected SimulatorVariable (String _name, Variable _variable, boolean _wert) {
+       this.name = _name;
+       this.progVariable = _variable;
+       this.typeSet = true;
+       this.boolValue = _wert;
     }
 
     /** Konstruktor fuer DEKLARATION einer Variablen 
@@ -43,16 +65,23 @@ public class SimulatorVariable{
     protected SimulatorVariable (String _name, Variable _variable) {
        this.name = _name;
        this.progVariable = _variable;
-       this.wert = null;
+       this.typeSet = false;
     }
 
-    /** Methode zum ZUWEISEN eines Wertes an eine existierende Variable
-     * @param _wert zuzuweisender Wert
-     * Es findet keine Typüberprüfung statt -> Aufgabe Gruppe Checker
+    /** Methode zum ZUWEISEN eines Integer-Wertes an eine existierende Variable
+     * @param _wert zuzuweisender Integer-Wert
      */
-    protected void setVariable (Object _wert) {
-	this.wert = _wert;
+    protected void setVariable (int _wert) {
+	this.intValue = _wert;	
+        this.typeSet = true;
     }
  
+    /** Methode zum ZUWEISEN eines booleschen Wertes an eine existierende Variable
+     * @param _wert zuzuweisender Integer-Wert
+     */
+    protected void setVariable (boolean _wert) {
+	this.boolValue = _wert;
+        this.typeSet = true;
+    }
 
 }

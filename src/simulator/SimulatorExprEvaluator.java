@@ -46,7 +46,6 @@ public class SimulatorExprEvaluator {
 	expr = _expr;
 	isAnInt = true;
 	boolVal = false;
-	intVal = 0;
     }
 
     /** Methode zur Auswertung einer booleschen Expression
@@ -66,6 +65,19 @@ public class SimulatorExprEvaluator {
 	return isAnInt;
     }
 
+    /** Methode, die den Integerwert des evaluierten Ausdrucks zurückgibt 
+     * @return berechneter Integerwert
+     */
+    protected int getIntVal() {
+	return intVal;
+    }
+
+    /** Methode, die den booleschen Wert des evaluierten Ausdrucks zurückgibt 
+     * @return berechneter boolescher Wert
+     */
+    protected boolean getBoolVal() {
+	return boolVal;
+    }
 
 }
 
