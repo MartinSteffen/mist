@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.14 2000-07-10 17:55:14 unix01 Exp $
+# $Id: Todo,v 1.15 2000-07-20 11:43:26 unix01 Exp $
 #######################################################
 
       
@@ -29,18 +29,18 @@ modcheck:
 parser:    
 
 	- Parsen eines Strings in eine Expression
-	  status: bislang keine Stellungnahme von parsergruppe,
-	          Schnittstelle noch nicht festgelegt.
 	
 
 checks1:    
 
-	- Kompilationsfehler!
+	- Was wird da eigentlich so gecheckt
+	-
+	
 
 checks2:  
 
-	- R"uckmeldung der Teilnehmer?
-          status: keine R"uckmeldung
+	- Die machen nicht also nicht mit.
+	- status: keine R"uckmeldung
 
 position1:
 
