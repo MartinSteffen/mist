@@ -10,20 +10,22 @@ import absynt.*;
 
 public class MCheckException extends Exception {
     private Astate[] errorStates;
-
+	private String msg;
     /**
      * Konstruktor MCheckException
      * @param Fehlermeldung, Liste mit Fehler-Zustaenden.
      */
     public MCheckException (String _msg, Astate[] _errorStates) {
-	super(_msg);
+	msg=_msg;
+
+errorStates= _errorStates;
     }
 
     /**
      * Methode zur Rueckgabe der Fehlermeldung, ueberschreibt java.Exception
      * @return Fehlermeldung
      */
-    public String getMessage() { return "Fehler im Modcheck aufgetreten!";
+    public String getMessage() { return msg;
     } 
 
     /**

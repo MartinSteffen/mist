@@ -1,15 +1,14 @@
 /**
  * LabelHandler-Klasse zur Verwaltung von Labeltests/-aktionen.
- * @author Frank Neumann, Aneta Kuemper, Eike Schulz
- * @version 1.0
+ *
+ * @author Initially provided by Frank Neumann, Aneta Kuemper, Eike Schulz
+ * @version $Id: LabelHandler.java,v 1.2 2000-07-17 13:01:25 unix01 Exp $
  */
-
 package modcheck;
 
 import absynt.*;
 
 public class LabelHandler {
-
 
   // ----------------------------- public Methoden ----------------------------
 
@@ -56,7 +55,7 @@ public class LabelHandler {
 
   // ----------------------------- private Methoden ---------------------------
 
-  //                    >>> Hilfsmethoden fuer "checkExpr" <<<
+  // ---------------------- Hilfsmethoden fuer "checkExpr" --------------------
 
 
   // Werte uebergebenen Ausdruck (rekursiv mit evtl. Unterausdruecken) aus.
@@ -89,7 +88,7 @@ public class LabelHandler {
       while (!vL.head.var.name.equals( ((Variable)_e).name ))
 	vL = vL.next;
 
-      // Lies nun Variablenwert aus Liste (bzw. aus Expr-Object "Constval").
+      // Lies nun Variablenwert aus Liste (bzw. aus Expr-Objekt "Constval").
 
       ret_b = extractExpr(vL.head.val, _vL);
 
@@ -117,11 +116,11 @@ public class LabelHandler {
 
 	  // _e binaere Verknuepfung ?
 
-	  if (_e instanceof B_expr)
+	  if (_e instanceof B_expr) {
 
 	    // Pruefe, ob es sich bei den Operatoren des Ausdrucks um boolesche
 	    // Verknuepfungen (AND, OR) oder Vergleichsoperationen ( "=", "<",
-	    // ">", "<=", ">=" ) handelt.
+	    // ">", "<=", ">=" [, "!="] ) handelt.
 
 	    // Boolesche Verknuepfungen
 
@@ -174,7 +173,14 @@ public class LabelHandler {
 			    ret_b =
 			      extractTerm( ((B_expr)_e).left_expr, _vL ) >=
 			      extractTerm( ((B_expr)_e).right_expr, _vL );
+		  /*
+			  else
 
+			    if ( ((B_expr)_e).op == Expr.NEQ )
+			      ret_b =
+				extractTerm( ((B_expr)_e).left_expr, _vL ) !=
+				extractTerm( ((B_expr)_e).right_expr, _vL );
+				*/
 		} catch (NumberFormatException _nfe) {
 
 		  // Fehler in Termauswertung aufgetreten.
@@ -184,6 +190,8 @@ public class LabelHandler {
 		} // catch
 
 	      } // else
+
+	  } // if (_e instanceof B_expr)
 
     return ret_b;
 
@@ -210,7 +218,6 @@ public class LabelHandler {
 
     int ret_i = 0;
 
-
     // Pruefe, um was fuer ein Expr-Objekt es sich bei _e handelt.
 
     // _e Variable ?
@@ -223,9 +230,7 @@ public class LabelHandler {
       while (!vL.head.var.name.equals( ((Variable)_e).name ))
 	vL = vL.next;
 
-      // Lies nun Variablenwert aus Liste (bzw. aus Expr-Object "Constval").
-
-      ret_i = extractTerm(vL.head.val, _vL);
+      ret_i = extractTerm( vL.head.val, _vL );
 
     } else
 
@@ -234,13 +239,14 @@ public class LabelHandler {
       if (_e instanceof Constval) {
 
 	Integer integer = (Integer)(((Constval)_e).val);
+System.out.println(integer.intValue());
 	ret_i = integer.intValue();
 
       } else
 
 	// _e unaere Verknuepfung ?
 
-	if (_e instanceof U_expr)
+	if (_e instanceof U_expr) {
 
 	  // Als unaere Operatoren kommen bei Termen nur "+" und "-" in Frage.
 
@@ -251,50 +257,56 @@ public class LabelHandler {
 	    if ( ((U_expr)_e).op == Expr.MINUS )
 	      ret_i = -(extractTerm( ((U_expr)_e).sub_expr, _vL ));
 
-	    else
+	} else
 
-	      // _e binaere Verknuepfung ?
+	  // _e binaere Verknuepfung ?
 
-	      if (_e instanceof B_expr)
+	  if (_e instanceof B_expr) {
 
-		// Pruefe, um was fuer eine arithmetische Verknuepfung ( "+",
-		// "-", "*", "/" ) es sich handelt.
+	    // Pruefe, um was fuer eine arithmetische Verknuepfung ( "+",
+	    // "-", "*", "/" ) es sich handelt.
 
-		if ( ((B_expr)_e).op == Expr.PLUS )
+	    if ( ((B_expr)_e).op == Expr.PLUS )
+{	      ret_i =
+		extractTerm( ((B_expr)_e).left_expr, _vL ) +
+		extractTerm( ((B_expr)_e).right_expr, _vL );
+System.out.println("PLUS");	  
+System.out.println(ret_i);	  
+}
+  else
+
+	      if ( ((B_expr)_e).op == Expr.MINUS )
+		ret_i =
+		  extractTerm( ((B_expr)_e).left_expr, _vL ) -
+		  extractTerm( ((B_expr)_e).right_expr, _vL );
+    else
+
+		if ( ((B_expr)_e).op == Expr.TIMES )
 		  ret_i =
-		    extractTerm( ((B_expr)_e).left_expr, _vL ) +
+		    extractTerm( ((B_expr)_e).left_expr, _vL ) *
 		    extractTerm( ((B_expr)_e).right_expr, _vL );
 		else
 
-		  if ( ((B_expr)_e).op == Expr.MINUS )
-		    ret_i =
-		      extractTerm( ((B_expr)_e).left_expr, _vL ) -
-		      extractTerm( ((B_expr)_e).right_expr, _vL );
-		  else
+		  if ( ((B_expr)_e).op == Expr.DIV ) {
 
-		    if ( ((B_expr)_e).op == Expr.TIMES )
+		    // Teilerausdruck != 0 ? Falls nicht, wirf Exception.
+
+		    if ( extractTerm( ((B_expr)_e).right_expr, _vL ) != 0 )
 		      ret_i =
-			extractTerm( ((B_expr)_e).left_expr, _vL ) *
+			extractTerm( ((B_expr)_e).left_expr, _vL ) /
 			extractTerm( ((B_expr)_e).right_expr, _vL );
 		    else
+		      throw new NumberFormatException("division by zero");
+		  }
 
-		      if ( ((B_expr)_e).op == Expr.DIV )
-
-			// Teilerausdruck != 0 ? Falls nicht, wirf Exception.
-
-			if ( extractTerm( ((B_expr)_e).right_expr, _vL ) != 0 )
-			  ret_i =
-			    extractTerm( ((B_expr)_e).left_expr, _vL ) /
-			    extractTerm( ((B_expr)_e).right_expr, _vL );
-			else
-			  throw new NumberFormatException("division by zero");
+	  } // if (_e instanceof B_expr)
 
     return ret_i;
 
   } // method extractTerm
 
 
-  //                >>> Hilfsmethoden fuer "accomplishAction" <<<
+  // ------------------- Hilfsmethoden fuer "accomplishAction" ----------------
 
 
   // Fuehre Wertzuordnung durch.
@@ -319,23 +331,28 @@ public class LabelHandler {
     // Finde Variableneintrag in uebergebener Vardec-Liste.
 
     VardecList vL = new_vL;
-    //    System.out.println("aktuelle Vardec-Liste:");//--- Testzeile
-    //    vL.print();//--- Testzeile
-    //    System.out.println ("Vardec gesucht: " + _aa.var.name);//--- Testzeile
+
     while (!vL.head.var.name.equals( _aa.var.name ))
       vL = vL.next;
 
     // Lies nun Constval-Objekt zur Variable aus Liste.
 
     Constval cv = (Constval)(vL.head.val);
-    if (cv == null) System.out.println("null !");
 
     // Pruefe, ob es sich bei cv um eine Boolean- oder Integer-Konstante
     // handelt und werte entsprechend neuen Ausdruck/Term aus.
 
-    cv.val = (cv.val instanceof Boolean) ?
+    // >>> HIER WAR DER FEHLER (vorherige Zeile) :
+    //    cv.val = (cv.val instanceof Boolean) ? ...
+
+ /**   vL.head.val = (cv.val instanceof Boolean) ?
       new Constval( extractExpr(_aa.val, _vL) ):
       new Constval( extractTerm(_aa.val, _vL) );
+*/
+if (cv.val instanceof Boolean) vL.head.val=new Constval( extractExpr(_aa.val, _vL) );
+else 
+ vL.head.val=new Constval( extractTerm(_aa.val, _vL) );
+
 
     return new_vL;
 
