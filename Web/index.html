@@ -94,14 +94,53 @@ Wer einen solchen Schlüssel nicht hat, muß ihn sich generieren, und zwar mittels
 </blockquote>
 
 
+Für das das korrekte funktionnieren braucht man noch folgendes (bash-Syntax): 
+
+<listing>
+
+export CVSROOT=unix01@gimli.ap.informatik.uni-kiel.de:/home/unix01/cvsroot 
+export CVS_RSH=ssh
+export CVSEDITOR=emacsclient
+
+export CLASSPATH=/home/[workingdirectory]/Mist/src:
+
+</listing>
+
+
+Die ersten drei Zeilen sind zum korrekten Steuern von cvs gedacht. (man
+kann cvs auch anders steuern, z.b. über <tt>.cvsrc</tt>, bei Bedarf bitte
+selbst im Manual nachschlagen). Anstelle <tt>emacsclient</tt> kann man auch
+<tt>emacs</tt> oder den editor seiner Wahl nehmen.
+
+
+
+Die letzte Zeile hat mit ssh/cvs nichts zu tun, sondern hat mit dem
+Java-projekt selbst zu tun. ist nur für das Javaprojekt zu tun.
+
+<p>
+
+<b>Beispiel:</b> Im Beispiel findet alles im Verzeichnis <tt>~/Projekt</tt>
+statt will. (d.h. <tt>[workingdirectory]</tt> = <tt>~/Projekt</tt>). So
+startet man.
+
+<listing>
+cd ~
+mkdir Projekt
+cd Projekt
+cvs checkout Mist/src
+</listing>
+
+
+
+
 <h3> Arbeitsgruppen </h3>
 
 
 <ol>
-  <li> <b>GUI/Integration</b>:     Helge Kraas/ Schümann (unix22)
-  <li> <b>Editor</b>: Finn Jacobs/ Alexander Eckloff (unix18)
+  <li> <b>GUI/Integration</b>:     Helge Kraas/ Schümann (unix22) 
+  <li> <b>Editor</b>: Finn Jacobs/ Alexander Eckloff (unix18)   (ssh)
   <li> <b>Simulator</b>: Michael Goemann/Michael Nimser (unix23)
-  <li> <b>Model-checker</b>: Frank Neumann/Aneta Kümper/Eike Schulz
+  <li> <b>Model-checker</b>: Frank Neumann/Aneta Kümper/Eike Schulz (unix19, ssh)
   <li> <b>Parser</b>: Andreas Scott/Alexander Hegegner
   <li> <b>Graphplazierung:</b>
       <ul>
@@ -154,7 +193,7 @@ Martin Steffen</a>
 </address>
 <!-- hhmts start -->
 <font size=1>
-Last modified: Wed May 31 14:01:19 MET DST 2000
+Last modified: Fri Jun  2 15:11:50 MET DST 2000
 </font>
 <!-- hhmts end -->
 </body> </html>
