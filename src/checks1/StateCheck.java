@@ -10,9 +10,9 @@
 package checks1;
 import absynt.*;
 
-public class stateCheck {
+public class StateCheck {
 static checkWindow anzeige=new checkWindow("State-Check\n");
-  public stateCheck() {
+  public StateCheck() {
   anzeige.setLocation(500,0);
   anzeige.show();
   }
