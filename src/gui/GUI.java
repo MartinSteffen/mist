@@ -20,6 +20,7 @@ public class GUI extends javax.swing.JFrame {
     Session actualsession = null;
     editor.Editor actualeditor = null;
     gui.SimUI mySimUI = null;
+    modcheck.Modelchecker modelchecker = null;
     
     /** Creates new form GUI */
     public GUI() {
@@ -183,7 +184,7 @@ public class GUI extends javax.swing.JFrame {
 	toolsMenu.add (simulatorMenuItem);
     
 	toolsMenu.add (jSeparator6);
-	
+	modelcheckerMenuItem.setText("ModelChecker");
 	modelcheckerMenuItem.addActionListener (new java.awt.event.ActionListener () {
 		public void actionPerformed (java.awt.event.ActionEvent evt) {
 		    modelcheckerMenuItemActionPerformed (evt);
@@ -312,8 +313,16 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void modelcheckerMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	
-	
+	if (actualsession == null)
+	    return;
+	if (modelchecker == null)
+	    modelchecker = new modcheck.Modelchecker();
+	try {
+	    modelchecker.start_modcheck(actualsession.workProgram);
+	} catch(modcheck.MCheckException me) {
+	    System.out.println(me.getMessage());
+	}
+	System.out.println("ModelChecker durchgelaufen");
     }
 
     private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
