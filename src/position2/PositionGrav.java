@@ -32,7 +32,7 @@ public class PositionGrav implements Positionierung {
       generation++;
       population.shrink();
       population.expand();
-//      System.out.println(population.getBestIndividual());
+      System.out.println(population.getBestIndividual());
     }
 
     population.getBestIndividual().apply();
@@ -244,6 +244,7 @@ public class PositionGrav implements Positionierung {
      */
     private float fitnessCache;
 
+    int crossings=0;
     /**
      * wie elementAt, aber für indivAstate angepasst.
      *
@@ -293,67 +294,115 @@ public class PositionGrav implements Positionierung {
 
 
 
-    protected boolean doIntersectProper(Position a, Position b, Position c, Position d)
-    {
-        // Test whether lines intersect properly (i.e. lines cross completely).
-        // (from 'Computational Geometry in C', J. O'Rourke, ode 1.6)
-        if ((isColinear(a,b,c))||(isColinear(a,b,d))||(isColinear(c,d,a))||(isColinear(c,d,b)))
-            return false;
-        else
-            return (isLeft(a,b,c)^isLeft(a,b,d)) && (isLeft(c,d,a)^isLeft(c,d,b));
-    }
 
-    protected boolean isLeft(Position p1, Position p2, Position p3)
-    {
-        if (AreaTriangle2(p1,p2,p3)>0)
-            return true;
-        else
-            return false;
-    }
-
-    protected boolean doIntersectHalf(Position a, Position b, Position c, Position d)
-    {
-        // Test whether lines intersect properly or improperly (
-        // i.e. lines cross completely or just touch at one point).
-        // (from 'Computational Geometry in C', J. O'Rourke, ode 1.6)
-        if (    isBetween(a,b,c)
-                  || isBetween(a,b,d)
-                  || isBetween(c,d,a)
-                  || isBetween(c,d,b)
-                )
-                return true;
-        else    return false;
+    boolean SAME_SIGNS ( float a, float b ) {
+     return ( ( java.lang.Math.abs(a)>=0 && java.lang.Math.abs(b)>=0 ) || ( java.lang.Math.abs(a)<0 && java.lang.Math.abs(b)<0 ) );
     }
 
 
-    protected boolean isBetween(Position a, Position b, Position c)
-    {
-        if (isColinear(a,b,c)==false)
-            return false;
-        // If line a-b not vertical check betweenness on x else on y
-        if (a.x != b.x)
-            return ((a.x<=c.x)&&(c.x<=b.x)) || ((a.x>=c.x)&&(c.x>=b.x));
-        else
-            return ((a.y<=c.y)&&(c.y<=b.y)) || ((a.y>=c.y)&&(c.y>=b.y));
+  public boolean intersect(Position line1EndPosition1, Position line1EndPosition2, Position line2EndPosition1, Position line2EndPosition2 ) {
+    Position p=intersectPos(  line1EndPosition1, line1EndPosition2, line2EndPosition1, line2EndPosition2 );
+
+    return (
+      p != null &&
+      !( p.equalsn(line1EndPosition1) || p.equalsn(line1EndPosition2) || p.equalsn(line2EndPosition2) || p.equalsn(line2EndPosition1) )
+    );
+  }
+
+  /**
+   Use this method to tell if two lines (with defined endpoints) intersect.
+   Specifically, if the two lines intersect, the method will return the point
+   of intersection.  Else it will return null (for no existing intersection point).<P>
+
+   Faster Line Segment Intersection by Franklin Antonio
+
+   * @param line1 is a LineSegment object
+   * @param line2 is a LineSegment object
+   * @return the point where line1 & line2 intersect, or null if they do not intersect
+  */
+
+  public Position intersectPos( Position line1EndPosition1, Position line1EndPosition2, Position line2EndPosition1, Position line2EndPosition2 ){
+    /* Start local variables */
+
+    float Ax,Bx,Cx,Ay,By,Cy,d,e,f,num,offset;
+    float x1lo,x1hi,y1lo,y1hi;
+    float x,y; // intersection components
+
+    /* End local variables */
+    Ax = line1EndPosition2.x-line1EndPosition1.x;
+    Bx = line2EndPosition1.x-line2EndPosition2.x;
+
+    if ( Ax<0 ) {                /* X bound box test*/
+         x1lo=(short)line1EndPosition2.x;
+         x1hi=(short)line1EndPosition1.x;
+    } else {
+        x1hi=(short)line1EndPosition2.x; x1lo=(short)line1EndPosition1.x;
     }
 
-
-    protected float AreaTriangle2(Position a, Position b, Position c)
-    {
-        // returns twice the signed area of the triangle,m positive is ccw from a to b to c
-        return  a.x*b.y-a.y*b.x +
-                a.y*c.x-a.x*c.y +
-                b.x*c.y-c.x*b.y;
+    if ( Bx>0 ) {
+        if( x1hi < (short)line2EndPosition2.x || (short)line2EndPosition1.x < x1lo )
+            return null;
+    } else {
+        if ( x1hi < (short)line2EndPosition1.x || (short)line2EndPosition2.x < x1lo )
+            return null;
     }
 
+    Ay = line1EndPosition2.y-line1EndPosition1.y;
+    By = line2EndPosition1.y-line2EndPosition2.y;
 
-    protected boolean isColinear(Position p1, Position p2, Position p3)
-    {
-        if (AreaTriangle2(p1,p2,p3)==0)
-            return true;
-        else
-            return false;
+    if ( Ay<0 ) {                /* Y bound box test*/
+        y1lo=(short)line1EndPosition2.y;
+        y1hi=(short)line1EndPosition1.y;
+    } else {
+        y1hi=(short)line1EndPosition2.y;
+        y1lo=(short)line1EndPosition1.y;
     }
+    if ( By>0 ) {
+        if ( y1hi < (short)line2EndPosition2.y || (short)line2EndPosition1.y < y1lo )
+            return null;
+    } else {
+        if ( y1hi < (short)line2EndPosition1.y || (short)line2EndPosition2.y < y1lo )
+            return null;
+    }
+
+    Cx = line1EndPosition1.x-line2EndPosition1.x;
+    Cy = line1EndPosition1.y-line2EndPosition1.y;
+    d = By*Cx - Bx*Cy;              /* alpha numerator*/
+    f = Ay*Bx - Ax*By;              /* both denominator*/
+    if ( f>0 ) {                 /* alpha tests*/
+        if ( d<0 || d>f )
+            return null;
+    } else {
+        if ( d>0 || d<f )
+            return null;
+    }
+
+    e = Ax*Cy - Ay*Cx;              /* beta numerator*/
+    if ( f>0 ) {                 /* beta tests*/
+        if ( e<0 || e>f )
+            return null;
+    } else {
+        if ( e>0 || e<f )
+            return null;
+    }
+
+    /* compute intersection coordinates */
+
+    if ( f==0 ) // THEN THE LINES ARE COLLINEAR
+        return null;
+
+
+    num = d*Ax;                  /* numerator */
+    offset = SAME_SIGNS(num,f) ? f/2 : -f/2;    /* round direction*/
+    x = (int)(line1EndPosition1.x + (num+offset) / f);            /* intersection x */
+
+    num = d*Ay;
+    offset = SAME_SIGNS(num,f) ? f/2 : -f/2;
+    y = (int)(line1EndPosition1.y + (num+offset) / f);            /* intersection y */
+
+    return new Position(x,y);
+
+}
 
 
     /**
@@ -363,6 +412,7 @@ public class PositionGrav implements Positionierung {
      */
     private float fitness() {
       float fitness=0;
+      crossings=0;
 
       float penaltyLineCrossing=50;
 
@@ -381,7 +431,7 @@ public class PositionGrav implements Positionierung {
           if (tl.head.source != tl.head.target ) {
             Position q1=findAstate(tl.head.source).pos;
             Position q2=findAstate(tl.head.target).pos;
-            if ( doIntersectProper(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; }
+            if ( intersect(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; crossings++; }
             t2=(TransitionList)t2.nextElement();
           }
         }
@@ -389,7 +439,7 @@ public class PositionGrav implements Positionierung {
           if (tl.head.source != tl.head.target ) {
             Position q1=findAstate(tl.head.source).pos;
             Position q2=findAstate(tl.head.target).pos;
-            if ( doIntersectProper(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing;}
+            if ( intersect(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing;crossings++;}
           }
         }
       }
@@ -404,15 +454,13 @@ public class PositionGrav implements Positionierung {
         while ( t2.hasMoreElements() ) {
           Position q1=findAstate(tl.head.source).pos;
           Position q2=findAstate(tl.head.target).pos;
-          if ( doIntersectProper(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; }
-          if ( doIntersectHalf(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; }
+          if ( intersect(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing;crossings++; }
           t2=(TransitionList)t2.nextElement();
         }
         {
           Position q1=findAstate(tl.head.source).pos;
           Position q2=findAstate(tl.head.target).pos;
-          if ( doIntersectProper(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; }
-          if ( doIntersectHalf(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; }
+          if ( intersect(p1,p2,q1,q2) ) { fitness+=penaltyLineCrossing; crossings++;}
         }
       }
 
@@ -516,7 +564,7 @@ public class PositionGrav implements Positionierung {
         if ( i>0 ) { n+=", "; }
         n+=indivAstateAt(i).toString();
       }
-      n+=" ]";
+      n+=" Crossings: "+crossings+"]";
       return(n);
     }
 
