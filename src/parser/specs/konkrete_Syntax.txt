@@ -1,5 +1,8 @@
-$Id: konkrete_Syntax.txt,v 1.6 2000-07-13 20:21:00 unix01 Exp $
+$Id: konkrete_Syntax.txt,v 1.7 2000-07-14 10:09:56 unix01 Exp $
 $Log: not supported by cvs2svn $
+Revision 1.6  2000/07/13 20:21:00  unix01
+weiter mit den Statements
+
 Revision 1.5  2000/07/12 20:47:21  unix01
 parsen der Statements (debugged) (Alexander)
 
@@ -18,9 +21,9 @@ keine Aenderung der Syntax, nur testen des CVS-logging
 Program     ::= "program" Id "{" DecList "}" 
 
 DecList	    ::= Process DecList 
-	    |	ChanDec DecList
-	    |	Process 
-	    |	ChanDec
+			|	ChanDec DecList
+			|	Process 
+			|	ChanDec
 
 ChanDec	    ::= "channel" Type Id ";"
 

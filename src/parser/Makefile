@@ -2,7 +2,7 @@
 #	Parser for Mist
 #	------------------------------------
 #
-#	$Id: Makefile,v 1.4 2000-07-14 06:16:58 unix01 Exp $
+#	$Id: Makefile,v 1.5 2000-07-14 10:09:55 unix01 Exp $
 #
 #----------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ testsuite:	LineParser.java	FileParser.java
 clean:
 	\rm -f *.class *~ Scanner.java $(LEXLOGFILE)
 
-localdoc:	Scanner.java
+localdoc:	Scanner.class
 	javadoc  -version -author -d $(LOCALDOCDIR) *.java
 
 www:
@@ -44,6 +44,11 @@ www:
 
 # -----------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.4  2000/07/14 06:16:58  unix01
+#	Abhaengigkeiten abgestimmt
+#	Target testsuite erstellt (zur Uebersetzung von LineParser, FileParser)
+#	[Scott]
+#	
 #	Revision 1.3  2000/07/11 11:31:36  unix01
 #	Umbenennung von Parser.lex in Scanner.lex - einfacher fuer die anderen
 #	Gruppen

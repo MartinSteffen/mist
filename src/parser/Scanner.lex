@@ -6,11 +6,15 @@ import java.io.IOException;
  * Klasse Scanner - automatisch generiert von JLex aus Scanner.lex
  *
  * @author Andreas Scott &amp; Alexander Hegener 
- * @version $Id: Scanner.lex,v 1.5 2000-07-14 06:00:50 unix01 Exp $
+ * @version $Id: Scanner.lex,v 1.6 2000-07-14 10:09:55 unix01 Exp $
  * @see <a href="../../Scanner.lex">Scanner.lex</a>
  *
  * <!-- Log ==========
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2000/07/14 06:00:50  unix01
+ * Expressions werden jetzt vollstaendig geparsed, beruecksichtigen keine
+ * Prioritaeten!! [Scott]
+ *
  * Revision 1.4  2000/07/13 20:20:59  unix01
  * weiter mit den Statements
  *
@@ -49,6 +53,7 @@ import java.io.IOException;
   Token token;
   boolean debug = true;
   int states = 0;
+  String indent  = "  ";
 
   /**
    * zaehlt die Zeilen
@@ -68,7 +73,37 @@ import java.io.IOException;
 	  throw new ParseException("Zeile "+yyline()+": "+message);
   }
   
-  
+  private boolean check (int expected_type) throws ParseException{
+	  if (token.type != expected_type){
+		  switch (expected_type)
+			  {
+			  case Token.NAME   : lexerror ("Identifikator erwartet"); break;
+			  case Token.NUMBER : lexerror ("Integer erwartet");       break;
+			  case Token.LBRACE : lexerror ("'{' erwartet");           break;
+			  case Token.RBRACE : lexerror ("'}' erwartet");           break;
+			  case Token.LPAREN : lexerror ("'(' erwartet");           break;
+			  case Token.PROGRAM: lexerror ("'program' erwartet");     break;
+			  case Token.PROCESS: lexerror ("'process' erwartet");     break;
+			  case Token.CHANNEL: lexerror ("'channel' erwartet");     break;
+			  case Token.WHILE  : lexerror ("'while' erwartet");       break;
+			  case Token.IF     : lexerror ("'if' erwartet");          break;
+			  case Token.ELSE   : lexerror ("'else' erwartet");        break;
+			  case Token.ASSERT : lexerror ("'assert' erwartet");      break;
+			  case Token.SEMICOL: lexerror ("';' erwartet");           break;
+			  case Token.ASSIGN : lexerror ("'=' erwartet");           break;
+			  case Token.OP     : lexerror ("Operator erwartet");      break;
+			  case Token.PUT    : lexerror ("'put' erwartet");         break;
+			  case Token.GET    : lexerror ("'get' erwartet");         break;
+			  case Token.COMMA  : lexerror ("',' erwartet");           break;
+			  case Token.TYPE   : lexerror ("Typ erwartet");           break;
+			  default: lexerror ("Parserfehler: ");
+			  }
+		  return false;
+	  } else {
+		  return true;
+	  }
+  }
+
   /**
    * Methode um ein Objekt der Klasse absynt.Program zu erzeugen
    * @returns absynt.Program - den abstrakten Syntax-Baum ;-)
@@ -82,54 +117,48 @@ import java.io.IOException;
       String progname = null;
 
       /* aktueller Token-Typ: Token.PROGRAM */
-      if (token.type != Token.PROGRAM)
-	  lexerror("Parserfehler");
-
+	  check (Token.PROGRAM);
 
       /* naechstes Token: NAME erwartet */
       token = nextToken();
-      if (token.type != Token.NAME)
-	  lexerror ("Identifikator (Programmname) erwartet.");
-      //    progname = token.textValue;  // setze Namen des Programms      
-
+	  check (Token.NAME);
+	  progname = token.textValue;  // setze Namen des Programms      
+	  
       if (debug)
-	  System.out.println ("Programm "+token.textValue);
+		  System.out.println ("Programm \""+token.textValue+"\"");
 
       /* naechstes Token: { erwartet */
       token = nextToken();
-      if (token.type != Token.LBRACE)
-	  lexerror ("'{' erwartet.");
+	  check(Token.RBRACE);
 
       /* naechstes Token: 'process' oder 'channel' erwartet */
       token = nextToken();
       while ((token.type == Token.CHANNEL) || (token.type == Token.PROCESS)){
-	  if (token.type == Token.CHANNEL){
-	      channels =  new absynt.ChandecList(
-				new absynt.Chandec(buildChannel()), channels);
-	  } else if (token.type == Token.PROCESS) {
-	      buildProcess();
+		  if (token.type == Token.CHANNEL){
+			  channels =  new absynt.ChandecList
+				  (new absynt.Chandec(buildChannel()), channels);
+		  } else if (token.type == Token.PROCESS) {
+			  processes = new absynt.ProcessList(buildProcess(), processes);
+		  } else 
+			  lexerror ("'channel' oder 'process' erwartet");
 
-	  } else 
-	      lexerror ("'channel' oder 'process' erwartet.");
-
-	  /* aktueller Token: ';' oder '}' */
-
-	  /* naechster Token */
-	  token = nextToken();
+		  /* aktueller Token: ';' oder '}' */
+		  
+		  /* naechster Token */
+		  token = nextToken();
       }
       
-      if (token.type != Token.RBRACE)
-	  lexerror("'}' erwartet.");
+	  check(Token.RBRACE);
 
       /* Programm erzeugen */
       program = new absynt.Program(channels, processes);
       program.name = progname;
 
       if(debug)
-	  System.out.println("Ende Programm.");
+		  System.out.println("Ende Programm.");
       
       return program;
-  }/* Ende buildProgram() */
+  } /* Ende buildProgram() */
   
 
 
@@ -142,43 +171,41 @@ import java.io.IOException;
   private absynt.Channel buildChannel() throws IOException, ParseException{
       absynt.Channel channel;
       absynt.M_AtomType channeltype;
-
+	  
       /* aktueller Token-Typ: Token.CHANNEL */
       if (token.type != Token.CHANNEL)
-	  lexerror("Parserfehler");
-
-
+		  lexerror("Parserfehler");
 
       /* naechstes Token: TYPE erwartet */
       token = nextToken();
       if (token.type != Token.TYPE)
-	lexerror("Typ (Channeltyp) erwartet");
+		  lexerror("Typ (Channeltyp) erwartet");
 
       if (token.intValue == Token.BOOL)
-  	  channeltype = new absynt.M_Bool();
-        else
-  	  channeltype = new absynt.M_Int();
-
+		  channeltype = new absynt.M_Bool();
+	  else
+		  channeltype = new absynt.M_Int();
+	  
       /* naechstes Token: NAME erwartet */
       token = nextToken();
       if (token.type != Token.NAME)
-	  lexerror("Identifikator (Channelname) erwartet");
+		  lexerror("Identifikator (Channelname) erwartet");
       channel = new absynt.Channel(token.textValue, channeltype);
 
       /* naechstes Token: SEMICOL erwartet */
       token = nextToken();
       if (token.type != Token.SEMICOL)
-	  lexerror("';' erwartet");
+		  lexerror("';' erwartet");
 
-//        if (debug)
-//  	  System.outprintln("channel: "+channel.m_type+" "+channel.name);
+	  if (debug)
+		  System.out.println("channel: "+channel.type+" "+channel.name);
       return channel;
   }
   
 
 
-  protected void buildProcess() throws IOException, ParseException{
-      //      absynt.Process process = null;
+  protected absynt.Process buildProcess() throws IOException, ParseException{
+	absynt.Process process = null;
       //      absynt.VardecList vardecs = null;
       //      absynt.TransitionList transitions = null;
       //      absynt.AstateList astates = null;
@@ -191,7 +218,7 @@ import java.io.IOException;
 	      lexerror("Identifikator (Prozessname) erwartet");
 
 	  if(debug)
-	      System.out.println("  process "+token.textValue);
+	      System.out.println(indent+"\nProzess "+token.textValue);
 
 	  token = nextToken();
 
@@ -199,128 +226,138 @@ import java.io.IOException;
 	  if (token.type == Token.LBRACE){
 	      /* bis '}' ... */
 	      while (token.type != Token.RBRACE){
-		  token = nextToken();
-		  /* ...statements erwartet */
-		  buildStatement();
+			  token = nextToken();
+			  /* ...statements erwartet */
+			  buildStatement();
 	      }
 	  } else
 	      lexerror("'{'erwartet");
 	  
-	  if (token.type == Token.RBRACE){
-	      System.out.println("Ende Prozess");
-	  } else
+	  if (token.type != Token.RBRACE)
 	      lexerror("'}'erwartet");
 
+	  if (debug)
+		  System.out.println("Ende Prozess");
 
+	  return process;
   }/* ende buildProcess() */
   
-  protected void buildStatement() throws IOException, ParseException{
-    if (token.type == Token.LBRACE){
-      buildBlock();
-      if(debug)
-	System.out.println("Ende Block");
-    } 
 
-    if (debug)
-      System.out.print("["+states++ +"]");
+  /** bastelt die einzelnen Anweisung (+ Deklarationen und Assertions)
+   *
+   */
+  protected void buildStatement() throws IOException, ParseException{
+	  /* falls wir '{' gefunden haben, muessen wir einen Block parsen */
+	  if (token.type == Token.LBRACE){
+		  buildBlock();
+	  } 
+	  
+	  if (debug)
+		  System.out.print("["+states++ +"]");
     
-    switch (token.type){
-    case Token.TYPE:    buildVardec();         break;
-    case Token.NAME:    buildAssignment(); break;
-    case Token.WHILE:   buildWhileStatement(); break;
-    case Token.ASSERT:  buildAssertStatement(); break;
-    case Token.PUT:     buildPutStatement(); break; 
-    case Token.GET:     buildGetStatement(); break;
-    case Token.IF:      buildIfStatement();  break;
-    case Token.SEMICOL: buildTauStatement(); break;
-    }
-    
+	  switch (token.type)
+		  {
+		  case Token.TYPE   : buildVardec();          break;
+		  case Token.NAME   : buildAssignment();      break;
+		  case Token.WHILE  : buildWhileStatement();  break;
+		  case Token.ASSERT : buildAssertStatement(); break;
+		  case Token.PUT    : buildPutStatement();    break; 
+		  case Token.GET    : buildGetStatement();    break;
+		  case Token.IF     : buildIfStatement();     break;
+		  case Token.SEMICOL: buildTauStatement();    break;
+		  }
+	  
     /* erwartetes Token: SEMICOL oder RBRACE */ 
   }
   
+  /** bastelt eine Variablen-Deklaration zusammen
+   *
+   */
   protected absynt.Vardec buildVardec() throws IOException, ParseException{
-    absynt.M_AtomType vartype = null;
-    String            varname = null;
-    absynt.Expr       varvalue= null;
-    
-    if (debug)
-      System.out.print("     Deklaration: ");
+	  absynt.M_AtomType vartype = null;
+	  String            varname = null;
+	  absynt.Expr       varvalue= null;
+	  
+	  if (debug)
+		  System.out.print("     Deklaration: ");
 
-    /* akt. Token: TYPE */
-    if (token.intValue == Token.BOOL){
-      vartype = new absynt.M_Bool();
-      if (debug)
-	System.out.print("bool ");
+	  /* akt. Token: TYPE */
+	  if (token.intValue == Token.BOOL){
+		  vartype = new absynt.M_Bool();
+		  if (debug)
+			  System.out.print("bool ");
 
-    } else if (token.intValue == Token.INT){
-      vartype = new absynt.M_Int();
-      if (debug)
-	System.out.print("int ");
-    } else
-      lexerror("unbekannter Typ");
+	  } else if (token.intValue == Token.INT){
+		  vartype = new absynt.M_Int();
+		  if (debug)
+			  System.out.print("int ");
+	  } else
+		  lexerror("unbekannter Typ");
+	  
 
-
-     /* erwartetes Token: NAME */
-    token = nextToken();
-    if (token.type != Token.NAME)
-      lexerror("Name erwartet");
-    varname = token.textValue;
-
-    if (debug)
-      System.out.print(varname);
+	  /* erwartetes Token: NAME */
+	  token = nextToken();
+	  if (token.type != Token.NAME)
+		  lexerror("Name erwartet");
+	  varname = token.textValue;
+	  
+	  if (debug)
+		  System.out.print(varname);
 
     /* erwartetes Token: ASSIGN '=' */
-    token = nextToken();
-    if (token.type != Token.ASSIGN)
-      lexerror ("'=' erwartet.");	  
-
-    if (debug)
-      System.out.print("=");
-
-    /* erwartetes Token: Teil einer Expr, 
-     * also Konstante, Operator, '(' oder Id
-     */
-    token = nextToken();
-    buildExpression();      
-    //    varvalue = buildExpression();
-    
-    
-    /* erwartetes Token: SEMICOL oder '}'*/
-    
-    if (debug)
-      System.out.print("\n");
-
-    
-    states--;
-    return new Vardec (new Variable(varname), varvalue, vartype);
+	  token = nextToken();
+	  if (token.type != Token.ASSIGN)
+		  lexerror ("'=' erwartet.");	  
+	  
+	  if (debug)
+		  System.out.print("=");
+	  
+	  /* erwartetes Token: Teil einer Expr, 
+	   * also Konstante, Operator, '(' oder Id
+	   */
+	  token = nextToken();
+	  varvalue = buildExpression();
+	  
+	  
+	  /* erwartetes Token: SEMICOL oder '}'*/
+	  
+	  if (debug)
+		  System.out.print("\n");
+	  
+	  /*  Variablendeklarationen sind kein gesonderter Zustand */
+	  states--;
+	  
+	  return new Vardec (new Variable(varname), varvalue, vartype);
   }
 
 
 
-		       
+  /** leere Anweisung 
+   */
   protected void buildTauStatement() throws IOException, ParseException{
       token = nextToken();
   }
 
+  
   /**
    * geplanter Rückgabewert: Assign_Action
    */
   protected void buildAssignment() throws IOException, ParseException{
       String varname = null;
-
+	  
       /* aktueller Token-Typ: Token.NAME */
       if (token.type != Token.NAME)
-	  lexerror("Parserfehler");
+		  lexerror("Parserfehler");
 
       varname = token.textValue;
-
+	  
       /* erwartetes Token: ASSIGN '=' */
       token = nextToken();
       if (token.type != Token.ASSIGN)
-	  lexerror ("'=' erwartet.");	  
+		  lexerror ("'=' erwartet.");	  
       
       if(debug)
-	  System.out.print("    Zuweisung: "+varname+"=");
+		  System.out.print(indent+"Zuweisung: "+varname+"=");
 
 
       /* erwartetes Token: Teil einer Expr, 
@@ -331,7 +368,7 @@ import java.io.IOException;
       
       /* erwartetes Token: SEMICOL */
       if (debug)
-	System.out.println();
+		  System.out.println();
 
   }
   
@@ -530,7 +567,7 @@ import java.io.IOException;
 	  lexerror ("Parserfehler");
 
       if(debug)
-	  System.out.println("  block ");
+	  System.out.println("\nStart Block ");
 
       /* erwartetes Token: Statement */      
       while(token.type != Token.RBRACE){
@@ -543,11 +580,15 @@ import java.io.IOException;
 
       /* erwartetes Token: naechstes Statement oder Prozessende ('}' */
       token = nextToken();
+
+	  if(debug)
+		  System.out.println("Ende Block");
+
   }
 
   /**
    * zum parsen eines Ausdrucks
-   * @see parser.Parser.parse.Expression
+   * @see parser.Parser.parseExpression
    */
   protected absynt.Expr buildExpression() throws IOException, ParseException{
 	  absynt.Expr       left     = null;
@@ -679,52 +720,41 @@ name	= ({letter}({letter}|{digit})*)
 <YYINITIAL>
 {comment}           { }
 {space}             { }
-"program"           { return new Token(Token.PROGRAM)         ; }
-"channel"           { return new Token(Token.CHANNEL)         ; }
-"process"           { return new Token(Token.PROCESS)         ; }
-"while"             { return new Token(Token.WHILE)           ; }
-"bool"              { return new Token(Token.TYPE, Token.BOOL); }
-"int"               { return new Token(Token.TYPE, Token.INT) ; }
-"if"                { return new Token(Token.IF)              ; }
-"else"              { return new Token(Token.ELSE)            ; }
-"put"               { return new Token(Token.PUT)             ; }
-"get"               { return new Token(Token.GET)             ; }
-"assert"            { return new Token(Token.ASSERT)          ; }
-"true"              { return new Token(Token.TRUE)            ; }
-"false"             { return new Token(Token.FALSE)           ; }
-"="                 { return new Token(Token.ASSIGN)          ; }
-";"                 { return new Token(Token.SEMICOL)         ; }
-"("                 { return new Token(Token.LPAREN)          ; }
-")"                 { return new Token(Token.RPAREN)          ; }
-"{"                 { return new Token(Token.LBRACE)          ; }
-"}"                 { return new Token(Token.RBRACE)          ; }
-","                 { return new Token(Token.COMMA)           ; }
-
-"&&"                { return new Token(Token.OP,Token.AND)    ; }
-"||"                { return new Token(Token.OP,Token.OR)     ; }
-">"                 { return new Token(Token.OP,Token.GREATER); }
-">="                { return new Token(Token.OP,Token.GEQ)    ; }
-"<"                 { return new Token(Token.OP,Token.LESS)   ; }
-"<="                { return new Token(Token.OP,Token.LEQ)    ; }
-"!"                 { return new Token(Token.OP,Token.NEG)    ; }
-"!="                { return new Token(Token.OP,Token.NEQ)    ; }
-"=="                { return new Token(Token.OP,Token.EQ)     ; }
-"-"                 { return new Token(Token.OP,Token.MINUS)  ; }
-"+"                 { return new Token(Token.OP,Token.PLUS)   ; }
-"/"                 { return new Token(Token.OP,Token.DIV)    ; }
-"*"                 { return new Token(Token.OP,Token.TIMES)  ; }
+"program"           { return new Token(Token.PROGRAM, "program")  ; }
+"channel"           { return new Token(Token.CHANNEL, "channel")  ; }
+"process"           { return new Token(Token.PROCESS, "process")  ; }
+"while"             { return new Token(Token.WHILE, "while")      ; }
+"bool"              { return new Token(Token.TYPE, Token.BOOL, "bool"); }
+"int"               { return new Token(Token.TYPE, Token.INT, "int"  ); }
+"if"                { return new Token(Token.IF, "if")            ; }
+"else"              { return new Token(Token.ELSE, "else")        ; }
+"put"               { return new Token(Token.PUT, "put")          ; }
+"get"               { return new Token(Token.GET, "get")          ; }
+"assert"            { return new Token(Token.ASSERT, "assert")    ; }
+"true"              { return new Token(Token.TRUE, "true")        ; }
+"false"             { return new Token(Token.FALSE, "false")      ; }
+"="                 { return new Token(Token.ASSIGN, "assign")    ; }
+";"                 { return new Token(Token.SEMICOL, ";")        ; }
+"("                 { return new Token(Token.LPAREN, "(")         ; }
+")"                 { return new Token(Token.RPAREN, ")")         ; }
+"{"                 { return new Token(Token.LBRACE, "{")         ; }
+"}"                 { return new Token(Token.RBRACE, "}")         ; }
+","                 { return new Token(Token.COMMA, ",")          ; }
+"&&"                { return new Token(Token.OP,Token.AND, "&&")    ; }
+"||"                { return new Token(Token.OP,Token.OR, "||")     ; }
+">"                 { return new Token(Token.OP,Token.GREATER, ">") ; }
+">="                { return new Token(Token.OP,Token.GEQ, ">=")    ; }
+"<"                 { return new Token(Token.OP,Token.LESS, "<")    ; }
+"<="                { return new Token(Token.OP,Token.LEQ, "<=")    ; }
+"!"                 { return new Token(Token.OP,Token.NEG, "!")     ; }
+"!="                { return new Token(Token.OP,Token.NEQ, "!=")    ; }
+"=="                { return new Token(Token.OP,Token.EQ, "==")     ; }
+"-"                 { return new Token(Token.OP,Token.MINUS, "-")   ; }
+"+"                 { return new Token(Token.OP,Token.PLUS, "+")    ; }
+"/"                 { return new Token(Token.OP,Token.DIV, "/")     ; }
+"*"                 { return new Token(Token.OP,Token.TIMES, "*")   ; }
 
 {name}              { return new Token(Token.NAME,yytext())   ; }
 {number}            { return new Token(Token.NUMBER, Integer.valueOf(yytext()).intValue()); }
-.					{ System.out.println("char: "+yytext()); }
-
-
-
-
-
-
-
-
-
-
+.					{ return new Token(-1, "unbekanntes Zeichen: "+yytext()); }
 

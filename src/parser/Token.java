@@ -53,7 +53,7 @@ public class Token{
     /** Integer       */ public static final int INT     =  1;
 
     public String  textValue = null;
-    public int     intValue = 0;
+    public int     intValue = -1;
     public int     type = -1;
 	
     /**
@@ -62,7 +62,7 @@ public class Token{
      * type - Typ des Tokens
      */
     Token(int type){
-	this.type = type; 
+		this.type = type; 
     }
     
     /**
@@ -72,8 +72,8 @@ public class Token{
      * text - Wert (Zeichenkette) des Tokens
      */
     Token(int type, String text){
-	this.type = type; 
-	textValue = text;
+		this.type = type; 
+		textValue = text;
     }
     
     /**
@@ -83,9 +83,32 @@ public class Token{
      * value - Wert (integer) des Tokens
      */
     Token(int type, int value){
-	this.type = type; 
-	intValue = value;
+		this.type = type; 
+		intValue = value;
+    }
+
+	/** 
+	 * Konstruktor um Token mit Typ,  Wert (int und String) zu erzeugen
+	 * @parameter
+	 * type - Typ des Tokens
+	 * value - int Wert des Tokens
+	 * text - Wert (Zeichenkette) des Tokens
+	 */
+    Token(int type, int value, String text){
+		this.type = type; 
+		intValue = value;
+		textValue = text;
     }
 }	
+
+
+
+
+
+
+
+
+
+
 
 
