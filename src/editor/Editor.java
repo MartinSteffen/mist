@@ -301,6 +301,50 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     }
 */
 
+    // *** Die haetten wir noch gerne    
+    public String [] getProcessIds() {
+	String [] a = new String[3];
+	a[0] = "process01";
+	a[1] = "process02";
+	a[2] = "process03";
+	return a;
+    }
+    
+    // Prozess dauerhaft hinzufuegen und seine id zurueckgeben
+    public String NewProcess() {
+	return new String("processxy");
+    }
+    
+    // Prozess dauerhaft entfernen
+    public void RemoveProcess(String id) {
+	
+    }
+             
+    // Das Fenster, von dem Prozess mit der entspr. id, sichtbar machen
+    public void OpenProcess(String id) {
+
+    }
+
+    // Das Fenster, in dem der Prozess zu sehen ist, verstecken
+    public void CloseProcess(String id) {
+	
+    }
+    
+    // Das Programm wurde in der GUI ausgetauscht => neues Programm darstellen (und altes wegnehmen)
+    public void refresh(absynt.Program p) {
+
+    }
+
+    // Das Programm wurde in der GUI geschlossen, der Editor soll alle Fenster schliessen,
+    // bloss sich selbst nicht, und auf ein 'refresh(absynt.Program p)' warten
+    public void refresh() {
+
+    }
+    
+    // ***
+    
+
+
     void newProcessWindow (Eprocess inprocess) {
       if (debug) debugText("newProcessWindow");
       if (inprocess == null) {
