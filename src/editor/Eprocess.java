@@ -18,7 +18,6 @@ public class Eprocess {
   public absynt.Process process;
   public absynt.ProcessList proclist;
   public boolean grid;
-  public String name;
   public Eprogram program;
 
   public Eprocess (Eprogram rootprogram, String inname) {
@@ -30,22 +29,50 @@ public class Eprocess {
     process = ainterface.makeNewProcess();
     proclist = new absynt.ProcessList(process, null);
     grid = false;
-    name = inname;
+    setName(inname);
     program = rootprogram;
   }
   
-  public Eprocess (Eprogram rootprogram, String inname, absynt.Process inprocess, absynt.ProcessList inproclist) {
+  public Eprocess (Eprogram rootprogram, absynt.Process inprocess, absynt.ProcessList inproclist) {
     ainterface = new AbsyntInterface();
     next = null;
     last = null;
     process = inprocess;
     proclist = inproclist;
     grid = false;
-    name = inname;
     program = rootprogram;
-    if (proclist.next != null) next = new Eprocess(program, name+"?", proclist.next.head, proclist.next);
+    if (proclist.next != null) next = new Eprocess(program, proclist.next.head, proclist.next);
   }
 
+  String[] getProcessNames() {
+    String[] outarray;
+    if (next != null) {
+      String[] restarray = next.getProcessNames();
+      outarray = new String[restarray.length+1];
+      for (int i = 0; i < restarray.length; i++) outarray[i] = restarray[i];
+      outarray[restarray.length] = getName();
+    } else {
+      outarray = new String[1];
+      outarray[1] = getName();
+    }
+    return(outarray);
+  }
+
+  absynt.Process getProcess() {
+    return(process);
+  }
+
+  String getName() {
+    String outname = "";
+    if (process != null) outname = process.name;
+    else System.out.println("Error !!!! (Eprocess.getName) no absynt.Process in Eprocess");
+    return(outname);
+  }
+
+  void setName(String inname) {
+    if (process != null) process.name = inname;
+    else System.out.println("Error !!!! (Eprocess.setName) no absynt.Process in Eprocess");
+  }
 
   absynt.ProcessList getList() {
     return(proclist);
@@ -92,7 +119,7 @@ public class Eprocess {
  */
   public boolean checkProcessTitle (String inname) {
     boolean wert = false;
-    if (name.compareTo(inname) == 0) wert = true;
+    if (getName().compareTo(inname) == 0) wert = true;
     else {
       if (next != null) wert = next.checkProcessTitle(inname); 
     }

@@ -36,6 +36,9 @@ public class TopMenuBar extends JMenuBar {
 
       JMenu menu_process = new JMenu("Process");
       menu_process.setFont(editor.menufont);
+      
+      JMenu menu_position = new JMenu("Position");
+      menu_position.setFont(editor.menufont);
 
   /* Eintraege fuer die Pull-Down Menus */
 
@@ -96,6 +99,23 @@ public class TopMenuBar extends JMenuBar {
       p_newprocess.addActionListener(new NewProcessListener(editor));
       p_newprocess.setFont(editor.menufont);
 
+// Position-Menu
+      JMenuItem p_pos1grav = new JMenuItem("pos1 Grav");
+      p_pos1grav.addActionListener(new Position1Listener(editor, "Grav"));
+      p_pos1grav.setFont(editor.menufont);
+      
+      JMenuItem p_pos2grav = new JMenuItem("pos2 Grav");
+      p_pos2grav.addActionListener(new Position2Listener(editor, "Grav"));
+      p_pos2grav.setFont(editor.menufont);
+      
+      JMenuItem p_pos2fr = new JMenuItem("pos2 FR");
+      p_pos2fr.addActionListener(new Position2Listener(editor, "FR"));
+      p_pos2fr.setFont(editor.menufont);
+      
+      JMenuItem p_pos2zufall = new JMenuItem("pos2 Zufall");
+      p_pos2zufall.addActionListener(new Position2Listener(editor, "Zufall"));
+      p_pos2zufall.setFont(editor.menufont);
+
   /* Eintraege in die Pull-Down Menus einfuegen */
 
       menu_file.add(f_new);
@@ -118,6 +138,12 @@ public class TopMenuBar extends JMenuBar {
       menu_process.add(p_newprocess);
       menu_process.addSeparator();
 
+      menu_position.add(p_pos1grav);
+      menu_position.addSeparator();
+      menu_position.add(p_pos2grav);
+      menu_position.add(p_pos2fr);
+      menu_position.add(p_pos2zufall);
+
   /* Menus zu der Menubar hinzufuegen */
 
       add(menu_file);
@@ -125,5 +151,32 @@ public class TopMenuBar extends JMenuBar {
       add(menu_options);
       add(menu_program);
       add(menu_process);
+      add(menu_position);
+    }
+    
+    class Position1Listener implements ActionListener {
+      Editor editor;
+      String method;
+      
+      public Position1Listener(Editor editroot, String inmethod) {
+        editor = editroot;
+        method = inmethod;
+      }
+      public void actionPerformed(ActionEvent event) {
+        editor.calcPosition1(method);
+      }
+    }
+    
+    class Position2Listener implements ActionListener {
+      Editor editor;
+      String method;
+      
+      public Position2Listener(Editor editroot, String inmethod) {
+        editor = editroot;
+        method = inmethod;
+      }
+      public void actionPerformed(ActionEvent event) {
+        editor.calcPosition2(method);
+      }
     }
 }

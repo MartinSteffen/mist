@@ -42,13 +42,14 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     EditorSelection globalselection;
     int zoom;
     PrettyPrint prettyprint;
+    gui.GUI gui;
 
 
     /**
      * Konstruktoren
      *
      */
-    public Editor (String name, absynt.Program program, int set_x, int set_y, int set_width, int set_height) {
+    public Editor (gui.GUI rootgui, absynt.Program program, int set_x, int set_y, int set_width, int set_height) {
       super("");
       setSize(set_width, set_height);
       setLocation(set_x, set_y);
@@ -58,6 +59,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       activeprogram = null;
       activeprocess = null;
       globalselection = null;
+      gui = rootgui;
       zoom = 100;
       prettyprint = new PrettyPrint();
 
@@ -67,7 +69,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       editor_count++;			// Anzahl laufender Editorfenster
       editor_id = editor_idcount;	// Nummer fuer diesen Editor
 
-      addProgram(name, program);
+      addProgram(program);
 
       setEditorFonts();
       debug = false;
@@ -117,8 +119,12 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       setVisible(true);			// Frame sichtbar machen
     }
 
+    public Editor (gui.GUI rootgui, absynt.Program program) {
+      this(rootgui, program, 0, 0, 400, 400);
+    }
+
     public Editor (absynt.Program program) {
-      this("unnamed", program, 0, 0, 300, 300);
+      this(null, program, 0, 0, 400, 400);
     }
 
 /*
@@ -138,6 +144,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     public void internalFrameActivated(InternalFrameEvent event) {
       if (debug) debugText("activated : "+event);
       activewindow = (ProcessWindow)event.getSource();
+      activeprocess = activewindow.getEprocess();
     }
     public void internalFrameDeactivated(InternalFrameEvent event) {}
     public void internalFrameOpened(InternalFrameEvent event) {
@@ -166,6 +173,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
 
     void setActiveWindow (ProcessWindow processwindow) {
       activewindow = processwindow;
+      activeprocess = processwindow.getEprocess();
     }
 
     String checkProgramName (String inname) {
@@ -244,17 +252,25 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       }
     }
 
-    void addProgram (String inname, absynt.Program inprogram) {
-      if (debug) debugText("addProgram : inname = "+inname);
-      String outname = "";
-      outname = checkProgramName(inname);
+    void addProgram (absynt.Program inprogram) {
+//      if (debug) debugText("addProgram : inname = "+inname);
+//      String outname = "";
+//      outname = checkProgramName(inname);
+      String progname = "";
+      boolean nameset = false;
+      if (inprogram == null) {
+      	nameset = true;
+      	progname = checkProgramName("unnamed");
+      }
       if (programlist == null) {
-        programlist = new Eprogram(outname, inprogram);
+        programlist = new Eprogram(inprogram);
         activeprogram = programlist;
       } else {
-        activeprogram = programlist.appendProgram(outname, inprogram);
+        activeprogram = programlist.appendProgram(inprogram);
       }
-      setTitle(editorname+" - "+outname);
+      if (nameset) activeprogram.setName(progname);
+//      setTitle(editorname+" - "+outname);
+      setTitle(editorname+" - "+activeprogram.getName());
     }
 
     void addProcess (absynt.Process inproccess) {
@@ -262,13 +278,13 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
 
     void newProgram () {
       if (debug) debugText("newProgram");
-      addProgram("unnamed", null);
+      addProgram(null);
     }
 
     void exitEditor () {
       closeEditor();
       if (debug) debugText("exitEditor : Nr."+Integer.toString(editor_id));
-      if (editor_count == 0) System.exit(0);
+      if (editor_count == 0 && gui == null) System.exit(0);
     }
 
     void closeEditor () {
@@ -291,6 +307,39 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       return (outselection);
     }
 
+    void calcPosition1 (String method) {
+      if (activeprocess != null) {
+        position1.Position position = null;
+        if (method.compareTo("Grav") == 0) position = new position1.PositionGrav();
+
+        if (position != null) {
+          System.out.println("calcPosition1 : "+method);
+          position.positioniere(activeprocess.getProcess());
+        }
+      }
+    }
+
+    void calcPosition2 (String method) {
+     
+      if (activeprocess != null) {
+        position2.Position position = null;
+        if (method.compareTo("Grav") == 0) {
+          System.out.println("calcPosition2 : "+method);
+          position2.Positionierung position2grav = new position2.PositionGrav();
+          position2grav.positioniere(activeprocess.getProcess());
+//          position = new position2.PositionGrav();
+        }
+        else if (method.compareTo("FR") == 0) position = new position2.PositionFR();
+        else if (method.compareTo("Zufall") == 0) position = new position2.PositionZufall();
+
+        if (position != null) {
+          System.out.println("calcPosition2 : "+method);
+          position.positioniere(activeprocess.getProcess());
+        }
+      } else System.out.println("no active Process !!");
+    }
+
+
 /*
     void newProcessWindow (Eprocess inprocess) {
       if (debug) debugText("newProcessWindow");
@@ -300,21 +349,23 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       ProcessWindow pwin = new ProcessWindow(this, inprocess);
     }
 */
-
-    // *** Die haetten wir noch gerne    
+   
     public String [] getProcessIds() {
-	String [] a = new String[3];
-	a[0] = "process01";
-	a[1] = "process02";
-	a[2] = "process03";
-	return a;
+      String[] outarray;
+      if (activeprogram != null) outarray = activeprogram.getProcessNames();
+      else outarray = new String[0];
+      return(outarray);
     }
     
     // Prozess dauerhaft hinzufuegen und seine id zurueckgeben
     public String NewProcess() {
-	return new String("processxy");
+      String outname = "";
+      outname = newProcessWindow(null);
+      return(outname);
     }
-    
+
+
+    // *** Die haetten wir noch gerne     
     // Prozess dauerhaft entfernen
     public void RemoveProcess(String id) {
 	
@@ -345,17 +396,20 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     
 
 
-    void newProcessWindow (Eprocess inprocess) {
+    String newProcessWindow (Eprocess inprocess) {
       if (debug) debugText("newProcessWindow");
+      String outname = "";
       if (inprocess == null) {
-        inprocess = activeprogram.newProcess(checkProcessName("unnamed"));
-      }
+        outname = checkProcessName("unnamed");
+        inprocess = activeprogram.newProcess(outname);
+      } else outname = inprocess.getName();
       ProcessWindow pwin = new ProcessWindow(this, inprocess);
       pwin.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       pwin.addInternalFrameListener(this);
       dpane.add(pwin);
       pwin.fitIn();
       pwin.moveToFront();
+      return(outname);
     }
 
     void clear() {};
@@ -424,7 +478,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     }
 
     public static void main (String[] argv) {
-      Editor prog = new Editor("program 1",null, 0, 0, 300, 300);
+      Editor prog = new Editor(null, null, 0, 0, 300, 300);
     }
 
 }

@@ -75,10 +75,8 @@ public class AbsyntInterface {
  */
     public absynt.B_expr copyBexpr(absynt.B_expr inexpr) {
       absynt.B_expr outexpr = null;
-      if (inexpr != null) {
-      	
-// >>> Achtung <<< hier stimmte was mit der abstrakten Syntax nicht !!      	
-        outexpr = new absynt.B_expr(copyExpr(inexpr.left_expr), 0 ,copyExpr(inexpr.right_expr));
+      if (inexpr != null) {      	
+        outexpr = new absynt.B_expr(copyExpr(inexpr.left_expr), inexpr.op ,copyExpr(inexpr.right_expr));
       }
       return(outexpr);
     }
@@ -89,7 +87,7 @@ public class AbsyntInterface {
     public absynt.U_expr copyUexpr(absynt.U_expr inexpr) {
       absynt.U_expr outexpr = null;
       if (inexpr != null) {     	
-        outexpr = new absynt.U_expr();
+        outexpr = new absynt.U_expr(inexpr.op, copyExpr(inexpr.sub_expr));
       }
       return(outexpr);
     }

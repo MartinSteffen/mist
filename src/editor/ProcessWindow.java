@@ -30,7 +30,7 @@ public class ProcessWindow extends JInternalFrame {
       scrollpane = new ScrollPane();
       zeichenflaeche = new Zeichenflaeche(this);
       scrollpane.add(zeichenflaeche);
-      setTitle(eprocess.name);
+      setTitle(eprocess.getName());
       setSize(new Dimension(300, 300));
       setLocation(10 ,10);
 //      addWindowListener(this);
@@ -50,6 +50,10 @@ public class ProcessWindow extends JInternalFrame {
 //    public void windowOpened(WindowEvent event) {}
 //    public void windowClosing(WindowEvent event) {
 //    }
+
+    Eprocess getEprocess() {
+      return(eprocess);
+    }
 
     public boolean isGrid() {
       return(eprocess.grid);

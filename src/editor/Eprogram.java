@@ -10,7 +10,6 @@ public class Eprogram {
   public Eprogram last;
   public Eprocess processlist;
   public absynt.Program program;
-  public String name;
 
   public Eprogram (String inname) {
     ainterface = new AbsyntInterface();
@@ -18,10 +17,10 @@ public class Eprogram {
     last = null;
     processlist = null;
     program = ainterface.makeNewProgram();
-    name = inname;
+    setName(inname);
   }
 
-  public Eprogram (String inname, absynt.Program inprogram) {	
+  public Eprogram (absynt.Program inprogram) {	
     ainterface = new AbsyntInterface();
     next = null;
     last = null;
@@ -31,25 +30,43 @@ public class Eprogram {
     } else {
       program = inprogram;
     }
-    name = inname;
 // bei vorhandenem Inhalt EditorSyntax darumbauen
     if (program.procs != null) {
-      processlist = new Eprocess(this, "???", program.procs.head, program.procs);
+      processlist = new Eprocess(this, program.procs.head, program.procs);
     }
   }
+
+  String[] getProcessNames() {
+    String[] outarray;
+    if (processlist != null) outarray = processlist.getProcessNames();
+    else outarray = new String[0];
+    return(outarray);
+  }
+
+  String getName() {
+    String outname = "";
+    if (program != null) outname = program.name;
+    else System.out.println("Error !!!! (Eprogram.getName) no absynt.Program in Eprogram");
+    return(outname);
+  }
+
+  void setName(String inname) {
+    if (program != null) program.name = inname;
+    else System.out.println("Error !!!! (Eprogram.setName) no absynt.Program in Eprogram");
+  } 
 
   absynt.Program getProgram() {
     return(program);
   }
 
-  public Eprogram appendProgram (String inname, absynt.Program inprogram) {
+  public Eprogram appendProgram (absynt.Program inprogram) {
     Eprogram outprogram;
     if (next == null) {
-      outprogram = new Eprogram(inname, inprogram);
+      outprogram = new Eprogram(inprogram);
       outprogram.last = this;
       next = outprogram;
     } else {
-      outprogram = next.appendProgram(inname, inprogram);
+      outprogram = next.appendProgram(inprogram);
     }
     return(outprogram);
   }
@@ -72,7 +89,7 @@ public class Eprogram {
 
   public boolean checkProgramTitle (String inname) {
     boolean wert = false;
-    if (name.compareTo(inname) == 0) {
+    if (getName().compareTo(inname) == 0) {
       wert = true;
     } else {
       if (next != null) {
@@ -89,13 +106,5 @@ public class Eprogram {
     }
     return(wert);
   }
-
-  public void setName (String inname) {
-    name = inname;
-  }
-
-  public String getName () {
-    return(name);
-  } 
 
 }
