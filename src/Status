@@ -1,5 +1,5 @@
 ##################################################
-## $Id: Status,v 1.8 2000-07-04 07:26:50 unix01 Exp $
+## $Id: Status,v 1.9 2000-07-04 07:28:25 unix01 Exp $
 ##################################################
 
 
@@ -133,15 +133,14 @@ o  check1         nitsche.andree
 
 ==============
 
-``Excecutive Summary'':
+``Kurzfassung'':
 
 	Es geht _langsam_ voran (soweit ich sehen kann). Gui/Editor haben
-	den vorteil da"s sie relativ bald was laufendes vorf"uhrbar haben,
-	auch wenn noch nicht alles l"auft. Die natur der Sache bedingt es,
+	den Vorteil da"s sie relativ bald was laufendes vorf"uhrbar haben,
+	auch wenn noch nicht alles l"auft. Die Natur der Sache bedingt es,
 	da"s das bei den meisten anderen Gruppen nicht so ist. Da dort oft
 	nocht nichts l"auft, ist es schwierig, den Fortschritt zu
 	beurteilen.
-
 
 	Falls es inhaltliche oder sonstige Probleme gibt, bitte
 	vorbeikommen (am besten vorher bescheidsagen).
@@ -176,34 +175,6 @@ Martin
  
 
 
-   PositionGrav.java:9: class position2.PositionGrav must be declared abstract. It does not define void positioniere(absynt.Process) from interface position2.Position.
-
-   Grund: es k"onnte daran liegen, da"s ich die Abstrakte Syntax um die Klasse Position (nach der heutigen
-   Besprechung erweitert habe, und da"s es damit interferiert. Am besten sich das Problem anschauen, und
-   mir (unter unix01) bescheid sagen, was das Problem ist.
-
-
-
- integration   kyas.marcel, stahl.karsten, steffen.Martin
-	 
-
-          -   globale Gesamtkompilation unbekannt, wir haben bisher nur
-	      die Verzeichnisse einzeln testen k"onnen
-          
-
-
- utils/pp     kraus.oliver, labenda.holger
-
-	  + kompilierf"ahiger stubcode, 
-
-          + Makefile
-
-	  -- allerding keine "Anderung seit dem 4 Juni (bzgl. dessen, was
-	     wir vorgegeben haben).
-
-    	     Da pp f"ur alle n"utzlich ist, bitte bezeiten sich and den Code setzen.
-
-     
 ========= Hier eine Kurz"ubersicht
 C = Kompilierbar
 M = Makefile
