@@ -14,20 +14,20 @@ public class SimulatorProcess{
     /** Feld als ArrayList zur Repraesentation von den Variablen eines Prozesses.
 	als ArrayList, damit dynamische Erweiterbarkeit gewaehrleistet werden kann.
      */
-    private ArrayList varList;
+    protected ArrayList varList;
 
     /** Feld zum Merken des aktuell aktiven Prozesszustands 
      */
-    private Astate activeState;
+    protected Astate activeState;
 
     /** Feld als ArrayList zum Vorhalten der in einem Zustand konzessionierten Transitionen 
      */
-    private ArrayList permittedTransitions;
+    protected ArrayList permittedTransitions;
 
     /** Feld welches jeder Instanz vom Typ SimulatorProcess eine Referenz auf 
      * den jeweiligen Prozess aus dem zu simulierenden Programm zuweist.
      */
-    private absynt.Process progProcess;
+    protected absynt.Process progProcess;
     
 
     /** Konstruktor für einen Simulator-Prozess.
@@ -89,7 +89,7 @@ public class SimulatorProcess{
 
 		if (exprEval.isInt()){
 		    /* Ausdruck evaluiert zu einem Integerwert */
-		       result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var, exprEval.getIntVal() ) );
+		       result.add( new SimulatorVariable(pointer.head.var.name, pointer.head.var, exprEval.getIntVal() ) );
 		}
 		else {
 		    /* Ausdruck evaluiert zu einem booleschen Wert */ 
