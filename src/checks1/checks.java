@@ -5,8 +5,11 @@
  * Copyright:    Copyright (c) AndrÈ Nitsche<p>
  * Company:      <p>
  * @author AndrÈ Nitsche
- * @version $Id: checks.java,v 1.4 2000-07-19 11:48:55 unix01 Exp $
+ * @version $Id: checks.java,v 1.5 2000-07-19 11:59:09 unix01 Exp $
  */
+
+
+
 package checks1;
 import absynt.*;
 
@@ -17,9 +20,6 @@ public class checks {
   TransitionList tl;
   AstateList al;
   ChandecList cl;
-  boolean channelError=true;
-  boolean varError=true;
-  boolean stateError=true;
 
 
   public checks(Program p) {
@@ -35,30 +35,31 @@ public class checks {
 
 
 
-  public boolean start_check() {
-
+  public void start_check() {
    System.out.println("Check gestartet...");
    channelCheck cc=new channelCheck();
-   //sucht Channel - Fehler
-   channelError=(channelError && channelCheck.start_check(cl,tl));
-
+   System.out.println(channelCheck.start_check(cl,tl));
    varCheck vc=new varCheck();
-   varError=(varError && varCheck.start_check(vl,tl));
+   System.out.println(varCheck.start_check(vl,tl));
    stateCheck sc=new stateCheck();
-   stateError=(stateError && stateCheck.start_check(al,tl));
-   return (channelError && varError && stateError);
+   System.out.println(stateCheck.start_check(al,tl));
  }
 
 
 
 }
+
 //----------------------------------------------------------------------
 //	Checker for Mist Programs
 //	------------------------------------
 //
-//	$Id: checks.java,v 1.4 2000-07-19 11:48:55 unix01 Exp $
+//	$Id: checks.java,v 1.5 2000-07-19 11:59:09 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2000/07/19 11:48:55  unix01
+//	Version, wie von AndrÅÈ zugemailt. Ich habe keinen
+//	Test durchgefÅ¸hrt. [Steffen]
+//	
 //	
 //	
 //---------------------------------------------------------------------
