@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.13 2000-07-10 05:37:43 unix01 Exp $
+## $Id: Status,v 1.14 2000-07-10 05:46:24 unix01 Exp $
 ######################################################
 
 
@@ -29,7 +29,8 @@ o  gui           kraas.helge, schuemann.broder
         checken...)?
 
     [?] Wenn die GUI-Leute nichts mehr zu tun haben sollten: dann k"onnen sie
-	"uberlegen, was auf die CD kommt? Doku?
+	"uberlegen, was auf die CD kommt? Readme? Weitergehende Doku?
+	Wie l"ost man das gif-Problem?
 
 o   editor        jacobs.finn, eckloff.alexander
 
@@ -77,13 +78,16 @@ o modcheck      neumann.frank, kuemper.aneta, schulz.eike
     [?] Fortschritte seit letzter Woche? Zumindest keine Ver"anderung
 	im Code
 
+    [?] W"unsche an die checks-Gruppe? 
+    [?] Ist das mit den U_Expr gekl"art (Frage auch an die  Parserleute)
+
 
 o parser        scott.andreas, hegener.alexander
 
     - Stubcode
-    - unver"andertes Makefile, da die abh"angigkeiten
-        hier etwas komplexer sind, (Aufruf von Yacc/Lex)	
-	sollte das Makefile entsprechend angep"a"st werden.
+
+
+    - 
 
      - sehr einfache konkrete Syntax festgelegt,
         -> in eine ersten Version sollte der parser sehr
