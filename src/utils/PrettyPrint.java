@@ -93,7 +93,7 @@ public class PrettyPrint {
 	if(chandec !=null){
 	    System.out.println(whiteSpace(column) +"[Chandec] ");
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
-	    prettyprint.print(chandec);
+	    prettyprint.print(chandec.chan);
 	}
 
     }
