@@ -53,7 +53,6 @@ public class PositionFR implements position2.Position {
 	anzZustaende = stateList.size();
 	k = (float)Math.sqrt(1.0/anzZustaende);
 	AusgangsPosition(stateList);
-	//	ausgabe(stateList);
 	for (int j=1;j<=iterations;j++){
 	    System.out.println("Schleifendurchlauf Nr.: " + j);
 	    for (int i=0;i<stateList.size();i++){
@@ -77,11 +76,8 @@ public class PositionFR implements position2.Position {
 		erwTransition trans = (erwTransition) transitionlist.elementAt(i);
 		Position delta = new Position();
 		int index_v = trans.sourceIndex;
-		//stateList.indexOf(trans.source);
 		int index_u = trans.targetIndex;
-		//stateList.indexOf(trans.target);
 		if (index_v != -1 && index_u !=-1) {
-		    // System.out.println(index_v+" --- "+index_u);
 		    erwAstate v= (erwAstate) stateList.elementAt(index_v);
 		    erwAstate u= (erwAstate) stateList.elementAt(index_u);
 		    delta.x = trans.transition.source.pos.x - trans.transition.target.pos.x;
@@ -97,6 +93,7 @@ public class PositionFR implements position2.Position {
 	    }
 	    t = cool(t);
         }
+	skalieren(stateList);
 	ausgabe(stateList);
 }
 
@@ -165,6 +162,21 @@ public class PositionFR implements position2.Position {
 	    System.out.println("State "+ i + ": x="+state.astate.pos.x + " y="+ state.astate.pos.y);
 	} 
     }
+    private void skalieren(erwAstateList list){
+	float maxX = 0;
+	float maxY = 0;
+	for(int i=0;i<list.size();i++){
+	    Astate state = ((erwAstate) list.elementAt(i)).astate;
+	    //System.out.println("State "+ i + ": x="+state.astate.pos.x + " y="+ state.astate.pos.y);
+	    maxX = Math.max(maxX,state.pos.x);
+	    maxY = Math.max(maxY,state.pos.y);
+	}
+	for(int i=0;i<list.size();i++){
+	    Astate state = ((erwAstate) list.elementAt(i)).astate;
+	    state.pos.x = state.pos.x/maxX;
+	    state.pos.y = state.pos.y/maxY;
+	}
+    }
     private class erwTransitionList extends Vector{
 	public erwTransitionList(TransitionList list, erwAstateList stateList){
 	    for (;list.hasMoreElements();){
@@ -178,6 +190,14 @@ public class PositionFR implements position2.Position {
 		}						
 		list = (TransitionList) list.nextElement();
 	    }
+	    erwTransition erwtrans = new erwTransition(list.head);
+	    this.add(erwtrans);
+	    if (erwtrans.transition.source != null){
+		erwtrans.sourceIndex = stateList.indexOf(erwtrans.transition.source);
+	    }
+	    if (erwtrans.transition.target != null){
+		erwtrans.targetIndex = stateList.indexOf(erwtrans.transition.target);
+	    }						
 	}
     }
     private class erwTransition{
@@ -193,8 +213,8 @@ public class PositionFR implements position2.Position {
 	    for (;stateList.hasMoreElements();){
 		this.add(new erwAstate(stateList.head));
 		stateList = (AstateList) stateList.nextElement();
-		//		System.out.println("index: "+ this.indexOf(this.elementAt(0)));
 	    }
+	    this.add(new erwAstate(stateList.head));
 	}
     }
     private class erwAstate{
