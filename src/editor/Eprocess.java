@@ -426,4 +426,33 @@ public class Eprocess {
     return(outprocess);
   }
 
+/**
+ * liefert den Eprocess zurueck, der den uebergebenen absynt.Process kapselt
+ */
+  Eprocess getEprocessWithProcess(absynt.Process inprocess) {
+    Eprocess outprocess = null;
+    if (getProcess() == inprocess) outprocess = this;
+    else {
+      if (next != null) outprocess = next.getEprocessWithProcess(inprocess);
+    }
+    return(outprocess);
+  }
+
+/**
+ * liefert den Estate zurueck, der den uebergebenen absynt.Astate kapselt
+ */
+  Estate getEstateWithAstate (absynt.Astate instate) {
+    Estate outstate = null;
+    if (statelist != null) outstate = statelist.getEstateWithAstate(instate);
+    return(outstate);
+  }
+
+/**
+ * liefert die Etransition zurueck, die die uebergebene absynt.Transition kapselt
+ */
+  Etransition getEtransitionWithTransition (absynt.Transition intransition) {
+    Etransition outtransition = null;
+    if (translist != null) outtransition = translist.getEtransitionWithTransition(intransition);
+    return(outtransition);
+  }
 }

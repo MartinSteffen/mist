@@ -201,5 +201,169 @@ public class AbsyntInterface {
       absynt.Astate returnstate = null;
       return(returnstate);
     }
-    
+
+/**
+ * ueberfuehrt einen Operator in einen String
+ */
+    String operatorToString(int inoperator) {
+      String outstring = "";
+      if (inoperator == 0) outstring = "+";
+      else if (inoperator == 1) outstring = "-";
+      else if (inoperator == 2) outstring = "Times";
+      else if (inoperator == 3) outstring = "div";
+      else if (inoperator == 4) outstring = "and";
+      else if (inoperator == 5) outstring = "or";
+      else if (inoperator == 6) outstring = "neg";
+      else if (inoperator == 7) outstring = "eq";
+      else if (inoperator == 8) outstring = "less";
+      else if (inoperator == 9) outstring = "greater";
+      else if (inoperator == 10) outstring = "leq";
+      else if (inoperator == 11) outstring = "geq";
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.B_expr in einen String
+ */
+    String bexprToString(absynt.B_expr inexpr) {
+      String outstring = "";
+      if (inexpr != null) {
+        outstring = exprToString(inexpr.left_expr)+" "+operatorToString(inexpr.op)+" "+exprToString(inexpr.right_expr);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.U_expr in einen String
+ */
+    String uexprToString(absynt.U_expr inexpr) {
+      String outstring = "";
+      if (inexpr != null) {
+        outstring = operatorToString(inexpr.op)+" "+exprToString(inexpr.sub_expr);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Constval in einen String
+ */
+    String constvalToString(absynt.Constval inconstval) {
+      String outstring = "";
+      if (inconstval != null) {
+        if (inconstval.val != null) {
+      	  if (inconstval.val instanceof Boolean) {
+      	    if (((Boolean)inconstval.val).booleanValue()) outstring = "true";
+      	    else outstring = "false";
+          } else if (inconstval.val instanceof Integer) {
+            outstring = ((Integer)inconstval.val).toString();
+          }
+        }      	
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Variable in einen String
+ */
+    String variableToString(absynt.Variable invariable) {
+      String outstring = "";
+      if (invariable != null) {
+      	outstring = invariable.name;
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Expr in einen String
+ */
+    String exprToString(absynt.Expr inexpr) {
+      String outstring = "";
+      if (inexpr != null) {
+        if (inexpr instanceof absynt.B_expr) outstring = bexprToString((absynt.B_expr)inexpr);
+        else if (inexpr instanceof absynt.U_expr) outstring = uexprToString((absynt.U_expr)inexpr);
+        else if (inexpr instanceof absynt.Constval) outstring = constvalToString((absynt.Constval)inexpr);
+        else if (inexpr instanceof absynt.Variable) outstring = variableToString((absynt.Variable)inexpr);
+      } else outstring = "(null!)";
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt einen absynt.Channel in einene String
+ */
+     String channelToString(absynt.Channel inchannel) {
+       String outstring = "";
+       if (inchannel != null) {
+         outstring = inchannel.name;
+       }
+       return(outstring);
+     }
+
+/**
+ * ueberfuehrt eine absynt.Assign_action in einen String
+ */
+    String assignToString(absynt.Assign_action inaction) {
+      String outstring = "";
+      if (inaction != null) {
+      	outstring = "assign : "+variableToString(inaction.var)+" "+exprToString(inaction.val);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Input_action in einen String
+ */
+    String inputToString(absynt.Input_action inaction) {
+      String outstring = "";
+      if (inaction != null) {
+      	outstring = "input : ("+channelToString(inaction.chan)+") "+variableToString(inaction.var);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Output_action in einen String
+ */
+    String outputToString(absynt.Output_action inaction) {
+      String outstring = "";
+      if (inaction != null) {
+      	outstring = "output : ("+channelToString(inaction.chan)+") "+exprToString(inaction.val);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Tau_action in einen String
+ */
+    String tauToString(absynt.Tau_action inaction) {
+      String outstring = "";
+      if (inaction != null) {
+      	outstring = "tau : ";
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt eine absynt.Action in einen String
+ */
+    String actionToString(absynt.Action inaction) {
+      String outstring = "";
+      if (inaction != null) {
+      	if (inaction instanceof absynt.Assign_action) outstring = assignToString((absynt.Assign_action)inaction);
+      	else if (inaction instanceof absynt.Input_action) outstring = inputToString((absynt.Input_action)inaction);
+      	else if (inaction instanceof absynt.Output_action) outstring = outputToString((absynt.Output_action)inaction);
+      	else if (inaction instanceof absynt.Tau_action) outstring = tauToString((absynt.Tau_action)inaction);
+      }
+      return(outstring);
+    }
+
+/**
+ * ueberfuehrt ein absynt.Label in einen String
+ */
+    String labelToString(absynt.Label inlabel) {
+      String outstring = "";
+      if (inlabel != null) {
+      	outstring = exprToString(inlabel.guard)+" "+actionToString(inlabel.act);
+      } else outstring = "(no Label)";
+      return(outstring);
+    }
 }

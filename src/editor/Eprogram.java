@@ -209,4 +209,25 @@ public class Eprogram {
     return(outprocess);
   }
 
+/**
+ * liefert das Eprogram zurueck, welches das uebergeben absynt.Program kapselt
+ */
+  Eprogram getEprogramWithProgram(absynt.Program inprogram) {
+    Eprogram outprogram = null;
+    if (getProgram() == inprogram) outprogram = this;
+    else {
+      if (next != null) outprogram = next.getEprogramWithProgram(inprogram);
+    }
+    return(outprogram);
+  }
+
+/**
+ * liefert den Eprocess zurueck, welcher den eubergebenen absynt.Process kapselt
+ */
+  Eprocess getEprocessWithProcess(absynt.Process inprocess) {
+    Eprocess outprocess = null;
+    if (processlist != null) outprocess = processlist.getEprocessWithProcess(inprocess);
+    return(outprocess);
+  }
+
 }

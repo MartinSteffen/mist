@@ -2,6 +2,7 @@ package editor;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import editor.undo.*;
@@ -72,6 +73,8 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
     }
     public void paint(Graphics g) {
       procwin.editor.debugText("Zeichenflaeche (Paint): >> start <<");
+//      BufferedImage bufferimage = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_RGB);
+//      Graphics ig = bufferimage.getGraphics();
       g.setFont(procwin.editor.zeichenfont);
       g.setColor(Color.white);
       dimension = getSize();
@@ -86,6 +89,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
           }
         }
       }
+//      imageUpdate(bufferimage, ALLBITS, 0, 0, dimension.width, dimension.height);
       Etransition tsucher = procwin.eprocess.translist;
       while (tsucher != null) {
         paintTransition(tsucher, 0);

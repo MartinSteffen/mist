@@ -19,7 +19,8 @@ class NewProcessListener implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-      editor.newProcessWindow(null);
+      String id = editor.newProcessWindow(null);
+      editor.guiAddProcess(id);
     }
 
 }

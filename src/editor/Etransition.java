@@ -12,7 +12,8 @@ public class Etransition extends EditorObject {
   Estate sourcestate;
   Estate targetstate;
   absynt.Label lab;
-  AbsyntInterface einterface;
+  static AbsyntInterface einterface = new AbsyntInterface();
+  boolean highlighted;
 
   public Etransition (Estate s, Estate t, absynt.Label l) {
     lab = l;
@@ -24,6 +25,7 @@ public class Etransition extends EditorObject {
     translist.head = transition;
     next = null;
     last = null;
+    highlighted = false;
   }
 
   boolean isConnectedTo(Estate instate) {
@@ -192,4 +194,23 @@ public class Etransition extends EditorObject {
     }
     return (outselection);
   }
+
+/**
+ * liefert die Etransition zurueck, die die uebergebene absynt.Transition kapselt
+ */
+  Etransition getEtransitionWithTransition (absynt.Transition intransition) {
+    Etransition outtransition = null;
+    if (getTransition() == intransition) outtransition = this;
+    else {
+      if (next != null) outtransition = next.getEtransitionWithTransition(intransition);
+    }
+    return(outtransition);
+  }
+
+/**
+ * schaltet highlighted an und aus
+ */
+    void setHighlighted(boolean mode) {
+      highlighted = mode;
+    }
 }

@@ -150,8 +150,12 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     public void internalFrameOpened(InternalFrameEvent event) {
       if (debug) debugText("opened : "+event.getSource());
     }
-    public void internalFrameIconified(InternalFrameEvent event) {}
-    public void internalFrameDeiconified(InternalFrameEvent event) {}
+    public void internalFrameIconified(InternalFrameEvent event) {
+      guiCloseProcess(((ProcessWindow)event.getSource()).eprocess.getName());
+    }
+    public void internalFrameDeiconified(InternalFrameEvent event) {
+      guiOpenProcess(((ProcessWindow)event.getSource()).eprocess.getName());
+    }
     public void internalFrameClosing(InternalFrameEvent event) {}
 
     public void windowClosed(WindowEvent event) {
@@ -353,6 +357,35 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     }
 */
    
+    void cleanDesktop () {
+      JInternalFrame[] framelist = dpane.getAllFrames();
+      if (framelist.length > 0) {
+        for (int i=0; i < framelist.length; i++) {
+          ((ProcessWindow)framelist[i]).eprocess = null;
+          ((ProcessWindow)framelist[i]).closeWindow();
+        }
+      }
+    }
+
+    void removeActiveProgram() {
+      if (activeprogram != null) {
+        cleanDesktop();
+        if (programlist == activeprogram) {
+          programlist = activeprogram.next;
+          activeprogram = programlist;
+          if (programlist != null) programlist.last = null;
+        } else {
+          activeprogram.last.next = activeprogram.next;
+          if (activeprogram.next != null) activeprogram.next.last = activeprogram.last;
+          Eprogram newactiveprogram = activeprogram.last;
+          activeprogram.next = null;
+          activeprogram.last = null;
+          activeprogram = newactiveprogram;
+          newactiveprogram = null;
+        }
+      }
+    }
+
     public String [] getProcessIds() {
       String[] outarray;
       if (activeprogram != null) outarray = activeprogram.getProcessNames();
@@ -399,7 +432,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       }	
     }
     
-// *** Die haetten wir noch gerne    
+    
     // Das Programm wurde in der GUI ausgetauscht => neues Programm darstellen (und altes wegnehmen)
     public void refresh(absynt.Program inprogram) {
       addProgram(inprogram);
@@ -408,9 +441,26 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     // Das Programm wurde in der GUI geschlossen, der Editor soll alle Fenster schliessen,
     // bloss sich selbst nicht, und auf ein 'refresh(absynt.Program p)' warten
     public void refresh() {
-
+      removeActiveProgram();
     }
     
+    void guiAddProcess(String id) {
+      if (gui != null) gui.NewProcess(id);
+    }
+
+    void guiRemoveProcess(String id) {
+      if (gui != null) gui.RemoveProcess(id);
+    }
+    
+    void guiOpenProcess(String id) {
+      if (gui != null) gui.OpenProcess(id);
+    }
+    
+    void guiCloseProcess(String id) {
+      if (gui != null) gui.CloseProcess(id);
+    }
+    
+// *** Die haetten wir noch gerne    
     // ***
     
 
@@ -482,18 +532,54 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     public void destroy() {
       exitEditor();
     }
-    
+
+    void highlightState(absynt.Astate instate, absynt.Process inprocess, absynt.Program inprogram, boolean mode) {
+      if (programlist != null) {
+        Eprogram useprogram = programlist.getEprogramWithProgram(inprogram);
+        if (useprogram != null) {
+          Eprocess useprocess = useprogram.getEprocessWithProcess(inprocess);
+          if (useprocess != null) {
+            Estate usestate = useprocess.getEstateWithAstate(instate);
+            if (usestate != null) {
+              usestate.setHighlighted(mode);
+              if (useprocess.getProcessWindow() != null) useprocess.getProcessWindow().refreshDisplay();
+            } else System.out.println("Error !! (highlightState) no Estate found");
+          } else System.out.println("Error !! (highlightState) no Eprocess found");
+        } else System.out.println("Error !! (highlightState) no Eprogram found");
+      } else System.out.println("Error !! (highlightState) no Eprogram in editor");
+    }
+
+    void highlightTransition(absynt.Transition intransition, absynt.Process inprocess, absynt.Program inprogram, boolean mode) {
+      if (programlist != null) {
+        Eprogram useprogram = programlist.getEprogramWithProgram(inprogram);
+        if (useprogram != null) {
+          Eprocess useprocess = useprogram.getEprocessWithProcess(inprocess);
+          if (useprocess != null) {
+            Etransition usetransition = useprocess.getEtransitionWithTransition(intransition);
+            if (usetransition != null) {
+              usetransition.setHighlighted(mode);              
+              if (useprocess.getProcessWindow() != null) useprocess.getProcessWindow().refreshDisplay();
+            } else System.out.println("Error !! (highlightTransition) no Etransition found");
+          } else System.out.println("Error !! (highlightTransition) no Eprocess found");
+        } else System.out.println("Error !! (highlightTransition) no Eprogram found");
+      } else System.out.println("Error !! (highlightTransition) no Eprogram in editor");
+    }
+   
     public void highlightState(absynt.Astate state, absynt.Process process, absynt.Program program) {
+      highlightState(state, process, program, true);
 	//      zeichenflaeche.highlightState(state, process, program);
     }
     public void unhighlightState(absynt.Astate state, absynt.Process process, absynt.Program program) {
+      highlightState(state, process, program, false);
 	//      zeichenflaeche.unhighlightState(state, process, program);
     }
     public void highlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
-	//      zeichenflaeche.highlightState(transition, process, program);
+      highlightTransition(transition, process, program, true);
+	//      zeichenflaeche.highlightTransition(transition, process, program);
     }
     public void unhighlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
-	//      zeichenflaeche.highlightState(transition, process, program);
+      highlightTransition(transition, process, program, false);
+	//      zeichenflaeche.unhighlightTransition(transition, process, program);
     }
 
     public static void main (String[] argv) {

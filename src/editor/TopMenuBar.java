@@ -86,6 +86,10 @@ public class TopMenuBar extends JMenuBar {
 //      f_exit.addActionListener(new ExitProgramListener(editor));
       p_setchannels.setFont(editor.menufont);
       
+      JMenuItem p_programrename = new JMenuItem("rename");
+//      p_programrename.addActionListener(new ExitProgramListener(editor));
+      p_programrename.setFont(editor.menufont);
+
       JMenuItem p_prettyprint = new JMenuItem("PrettyPrint");
       p_prettyprint.addActionListener(new PrettyPrintListener(editor));
       p_prettyprint.setFont(editor.menufont);
@@ -98,6 +102,10 @@ public class TopMenuBar extends JMenuBar {
       JMenuItem p_newprocess = new JMenuItem("new Process");
       p_newprocess.addActionListener(new NewProcessListener(editor));
       p_newprocess.setFont(editor.menufont);
+
+      JMenuItem p_processrename = new JMenuItem("rename");
+//      p_processrename.addActionListener(new ExitProgramListener(editor));
+      p_processrename.setFont(editor.menufont);
 
 // Position-Menu
       JMenuItem p_pos1grav = new JMenuItem("pos1 Grav");
@@ -131,11 +139,13 @@ public class TopMenuBar extends JMenuBar {
       menu_options.add(o_toggle_debug);
 
       menu_program.add(p_setchannels);
+      menu_program.add(p_programrename);
       menu_program.add(p_prettyprint);
       menu_program.addSeparator();
       
       menu_process.add(p_setvariables);
       menu_process.add(p_newprocess);
+      menu_process.add(p_processrename);
       menu_process.addSeparator();
 
       menu_position.add(p_pos1grav);

@@ -55,7 +55,11 @@ public class ProcessWindow extends JInternalFrame {
 //    }
 
     void removeProcess() {
-      if (eprocess != null) eprocess.removeProcess();
+      if (eprocess != null) {
+        String id = eprocess.getName();
+      	eprocess.removeProcess();
+        editor.guiRemoveProcess(id);
+      }
     }
 
     void closeWindow() {

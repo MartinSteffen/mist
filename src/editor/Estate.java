@@ -12,6 +12,7 @@ public class Estate extends EditorObject {
     absynt.AstateList statelist;
     int type;
     static AbsyntInterface ainterface = new AbsyntInterface();
+    boolean highlighted;
 
     public Estate (String name, absynt.Expr inexpr, float x, float y, int etype) {
       type = etype;
@@ -21,6 +22,7 @@ public class Estate extends EditorObject {
       if (type == 0) state = new absynt.State(name, inexpr, xypos);
       else if (type == 1) state = new absynt.Initstate(name, inexpr, xypos);
       statelist = new absynt.AstateList(state, null);
+      highlighted = false;
     }
 
     float getX() {
@@ -233,4 +235,22 @@ public class Estate extends EditorObject {
       return (outselection);
     }
 
+/**
+ * liefert den Estate zurueck, der den uebergebenen absynt.Astate kapselt
+ */
+    Estate getEstateWithAstate (absynt.Astate instate) {
+      Estate outstate = null;
+      if (getState() == instate) outstate = this;
+      else {
+      	if (next != null) outstate = next.getEstateWithAstate(instate);
+      }
+      return(outstate);
+    }
+
+/**
+ * schaltet highlighted an und aus
+ */
+    void setHighlighted(boolean mode) {
+      highlighted = mode;
+    }
 }
