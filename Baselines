@@ -1,5 +1,5 @@
 ##################################################
-## $Id: Baselines,v 1.4 2000-07-20 11:43:24 unix01 Exp $
+## $Id: Baselines,v 1.5 2000-07-20 13:47:29 unix01 Exp $
 ##################################################
 
 
@@ -8,7 +8,7 @@
 Liste von Snapshots: Konvention: die Baselines werden einfach durchnumeriert.
 
 
-        Endbesprechnung: 20 Juli: (Version 4) 
+        Endbesprechung: 20 Juli: (Version 4) 
 
         Baseline3: 17 Juli: kompilierbar, wenig Fortschritte
 
