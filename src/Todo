@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.5 2000-06-27 08:27:36 unix01 Exp $
+# $Id: Todo,v 1.6 2000-06-27 08:28:13 unix01 Exp $
 #######################################################
 
       
@@ -12,10 +12,6 @@ o integration:
 
       status:  im prinzip vorhanden, einzelpakete sind aber noch
 	       nicht kompilierbar
-   - makefile f"ur globales javadoc
-
-      status:  nicht vorhanden
-   
 
 gui:
 
