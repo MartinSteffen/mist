@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.14 2000-07-10 05:46:24 unix01 Exp $
+## $Id: Status,v 1.15 2000-07-10 05:56:29 unix01 Exp $
 ######################################################
 
 
@@ -29,9 +29,14 @@ o  gui           kraas.helge, schuemann.broder
         checken...)?
 
     [?] Wenn die GUI-Leute nichts mehr zu tun haben sollten: dann k"onnen sie
-	"uberlegen, was auf die CD kommt? Readme? Weitergehende Doku?
-	Wie l"ost man das gif-Problem?
-
+	"uberlegen, was auf die CD kommt? 
+	 - Readme?  
+	 - Weitergehende Doku?
+	 - Jlex/Yacc (+ Copyright-Schriftst"uck)
+   	 - Namen der Teilnehmer?
+   	 - Wie l"ost man das gif/jar-Problem?
+	 - Vorlesung + Folien? etc
+	
 o   editor        jacobs.finn, eckloff.alexander
 
      - einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
