@@ -6,11 +6,14 @@ import java.io.IOException;
  * Klasse Scanner - automatisch generiert von JLex aus Scanner.lex
  *
  * @author Andreas Scott &amp; Alexander Hegener 
- * @version $Id: Scanner.lex,v 1.4 2000-07-13 20:20:59 unix01 Exp $
+ * @version $Id: Scanner.lex,v 1.5 2000-07-14 06:00:50 unix01 Exp $
  * @see <a href="../../Scanner.lex">Scanner.lex</a>
  *
  * <!-- Log ==========
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2000/07/13 20:20:59  unix01
+ * weiter mit den Statements
+ *
  * Revision 1.3  2000/07/12 20:47:20  unix01
  * parsen der Statements (debugged) (Alexander)
  *
@@ -541,17 +544,125 @@ import java.io.IOException;
       /* erwartetes Token: naechstes Statement oder Prozessende ('}' */
       token = nextToken();
   }
-  
-  protected void buildExpression() throws IOException, ParseException{
-      /* erwartetes Token: Konstante, Variable, '(' oder Operator */
 
-      while ((token.type != Token.SEMICOL) && 
-	     (token.type != Token.RPAREN) && 
-	     (token.type != Token.RBRACE)){
-	  System.out.print("expression ");
+  /**
+   * zum parsen eines Ausdrucks
+   * @see parser.Parser.parse.Expression
+   */
+  protected absynt.Expr buildExpression() throws IOException, ParseException{
+	  absynt.Expr       left     = null;
+	  absynt.Expr       right    = null;
+	  int               operator =    0;
+	  absynt.M_AtomType typ      = null;
+	  
+	  if (debug)
+		  System.out.print("[");
+
+	  if (token.type == Token.NAME){
+		  if (debug)
+			  System.out.print(token.textValue);
+		  left = new absynt.Variable(token.textValue);
+	  } else if (token.type == Token.NUMBER){
+		  if (debug)
+			  System.out.print(token.intValue);
+		  left = new absynt.Constval(token.intValue);
+	  } else if (token.type == Token.TRUE){
+		  if (debug)
+			  System.out.print("true");
+		  left = new absynt.Constval(true);
+	  } else if (token.type == Token.FALSE){
+		  if (debug)
+			  System.out.print("false");
+		  left = new absynt.Constval(false);
+	  } else if (token.type == Token.OP){
+		  /* Unaerer Ausdruck */
+		  operator = token.intValue;
+		  if (debug){
+			  switch (operator)
+				  {
+				  case Token.NEG  : System.out.print("!"); break;
+				  case Token.MINUS: System.out.print("-"); break;
+				  case Token.PLUS : System.out.print("+"); break;
+				  default: System.out.print("??");
+				  }
+		  }
+		  /* erwartetes Token: Teil eines Ausdrucks */
+		  token=nextToken();
+		  switch (operator)
+			  {
+			  case Token.NEG  : left = new absynt.U_expr(absynt.Expr.NEG  ,buildExpression()); break;
+			  case Token.MINUS: left = new absynt.U_expr(absynt.Expr.MINUS,buildExpression()); break;
+			  case Token.PLUS : left = new absynt.U_expr(absynt.Expr.PLUS ,buildExpression()); break;
+			  default: lexerror ("sinnloses Vorzeichen");
+			  }
+		  return left;
+	  } else if (token.type == Token.LPAREN){
+		  if (debug)
+			  System.out.print("(");
+		  token = nextToken();
+		  left = buildExpression();
+		  /* akt. Token: RPAREN */
+		  if (token.type != Token.RPAREN)
+			  lexerror("')' erwartet.");
+	  } else {
+		  lexerror ("Ausdruck erwartet");
+	  }
+
+	  /* erwartetes Token: OP, SEMICOL oder RPAREN */
 	  token = nextToken();
-      }
-  }
+	  if (token.type == Token.OP){
+		  switch (token.intValue)
+			  {
+				  /* Boolsche Operatoren */
+			  case Token.AND    : operator = absynt.Expr.AND    ; typ = new absynt.M_Bool(); break;
+			  case Token.OR     : operator = absynt.Expr.OR     ; typ = new absynt.M_Bool(); break;
+			  case Token.NEQ    : operator = absynt.Expr.NEQ    ; typ = new absynt.M_Bool(); break;
+			  case Token.LESS   : operator = absynt.Expr.LESS   ; typ = new absynt.M_Bool(); break;
+			  case Token.GREATER: operator = absynt.Expr.GREATER; typ = new absynt.M_Bool(); break;
+			  case Token.LEQ    : operator = absynt.Expr.LEQ    ; typ = new absynt.M_Bool(); break;
+			  case Token.GEQ    : operator = absynt.Expr.GEQ    ; typ = new absynt.M_Bool(); break;
+				  
+				  /* Numerische Operatoren */
+			  case Token.PLUS : operator = absynt.Expr.PLUS ; typ = new absynt.M_Int(); break;
+			  case Token.MINUS: operator = absynt.Expr.MINUS; typ = new absynt.M_Int(); break;
+			  case Token.DIV  : operator = absynt.Expr.DIV  ; typ = new absynt.M_Int(); break;
+			  case Token.TIMES: operator = absynt.Expr.TIMES; typ = new absynt.M_Int(); break;
+			  default: lexerror ("unbekannter Operator: "+token.intValue);
+			  }
+		  // Evtl. sollte dem Konstruktor des OP-Tokens noch der Textwert uebergeben werden, koennte 
+		  // die Debug-/Fehlerausgabe vereinfachen..
+		  
+		  if (debug){
+			  switch (token.intValue)
+				  {
+					  /* Boolsche Operatoren */
+				  case Token.AND    : System.out.print("&&"); break; 
+				  case Token.OR     : System.out.print("||"); break; 
+				  case Token.NEQ    : System.out.print("!="); break; 
+				  case Token.LESS   : System.out.print("<") ; break; 
+				  case Token.GREATER: System.out.print(">") ; break; 
+				  case Token.LEQ    : System.out.print("<="); break; 
+				  case Token.GEQ    : System.out.print(">="); break; 
+					  /* Numerische Operatoren */
+				  case Token.PLUS   : System.out.print("+"); break; 
+				  case Token.MINUS  : System.out.print("-"); break; 
+				  case Token.DIV    : System.out.print("/"); break; 
+				  case Token.TIMES  : System.out.print("*"); break; 
+				  default: System.out.print("??");
+				  }
+		  }
+		  /* erwartetes Token: Teil einer Expr */
+		  token = nextToken();
+		  right = buildExpression();
+		  left =  new absynt.B_expr(left, operator, right);
+	  }
+
+	  if (debug)
+		  System.out.print("]");
+	  /* akt. Token: SEMICOL oder RPAREN */
+	  return left;		 
+
+  } /* Ende von buildExpression() */
   
 %}
 
