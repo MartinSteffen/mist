@@ -33,8 +33,8 @@ public class SimulatorProgram {
      */
     protected SimulatorProgram (Program _program) {
 	progProgram = _program ; 	// Referenz auf zu simulierendes Programm setzen  
-      	processList = null;
-	channelList = null;
+      	processList = this.makeProcessList();
+	channelList = this.makeChannelList();
     }
 
     /** Methode zum Generieren der Prozess-Liste 
@@ -121,5 +121,13 @@ public class SimulatorProgram {
 	return result;
     }
 
+    protected void askQuestion () {
+	String[] ask= new String[3];
+	ask[0]="Honig ?";
+	ask[1]="Marmelade ?";
+	ask[2]="Nutella ?";
+	StrSelWin mySel = new StrSelWin("Benutzereingabe", "Bitte wähle aus", ask, true);
+	int selection = mySel.getSel();
+    }
 
 }

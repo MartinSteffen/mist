@@ -37,7 +37,7 @@ public class SimulatorProcess{
     protected SimulatorProcess (absynt.Process _process) {
 	progProcess = _process ;
 	varList = this.makeVarList();
-	activeState = null;
+	activeState = progProcess.init;
 	permittedTransitions = this.generatePermittedTransList();
     }
     
