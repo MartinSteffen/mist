@@ -1,0 +1,32 @@
+\section{Informelle Semantik}
+\label{sec:semantik}
+
+
+
+
+
+Wir haben uns auf folgende Semantik geeinigt:
+\begin{itemize}
+\item zwei-Weg Kommnuikation (kein Broadcast)
+\item synchroner Nachrichtenaustausch
+\end{itemize}
+Das hei"st genauer folgendes: Der Zustand des Programmes "andert sich nur
+in den \emph{Transitionen}. Es gibt 4 Arten davon
+\begin{enumerate}
+\item interne Aktionen (``tau'')
+\item Zuweisung
+\item Input
+\item Output
+\end{enumerate}
+Die ersten beiden Aktionen werden von einem einzigen Proze"s \emph{alleine}
+ausgef"uhrt. Die Transitionen k"onnen mit einem \textit{Guard} ausgestattet
+sein, einem \emph{booleschen Ausdruck.} Eine Transition kann nur genommen
+werden, falls der Guard sich zu \emph{true} evaluiert.
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "handout1"
+%%% End: 
