@@ -1,19 +1,10 @@
 #----------------------------------------------------------------------
-#	Parser for .mist-files
-#	----------------------
+#	Parser for Mist
+#	------------------------------------
 #
-#	$Id: Makefile,v 1.1 2000-06-07 13:09:47 unix01 Exp $
+#	$Id: Makefile,v 1.2 2000-07-09 21:14:28 unix01 Exp $
 #
 #	$Log: not supported by cvs2svn $
-#	Revision 1.3  2000/05/30 15:25:10  unix01
-#	Gruppeneinteilung (+ mail geschrieben)
-#	
-#	Revision 1.2  2000/05/28 08:51:48  unix01
-#	ok
-#	
-#	Revision 1.1  2000/05/28 07:57:02  unix01
-#	Erste Version, kopiert vom alten Javaprojekt
-#	
 #----------------------------------------------------------------------
 
 ################################################
@@ -23,27 +14,25 @@ WEBDIR     = /home/info/www/inf/deRoever/SS00/Java/Mist/absynt/
 
 ################################################
 
+all:	Parser.java
+	javac Parser.java
 
+Token.class:
+	javac Token.java
 
-all:	$(patsubst %.java,%.class,$(wildcard *.java))
-debug:	; make JAVACOPTS="-g" all
-
-%.class:	%.java
-		javac $(JAVACOPTS) $<
+Parser.java:	Parser.lex
+	java JLex.Main Parser.lex
+	mv Parser.lex.java Parser.java
 
 
 clean:
-	\rm -f *.class *~
+	\rm -f *.class *~ Parser.java
 
 localdoc:	;
 	javadoc  -version -author -d $(LOCALDOCDIR) *.java
 
 www:
 	cp $(LOCALDOCDIR)/*.html $(WEBDIR)
-
-
-
-
 
 
 
