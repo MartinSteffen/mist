@@ -7,7 +7,7 @@
 package gui;
 
 import java.util.Vector;
-import java.io.File;
+import java.io.*;
 import editor.*;
 
 /** 
@@ -278,7 +278,7 @@ public class GUI extends javax.swing.JFrame {
 		    String name = (String) projBrowserTableModel.getValueAt(row, 0);
 		    Boolean visible = (Boolean) projBrowserTableModel.getValueAt(row, 1);
 		    Boolean inproject = (Boolean)  projBrowserTableModel.getValueAt(row, 3);
-		    actualsession.modifyEditors(name, visible, inproject);
+		    // actualsession.modifyEditors(name, visible, inproject);
 		    
 		}
 	    } 
@@ -292,29 +292,29 @@ public class GUI extends javax.swing.JFrame {
     
     }//GEN-END:initComponents
     
-    private void aboutMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+    private void aboutMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_aboutMenuItemActionPerformed
+    }
     
-    private void contentsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentsMenuItemActionPerformed
+    private void contentsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_contentsMenuItemActionPerformed
+    }
     
-    private void checkAllMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAllMenuItemActionPerformed
+    private void checkAllMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_checkAllMenuItemActionPerformed
+    }
     
-    private void checkProcessMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkProcessMenuItemActionPerformed
+    private void checkProcessMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_checkProcessMenuItemActionPerformed
+    }
     
-    private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simulatorMenuItemActionPerformed
+    private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-	mySimUI = new gui.SimUI(new simulator.Simulator(this));
-	mySimUI.show();
-    }//GEN-LAST:event_simulatorMenuItemActionPerformed
+	// mySimUI = new gui.SimUI(new simulator.Simulator(this));
+	// mySimUI.show();
+    }
     
-    private void closeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEdMenuItemActionPerformed
+    private void closeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
 	Vector names = new Vector();
 	int i;
@@ -323,54 +323,162 @@ public class GUI extends javax.swing.JFrame {
 	    projBrowserTableModel.removeRow(i);
 	}
 	
-	actualsession.closeEditors(names);
-    }//GEN-LAST:event_closeEdMenuItemActionPerformed
+	// actualsession.closeEditors(names);
+    }
     
-    private void openParseEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openParseEdMenuItemActionPerformed
+    private void openParseEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_openParseEdMenuItemActionPerformed
+    }
     
-    private void openEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openEdMenuItemActionPerformed
+    private void openEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-    }//GEN-LAST:event_openEdMenuItemActionPerformed
+    }
     
-    private void newEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEdMenuItemActionPerformed
+    private void newEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-	if(actualsession!=null)
-	    actualsession.addEditor();
+	// if(actualsession!=null)
+	//     actualsession.addEditor();
     
-    }//GEN-LAST:event_newEdMenuItemActionPerformed
+    }
     
-    private void closeMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
-	// Add your handling code here:
-    }//GEN-LAST:event_closeMenuItemActionPerformed
+    private void closeMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	saveMenuItemActionPerformed(evt);
+	actualsession = null;
+	// Menues setzen
+	editorMenu.setEnabled(false);
+	toolsMenu.setEnabled(false);
+	// Firlefanz
+	projNameTextField.setText("");
+	setTitle("");
+    }
+
     
-    private void saveAsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
-	// Add your handling code here:
-    }//GEN-LAST:event_saveAsMenuItemActionPerformed
     
-    private void saveMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-	// Add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
-    
-    private void openMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-	// Add your handling code here:
-    }//GEN-LAST:event_openMenuItemActionPerformed
-    
-    private void newMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
-	// Add your handling code here:
-	actualsession = new Session();
+    private void saveAsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	File f;
 	
-    }//GEN-LAST:event_newMenuItemActionPerformed
+	if (actualsession == null)
+	    return;
+	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+	ExampleFileFilter filter = new ExampleFileFilter(); 
+	filter.addExtension("mst");
+	filter.setDescription("Mist Project Files"); 
+	chooser.setFileFilter(filter); 
+	int returnVal = chooser.showSaveDialog(this); 
+	if(returnVal == javax.swing.JFileChooser.APPROVE_OPTION) { 
+	    f = chooser.getSelectedFile();
+	    actualsession.filename = f.getAbsolutePath(); 
+	    System.out.println("trying to save Session as: " + f.getAbsolutePath() + "..."); 
+	    
+ 
+	    FileOutputStream ostream;
+	    ObjectOutputStream p;
+	    
+	    try {
+		ostream = new FileOutputStream(f.getAbsolutePath());
+		p = new ObjectOutputStream(ostream);
+		p.writeObject(actualsession);
+		p.flush();
+		ostream.close();
+	    } catch (IOException e) {
+		System.err.println("IOException in saveAsMenuItemActionPerformed: Save\n" + e);
+		actualsession.filename = "";
+	    }
+	} 
+    }
     
-    private void exitMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+    private void saveMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null) 
+	    return;
+	if (actualsession.filename.equals("")) // Es wurde noch nie gespeichert
+	    saveAsMenuItemActionPerformed(evt); 
+	else { 
+	    
+	    
+	    FileOutputStream ostream;
+	    ObjectOutputStream p;
+	    try {
+		ostream = new FileOutputStream(actualsession.filename);
+		p = new ObjectOutputStream(ostream);
+		p.writeObject(actualsession);
+		p.flush();
+		ostream.close();
+	    } catch (IOException e) {
+		System.err.println("IOException in saveMenuItemActionPerformed: Save\n" + e);
+	    }
+	}
+	
+    }
+    
+    private void openMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	File f;
+	if (actualsession != null)
+	    saveMenuItemActionPerformed(evt); // Session speichern
+	actualsession = null;
+	
+	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+	ExampleFileFilter filter = new ExampleFileFilter(); 
+	filter.addExtension("mst");
+	filter.setDescription("Mist Project Files"); 
+	chooser.setFileFilter(filter); 
+	int returnVal = chooser.showOpenDialog(this); 
+	if(returnVal == javax.swing.JFileChooser.APPROVE_OPTION) { 
+	    f = chooser.getSelectedFile();
+	    System.out.println("trying to load: " + f.getAbsolutePath() + " ..."); 
+	    
+	   
+	    if (! f.isFile()) {
+		System.err.println("Konnte " + f.getAbsolutePath() + " nicht finden");
+		return;
+	    }        
+	    try {
+		FileInputStream istream;
+		ObjectInputStream p;
+		
+		istream = new FileInputStream(f);
+		p = new ObjectInputStream(istream);
+		
+		// Aehaem ... 
+		actualsession = (Session) p.readObject();
+		istream.close();
+	    } catch (IOException e) {
+		System.err.println("IOException in: openMenuItemActionPerformed\n" + e.getMessage());
+	    } catch (ClassNotFoundException e) {
+		System.err.println("ClassNotFoundException in: openMenuItemActionPerformed\n" + e.getMessage());
+	    }
+	}
+	// Menues setzen
+	editorMenu.setEnabled(true);
+	toolsMenu.setEnabled(true);
+	// Firlefanz
+	projNameTextField.setText(actualsession.name);
+	setTitle(actualsession.name);
+
+ 	
+    }
+    
+    private void newMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession != null)
+	    saveMenuItemActionPerformed(evt);
+	
+	actualsession = new Session();
+	// Menues setzen
+	editorMenu.setEnabled(true);
+	toolsMenu.setEnabled(true);
+	// Firlefanz
+	projNameTextField.setText(actualsession.name);
+	setTitle(actualsession.name);
+    }
+    
+    private void exitMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	saveMenuItemActionPerformed(evt);
 	System.exit (0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
+    }
     
     /** Exit the Application */
-    private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
+    private void exitForm(java.awt.event.WindowEvent evt) {
 	System.exit (0);
-    }//GEN-LAST:event_exitForm
+    }
     
     /**
      * @param args the command line arguments
@@ -411,49 +519,36 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField projNameTextField;
     private javax.swing.JTable projBrowserTable;
     private javax.swing.table.DefaultTableModel projBrowserTableModel;
-    // End of variables declaration//GEN-END:variables
     
-    
-    // private Elementklasse zur Verwaltung einer GUI Session
-    private class Session {
-	// Das Programm, welches den Automaten beschreibt
-	public  absynt.Program workProgram = null;
-	// Vector haelt EdInterfaces
-	Vector editorinterfaces = new Vector();
-		
-	public Session() {
-	    // Example Program benutzen
-	    workProgram = (new absynt.Example()).getExample1();
-	    editorMenu.setEnabled(true);
-	    toolsMenu.setEnabled(true);
-	    projNameTextField.setText ("New Session.");
-	    GUI.this.setTitle("NewSession");
-	}
-	
-	public Session(File file) {
-	}
 
-	private boolean containsEdInterface(String _name) {
-	    EdInterface ie;
-	    for(int i = 0; i < editorinterfaces.size(); i++) {
-		if( ((EdInterface)editorinterfaces.elementAt(i)).name.equals(_name) )
-		    return true;
-	    }
-	    return false;
+    
+    // **************** Session **************************************+
+    // private Elementklasse zur Verwaltung einer GUI Session
+    static  class Session implements java.io.Serializable {
+	// Name der Session
+	public String name = new String("");
+	public String filename = new String("");
+	
+	// Das Programm, welches den Automaten beschreibt
+	private absynt.Program workProgram = null;
+	
+	// Ein Editor, der alle geoeffneten Editoren handelt 
+	private editor.Editor editor = null;
+	
+	// ****************  Konstruktoren  ****************
+	
+	// Aufgerufen von: Session->New
+	public Session() {
+	    name = "Example Program";
+	    
+	    workProgram = (new absynt.Example()).getExample1(); // Example Program benutzen
 	}
 	
-	private EdInterface getEdInterface(String _name) {
-	    EdInterface ie;
-	    for(int i = 0; i < editorinterfaces.size(); i++) {
-		ie = (EdInterface)editorinterfaces.elementAt(i);
-		if (ie.name.equals(_name))
-		    return ie;
-	    }
-	    return null;
-    	}
-	
+
+	/*
 	// Methoden zur Verwaltung der Editoren
 	public void addEditor() {
+	    
 	    EdInterface ei = new EdInterface("New Process" + projBrowserTableModel.getRowCount());
 	    editorinterfaces.addElement(ei);
 	    projBrowserTableModel.addRow(new Object[] {
@@ -485,6 +580,7 @@ public class GUI extends javax.swing.JFrame {
 	    }
 	    
 	}
+	*/
     }
 }
 
