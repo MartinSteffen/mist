@@ -1,7 +1,7 @@
 /**
    Beispiel fuer die Verwendung des Pretty Printers.
  * @author Initially provided by Martin Steffen.
- * @version  $Id: PpExample.java,v 1.1 2000-06-04 12:03:12 unix01 Exp $    
+ * @version  $Id: PpExample.java,v 1.2 2000-06-04 12:06:16 unix01 Exp $    
  */
 
 package utils;
@@ -25,3 +25,14 @@ public class PpExample {
 
 } // class PpExample
 
+
+
+//----------------------------------------------------------------------
+//	Utilites for Mist Programs
+//	------------------------------------
+//
+//	$Id: PpExample.java,v 1.2 2000-06-04 12:06:16 unix01 Exp $
+//
+//	$Log: not supported by cvs2svn $
+//	
+//---------------------------------------------------------------------
