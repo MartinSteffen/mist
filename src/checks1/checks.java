@@ -7,7 +7,7 @@
  * @author André Nitsche
  * @version 1.0
  */
-package Checks1;
+package checks1;
 import absynt.*;
 
 public class checks {
@@ -15,7 +15,9 @@ public class checks {
   public checks() {
   }
 
-  public String ChannelCheck(Program p) {
+public void start_check() {}  
+
+public String ChannelCheck(Program p) {
     /* Diese Methode testet, ob die im Programm p benutzten Channels deklariert
     sind, d.h. in einer ChandecList enthalten sind*/
 
