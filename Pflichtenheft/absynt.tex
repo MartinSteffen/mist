@@ -108,7 +108,7 @@
   & \of & operand
   \\
   u\_expr
-  & \of &
+  & \bnfdef &
   sub\_expr & \of & expr 
   \\
   & & op & \of & operand
@@ -165,6 +165,10 @@
   vardec &\bnfdef &
   var  & \of & variable
   \\
+  & & val  & \of & constval
+  \\
+  & & type & \of & m\_atom\_type
+  \\
   chandec & \bnfdef & chan & \of & channel
   \\
   variable & \bnfdef & name & \of & string
@@ -172,6 +176,18 @@
   channel  & \bnfdef & name & \of & string
   \\
   constval & \bnfdef & val& \of  & \textit{Object}
+  \\
+  m\_type & \bnfdef  & & & m\_atom\_type
+  \\
+  & \bnfbar  & & &
+  m\_chan
+  \\
+  m\_atom\_type
+  & \bnfdef & & &
+  m\_int
+  \\
+  & \bnfbar & & &
+  m\_bool
   \\
   position & \bnfdef & x & \of & float
   \\
