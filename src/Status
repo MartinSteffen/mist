@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.32 2000-07-19 05:16:32 unix01 Exp $
+## $Id: Status,v 1.33 2000-07-20 12:41:21 unix01 Exp $
 ######################################################
 
 
@@ -123,10 +123,10 @@ o   editor        jacobs.finn, eckloff.alexander
 	 - Wie macht man den Editor wieder zu?
 	 - Was macht das close an der GUI
 	 - die Transitionen haben keine Spitzen
-	 - das redraw funktionniert nicht beim Transitionenzeichnen
+	 - das redraw funktioniert nicht beim Transitionenzeichnen
 	 - kein redraw nach dem "Andern eines Zustands
 
-         - Was macht der erste Gr"une Pfeil, warum repositioniert er?
+         - Was macht der erste gr"une Pfeil, warum repositioniert er?
 	 - was machen die ersten beiden Icons?
 
 	 - Position1: graph (was macht das?
