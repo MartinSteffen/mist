@@ -1,3 +1,4 @@
+
 /*
  * GUI.java
  *
@@ -307,6 +308,10 @@ public class GUI extends javax.swing.JFrame {
     // ******  Callbacks aus Tools  ******
 
     private void checkAllMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null)
+	    return;
+	checks1.checks c = new checks1.checks(actualsession.workProgram);
+	c.start_check();
     }
     
     private void checkProcessMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
@@ -421,12 +426,13 @@ public class GUI extends javax.swing.JFrame {
 	File f;
 	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
 	ExampleFileFilter filter = new ExampleFileFilter(); 
-	filter.addExtension("mst");
+	filter.addExtension("blob");
 	filter.setDescription("Mist Project Files"); 
 	chooser.setFileFilter(filter); 
 	int returnVal = chooser.showSaveDialog(this); 
 	if(returnVal == javax.swing.JFileChooser.APPROVE_OPTION) { 
 	    f = chooser.getSelectedFile();
+	    f = new File(f.getAbsolutePath() + ".blob");
 	    actualsession.filename = f.getAbsolutePath(); 
 	    System.out.println("trying to save Session as: " + f.getAbsolutePath() + "..."); 
 	    
@@ -472,6 +478,69 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void openParseEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession != null)
+	    saveMenuItemActionPerformed(evt); // Session speichern
+	
+	actualsession = null;
+	File f;
+	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+	ExampleFileFilter filter = new ExampleFileFilter(); 
+	filter.addExtension("mst");
+	filter.setDescription("Mist Parsed Files"); 
+	chooser.setFileFilter(filter); 
+	int returnVal = chooser.showOpenDialog(this); 
+	if(returnVal == javax.swing.JFileChooser.APPROVE_OPTION) { 
+	    /*
+	    f = chooser.getSelectedFile();
+	    System.out.println("loading: " + f.getAbsolutePath() + " ..."); 
+	    if (! f.isFile()) {
+		System.err.println("Couldn't find  " + f.getAbsolutePath());
+		return;
+	    }        
+	    // Parser aufrufen, laesst sich im Moment noch nicht kompilieren !!!
+	     
+	    absynt.Program p = null;
+	    try {
+		p = (new parser.Parser() ).parseFile(f);
+	    } 
+	    catch (pareser.ParseException pe) {
+		return;
+	    }
+	    catch (java.io.IOException ioe) {
+		return;
+	    }
+	    // Falls keine Exception geworfen wurde, jedoch kein Program enstand ...
+	    if (p == null) {
+		System.out.println("Couldn't resolve Program out of " + f.getAbsolutePath() );
+		return;
+	    }
+	    // Alles hat geklappt, also Dialog zum starten einer neuen Session anholen
+	    new NewSessionUI(this, "Creating new Session", true);
+	    // Bemerkung: actualsession ist jetzt neu angelegt (ueber this)
+	    // Jetzt kann das workprogram gesetzt werden
+	    actualsession.workProgram = p;
+	    
+	    // Editor starten mit dem neuen workProgram
+	    try {
+		if (actualeditor == null) // Editor wurde noch nie gestartet
+		    actualeditor = new editor.Editor(this, actualsession.workProgram);
+		if (actualeditor != null) // Dem Editor das refresh-Signal senden
+		    actualeditor.refresh(actualsession.workProgram);
+	    } catch (Exception e) {
+		System.err.println("Exception in: openParseEdMenuItemActionPerformed " + e.getMessage());
+		return;
+	    }
+	    if (!actualeditor.isShowing())
+		actualeditor.show();
+	    
+	    redrawProcessTable(actualeditor.getProcessIds());
+	    // GUI anpassen
+	    editorMenu.setEnabled(true);
+	    toolsMenu.setEnabled(true);
+	    projNameTextField.setText(actualsession.name);
+	    */
+	}
+	
     }
     
     private void openMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
@@ -482,7 +551,7 @@ public class GUI extends javax.swing.JFrame {
 	File f;
 	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
 	ExampleFileFilter filter = new ExampleFileFilter(); 
-	filter.addExtension("mst");
+	filter.addExtension("blob");
 	filter.setDescription("Mist Project Files"); 
 	chooser.setFileFilter(filter); 
 	int returnVal = chooser.showOpenDialog(this); 
