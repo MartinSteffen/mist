@@ -41,7 +41,7 @@ public class SimulatorProcess{
 	permittedTransitions = null;
     }
     
-    /** Methode um für einen Prozess die benötigten Variablen und deren Werte
+    /** Methode um für einen Prozess die benötigten Variablen und evtl. deren Werte
      * in varList zu generieren .
      * @return Eine ArrayList mit Objekten vom Typ SimulatorVariable
      */

@@ -38,19 +38,22 @@ public class SimulatorExprEvaluator {
 
     
     /** Konstruktor für einen Expression Evaluator
+     * 
      * @param _process Referenz auf den SimulatorProcess, in dem evaluiert werden soll 
      * @param _expr Referenz auf die zu evaluierende Expression
      */
     protected SimulatorExprEvaluator(SimulatorProcess _process, Expr _expr) {
 	process = _process;
 	expr = _expr;
-	isAnInt = true;
-	boolVal = false;
     }
 
-    /** Methode zur Auswertung einer booleschen Expression
+    /** Methode zur Auswertung Expression
      * @return Ergebnis vom Typ java.lang.Object eigentlich nur int oder boolean
      * NOCH KEINE ECHTE FUNKTIONALITÄT !!!
+     * bisher nur ein Fake, hier soll 
+     * a) das Ergebnis und
+     * b) der Ergebnistyp 
+     * berechnet und gesetzt werden.
      */
     protected void evalExpression() {
 	boolVal = false;

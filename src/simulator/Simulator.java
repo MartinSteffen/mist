@@ -37,12 +37,29 @@ public class Simulator {
      */
     protected int debugLvl;
 
+
+    /** 
+     * Instanzfeld fuer Referenz auf das Simulator-Programm des
+     * zu simulierenden Absynt-Programms
+     */
+    private SimulatorProgram sProg;
+
     /** 
      * Schafft ein neues Objekt vom Typ Simulator
      * 
      * @param gui Referenz auf die aufrufende Gui-Instanz
      */
     public Simulator(GUI gui) {
+	this.active = false;
+    }
+
+
+    /** 
+     * Schafft ein neues Objekt vom Typ Simulator
+     * Diese Methode NICHT benutzen, da nur für interne 
+     * Testzwecke !!!!
+     */
+    public Simulator() {
 	this.active = false;
     }
 
@@ -59,6 +76,7 @@ public class Simulator {
     public String[] start(Program program) {
 	this.p = program;
 	this.active = true; 
+	this.sProg = new SimulatorProgram(this.p); 
 	String[] result= new String[3];
 	result[0]="first debugmessage from start(Program program)";
 	result[1]="second debugmessage from start(Program program)";

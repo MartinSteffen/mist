@@ -31,7 +31,7 @@ public class SimulatorProgram {
     /** Konstruktor für ein SimulatorProgramm 
      * @param _program  Referenz auf zu simulierendes Programm
      */
-    SimulatorProgram (Program _program) {
+    protected SimulatorProgram (Program _program) {
 	progProgram = _program ; 	// Referenz auf zu simulierendes Programm setzen  
       	processList = null;
 	channelList = null;
