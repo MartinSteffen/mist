@@ -83,7 +83,7 @@ public class TopMenuBar extends JMenuBar {
 
 // Program-Menu
       JMenuItem p_setchannels = new JMenuItem("edit Channels");
-//      f_exit.addActionListener(new ExitProgramListener(editor));
+      p_setchannels.addActionListener(new ChannelEditListener(editor));
       p_setchannels.setFont(editor.menufont);
       
       JMenuItem p_programrename = new JMenuItem("rename");
@@ -96,7 +96,7 @@ public class TopMenuBar extends JMenuBar {
 
 // Process-Menu      
       JMenuItem p_setvariables = new JMenuItem("edit Variables");
-//      f_exit.addActionListener(new ExitProgramListener(editor));
+      p_setvariables.addActionListener(new VariablenEditListener(editor));
       p_setvariables.setFont(editor.menufont);
 
       JMenuItem p_newprocess = new JMenuItem("new Process");

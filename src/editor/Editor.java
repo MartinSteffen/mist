@@ -43,7 +43,8 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     int zoom;
     PrettyPrint prettyprint;
     gui.GUI gui;
-
+    ChannelEditor channeleditor;
+    VariablenEditor variableneditor;
 
     /**
      * Konstruktoren
@@ -59,6 +60,8 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       activeprogram = null;
       activeprocess = null;
       globalselection = null;
+      channeleditor = null;
+      variableneditor = null;
       gui = rootgui;
       zoom = 100;
       prettyprint = new PrettyPrint();
@@ -145,6 +148,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       if (debug) debugText("activated : "+event);
       activewindow = (ProcessWindow)event.getSource();
       activeprocess = activewindow.getEprocess();
+      refreshVariablenEditor();
     }
     public void internalFrameDeactivated(InternalFrameEvent event) {}
     public void internalFrameOpened(InternalFrameEvent event) {
@@ -178,6 +182,16 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     void setActiveWindow (ProcessWindow processwindow) {
       activewindow = processwindow;
       activeprocess = processwindow.getEprocess();
+    }
+
+    void refreshVariablenEditor() {
+      if (variableneditor != null) {
+      	if (activeprocess != null) variableneditor.refresh(activeprocess.getProcess());
+        else variableneditor.refresh(null);
+      } else {
+//      	if (activeprocess != null) variableneditor = new VariablenEditor(this, activeprocess.getProcess());
+//      	else variableneditor = new VariablenEditor(this, null);
+      }
     }
 
     String checkProgramName (String inname) {
