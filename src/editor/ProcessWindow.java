@@ -26,6 +26,9 @@ public class ProcessWindow extends JInternalFrame {
       super("", true, true, true, true);
       editor = editroot;
       eprocess = inprocess;
+      if (eprocess != null) {
+        eprocess.setProcessWindow(this);
+      }
       processselection = null;
       scrollpane = new ScrollPane();
       zeichenflaeche = new Zeichenflaeche(this);
@@ -50,6 +53,20 @@ public class ProcessWindow extends JInternalFrame {
 //    public void windowOpened(WindowEvent event) {}
 //    public void windowClosing(WindowEvent event) {
 //    }
+
+    void removeProcess() {
+      if (eprocess != null) eprocess.removeProcess();
+    }
+
+    void closeWindow() {
+      eprocess = null;
+      try {
+      	this.setClosed(true);
+      } catch (PropertyVetoException e) {
+        System.out.println(e.getMessage());
+      }
+      this.dispose();
+    }
 
     Eprocess getEprocess() {
       return(eprocess);
@@ -112,6 +129,29 @@ public class ProcessWindow extends JInternalFrame {
       try {
       	setMaximum(true);
       	setSelected(true);
+      } catch (PropertyVetoException e) {
+        System.out.println(e.getMessage());
+      }
+    }
+    
+    void makeIconified() {
+      System.out.println("(ProcessWindow) makeIconified()");
+      try {
+        if (!isIcon()) {
+          setIcon(true);
+        }
+      } catch (PropertyVetoException e) {
+        System.out.println(e.getMessage());
+      }
+    }
+
+    void makeUnIconified() {
+      System.out.println("(ProcessWindow) makeUnIconified()");
+      try {
+        if (isIcon()) {
+          setIcon(false);
+          moveToFront();
+        }
       } catch (PropertyVetoException e) {
         System.out.println(e.getMessage());
       }

@@ -2,6 +2,7 @@ package editor;
 
 import absynt.*;
 import editor.einterface.*;
+import javax.swing.*;
 
 /**
  * Diese Klasse dient dem Editor als Kapsel fuer einen Process der abstrakten Syntax
@@ -19,24 +20,33 @@ public class Eprocess {
   public absynt.ProcessList proclist;
   public boolean grid;
   public Eprogram program;
+  public ProcessWindow processwindow;
 
+/**
+ * erzeugt einen neuen Process mit dem uebergeben Namen.
+ */
   public Eprocess (Eprogram rootprogram, String inname) {
     ainterface = new AbsyntInterface();
     next = null;
     last = null;
     statelist = null;
     translist = null;
+    processwindow = null;
     process = ainterface.makeNewProcess();
     proclist = new absynt.ProcessList(process, null);
     grid = false;
     setName(inname);
     program = rootprogram;
   }
-  
+
+/**
+ * Wrappt einen Eprocess um den uebergebenen absynt.Process
+ */  
   public Eprocess (Eprogram rootprogram, absynt.Process inprocess, absynt.ProcessList inproclist) {
     ainterface = new AbsyntInterface();
     next = null;
     last = null;
+    processwindow = null;
     process = inprocess;
     proclist = inproclist;
     grid = false;
@@ -44,6 +54,66 @@ public class Eprocess {
     if (proclist.next != null) next = new Eprocess(program, proclist.next.head, proclist.next);
   }
 
+/**
+ * Setzt das zum Eprocess zugehoerige ProcessWindow auf
+ * den uebergebenen Wert
+ */
+  void setProcessWindow(ProcessWindow inprocesswindow) {
+    processwindow = inprocesswindow;
+  }
+
+/**
+ * Liefert das zugehoerige ProcessWindow zurueck.
+ */  
+  ProcessWindow getProcessWindow() {
+    return(processwindow);
+  }
+
+/**
+ * schliesst das zu dem Eprocess zugehoerige Fenster.
+ */  
+  void removeProcessWindow() {
+    if (processwindow != null) {
+      processwindow.eprocess = null;
+      processwindow.closeWindow();
+      processwindow = null;
+    }
+  }
+
+/**
+ * Erzeugt ein ProcessWindow fuer den Eprocess.
+ */  
+  void createProcessWindow(Editor editroot, JDesktopPane dpane) {
+    if (processwindow == null) {
+      processwindow = new ProcessWindow(editroot, this);
+      processwindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+      processwindow.addInternalFrameListener(editroot);
+      dpane.add(processwindow);
+      processwindow.moveToFront();
+    }
+  }
+
+/**
+ * Iconifiziert das zugehoerige ProcessWindow, falls vorhanden
+ */
+  void makeIconified() {
+    System.out.println("(Eprocess) makeIconified()");
+    if (processwindow != null) processwindow.makeIconified();
+    else System.out.println("no processwindow !!");
+  }
+
+/**
+ * Deiconifiziert das zugehoerige ProcessWindow, falls vorhanden
+ */
+  void makeUnIconified() {
+    System.out.println("(Eprocess) makeIconified()");
+    if (processwindow != null) processwindow.makeUnIconified();
+    else System.out.println("no processwindow !!");
+  }
+
+/**
+ * Gibt die Namen der Processe als Stringliste zurueck.
+ */
   String[] getProcessNames() {
     String[] outarray;
     if (next != null) {
@@ -58,10 +128,26 @@ public class Eprocess {
     return(outarray);
   }
 
+/**
+ * liefert den gekapselten absynt.Process zurueck;
+ */
   absynt.Process getProcess() {
     return(process);
   }
 
+/**
+ * entfernt den Process aus dem Program
+ */
+  void removeProcess() {
+    if (program != null) {
+      removeProcessWindow();
+      program.removeProcess(this);
+    } else System.out.println("Error !! (Eprocess.removeProcess) eprogram == null");
+  }
+
+/**
+ * liefert den Namen des Process zurueck
+ */
   String getName() {
     String outname = "";
     if (process != null) outname = process.name;
@@ -69,24 +155,40 @@ public class Eprocess {
     return(outname);
   }
 
+/**
+ * Benenmnt den Process mit dem uebergebenen String
+ */
   void setName(String inname) {
     if (process != null) process.name = inname;
     else System.out.println("Error !!!! (Eprocess.setName) no absynt.Process in Eprocess");
   }
 
+/**
+ * Liefert die absynt.ProcessList des Process zurueck.
+ */
   absynt.ProcessList getList() {
     return(proclist);
   }
 
+/**
+ * setzt den uebergebenen Eprocess als Nachfolger fest.
+ */
   void setNext(Eprocess inprocess) {
     if (inprocess != null) proclist.next = inprocess.getList();
      else proclist.next = null;
   }
 
+/**
+ * bringt die Start- und Endzustaende aller Transitionen
+ * des Process auf den aktuellen Stand.
+ */
   void updateTransitions() {
     if (translist != null) translist.updateTransition();
   }
 
+/**
+ * Prueft, ob der uebergebene Estate in dem Eprocess enthalten ist
+ */
   boolean stateIsInProcess(Estate instate) {
     boolean wert = false;
     Estate sucher = statelist;
@@ -310,6 +412,18 @@ public class Eprocess {
       wert = statelist.checkStateName(inname);
     }
     return(wert);
+  }
+
+/**
+ * Liefert den Process mit dem uebergebenen Namen zurueck, falls vorhanden.
+ */
+  Eprocess getProcessByName(String inname) {
+    Eprocess outprocess = null;
+    if (getName().compareTo(inname) == 0) outprocess = this;
+    else {
+      if (next != null) outprocess = next.getProcessByName(inname);
+    }
+    return(outprocess);
   }
 
 }

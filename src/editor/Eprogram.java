@@ -2,7 +2,11 @@ package editor;
 
 import absynt.*;
 import editor.einterface.*;
+import javax.swing.*;
 
+/**
+ * Diese Klasse dient dem Editor als Kapsel fuer ein absynt.Program.
+ */
 public class Eprogram {
 
   public AbsyntInterface ainterface;
@@ -11,6 +15,9 @@ public class Eprogram {
   public Eprocess processlist;
   public absynt.Program program;
 
+/**
+ * Erzeugt ein neues absynt.Program mit dem uebergebenen Namen.
+ */
   public Eprogram (String inname) {
     ainterface = new AbsyntInterface();
     next = null;
@@ -20,6 +27,9 @@ public class Eprogram {
     setName(inname);
   }
 
+/**
+ * Wrappt ein Eprogram um das uebergebene absynt.Program.
+ */
   public Eprogram (absynt.Program inprogram) {	
     ainterface = new AbsyntInterface();
     next = null;
@@ -36,6 +46,35 @@ public class Eprogram {
     }
   }
 
+/**
+ * Schliesst alle ProcessWindows.
+ */
+  void removeProcessWindows () {
+    if (processlist != null) {
+      Eprocess sucher = processlist;
+      while (sucher != null) {
+        sucher.removeProcessWindow();
+        sucher = sucher.next;
+      }
+    }
+  }
+
+/**
+ * Erzeugt Processwindows fuer alle Processe.
+ */
+  void createProcessWindows(Editor editroot, JDesktopPane dpane) {
+    if (processlist != null) {
+      Eprocess sucher = processlist;
+      while (sucher != null) {
+        sucher.createProcessWindow(editroot, dpane);
+        sucher = sucher.next;
+      }
+    }
+  }
+
+/**
+ * liefert die Namen aller Processes des Programms als Stringliste zurueck.
+ */
   String[] getProcessNames() {
     String[] outarray;
     if (processlist != null) outarray = processlist.getProcessNames();
@@ -43,6 +82,9 @@ public class Eprogram {
     return(outarray);
   }
 
+/**
+ * Liefert den Namen des Programs zurueck.
+ */
   String getName() {
     String outname = "";
     if (program != null) outname = program.name;
@@ -50,15 +92,24 @@ public class Eprogram {
     return(outname);
   }
 
+/**
+ * benennt das Programm mit dem uebergebenen String.
+ */
   void setName(String inname) {
     if (program != null) program.name = inname;
     else System.out.println("Error !!!! (Eprogram.setName) no absynt.Program in Eprogram");
   } 
 
+/**
+ * Liefert das absynt.Program des Eprograms zurueck.
+ */
   absynt.Program getProgram() {
     return(program);
   }
 
+/**
+ * fuegt ein uebergebenes Programm am Ende der Programmliste an.
+ */
   public Eprogram appendProgram (absynt.Program inprogram) {
     Eprogram outprogram;
     if (next == null) {
@@ -71,6 +122,9 @@ public class Eprogram {
     return(outprogram);
   }
 
+/**
+ * erzeugt einen neuen Process mit dem uebergebenen Namen.
+ */
   public Eprocess newProcess(String inname) {
     Eprocess outprocess;
     outprocess = new Eprocess(this, inname);
@@ -87,6 +141,37 @@ public class Eprogram {
     return(outprocess);
   }
 
+/**
+ * entfernt den uebergebenen Process aus dem Program.
+ */
+  void removeProcess(Eprocess inprocess) {
+    if (processlist != null) {
+      if (processlist == inprocess) {
+        processlist = inprocess.next;
+        if (processlist != null) {
+          processlist.last = null;
+          processlist.setNext(null);
+          program.procs = processlist.getList();
+        } else {
+          program.procs = null;
+        }
+      } else {
+        Eprocess sucher = processlist;
+        while (sucher != inprocess && sucher != null) sucher = sucher.next;
+        if (sucher != null) {
+          sucher.last.next = sucher.next;
+          if (sucher.next != null) sucher.next.last = sucher.last;
+          sucher.last.setNext(sucher.next);
+          sucher.setNext(null);
+        }
+      }
+    }
+  }
+
+/**
+ * Prueft, ob der uebergebene Name bereits fuer ein Program
+ * vergeben ist.
+ */
   public boolean checkProgramTitle (String inname) {
     boolean wert = false;
     if (getName().compareTo(inname) == 0) {
@@ -99,12 +184,29 @@ public class Eprogram {
     return(wert);
   }
 
+/**
+ * Prueft, ob bereits ein Process mit dem Uebergebenen Namen
+ * existiert.
+ */
   public boolean checkProcessTitle (String inname) {
     boolean wert = false;
     if (processlist != null) {
       wert = processlist.checkProcessTitle(inname);
     }
     return(wert);
+  }
+
+
+/**
+ * sucht inm Program nach einem Eprocess mit dem uebergebenen
+ * Namen und liefert ihn zurueck.
+ */
+  Eprocess getProcessByName(String inname) {
+    Eprocess outprocess = null;
+    if (processlist != null) {
+      outprocess = processlist.getProcessByName(inname);
+    }
+    return(outprocess);
   }
 
 }

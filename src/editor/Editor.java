@@ -69,8 +69,6 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       editor_count++;			// Anzahl laufender Editorfenster
       editor_id = editor_idcount;	// Nummer fuer diesen Editor
 
-      addProgram(program);
-
       setEditorFonts();
       debug = false;
       grid = true;
@@ -117,6 +115,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       addWindowListener(this);		// WindowListener hinzufuegen
 //      pack();
       setVisible(true);			// Frame sichtbar machen
+      addProgram(program);
     }
 
     public Editor (gui.GUI rootgui, absynt.Program program) {
@@ -140,6 +139,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
         if (debug) debugText("closing active window !");
         activewindow = null;
       }
+      ((ProcessWindow)event.getSource()).removeProcess();
     }
     public void internalFrameActivated(InternalFrameEvent event) {
       if (debug) debugText("activated : "+event);
@@ -271,6 +271,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       if (nameset) activeprogram.setName(progname);
 //      setTitle(editorname+" - "+outname);
       setTitle(editorname+" - "+activeprogram.getName());
+      activeprogram.createProcessWindows(this, dpane);
     }
 
     void addProcess (absynt.Process inproccess) {
@@ -316,7 +317,8 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
           System.out.println("calcPosition1 : "+method);
           position.positioniere(activeprocess.getProcess());
         }
-      }
+        activewindow.refreshDisplay();
+      } else System.out.println("no active Process !!");
     }
 
     void calcPosition2 (String method) {
@@ -336,6 +338,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
           System.out.println("calcPosition2 : "+method);
           position.positioniere(activeprocess.getProcess());
         }
+        activewindow.refreshDisplay();
       } else System.out.println("no active Process !!");
     }
 
@@ -363,27 +366,43 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       outname = newProcessWindow(null);
       return(outname);
     }
-
-
-    // *** Die haetten wir noch gerne     
+     
     // Prozess dauerhaft entfernen
     public void RemoveProcess(String id) {
-	
+      System.out.println("GUI uses RemoveProcess");
+      if (activeprogram != null) {
+        Eprocess workprocess = activeprogram.getProcessByName(id);
+        if (workprocess != null) workprocess.removeProcess();
+        else System.out.println("no workprocess returned !!");
+      }
     }
              
     // Das Fenster, von dem Prozess mit der entspr. id, sichtbar machen
     public void OpenProcess(String id) {
-
+      System.out.println("GUI uses OpenProcess");
+      Eprocess workprocess = null;
+      if (activeprogram != null) {
+        workprocess = activeprogram.getProcessByName(id);
+        if (workprocess != null) workprocess.makeUnIconified();
+        else System.out.println("no workprocess returned !!");
+      }
     }
 
     // Das Fenster, in dem der Prozess zu sehen ist, verstecken
     public void CloseProcess(String id) {
-	
+      System.out.println("GUI uses CloseProcess");
+      Eprocess workprocess = null;
+      if (activeprogram != null) {
+        workprocess = activeprogram.getProcessByName(id);
+        if (workprocess != null) workprocess.makeIconified();
+        else System.out.println("no workprocess returned !!");
+      }	
     }
     
+// *** Die haetten wir noch gerne    
     // Das Programm wurde in der GUI ausgetauscht => neues Programm darstellen (und altes wegnehmen)
-    public void refresh(absynt.Program p) {
-
+    public void refresh(absynt.Program inprogram) {
+      addProgram(inprogram);
     }
 
     // Das Programm wurde in der GUI geschlossen, der Editor soll alle Fenster schliessen,
