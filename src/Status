@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.27 2000-07-12 08:14:46 unix01 Exp $
+## $Id: Status,v 1.28 2000-07-13 09:37:26 unix01 Exp $
 ######################################################
 
 
@@ -16,8 +16,6 @@ o absynt:
 	  seiten der Modcheck/simulatorleute,
 	  ob die "Anderung den W"unschen gem"a"s passiert ist,
 	  steht noch aus.
-
-
 
       [?] model-check Gruppe hat clone()-methoden eingef"ugt,
           bisher scheint sich niemand dar"uber beklagt zu haben,
