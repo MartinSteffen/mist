@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.23 2000-07-12 04:46:10 unix01 Exp $
+## $Id: Status,v 1.24 2000-07-12 05:23:48 unix01 Exp $
 ######################################################
 
 
@@ -31,8 +31,13 @@ o absynt:
 o  gui           kraas.helge, schuemann.broder
 
 
-   [?] Was macht der Knopf: editor->remove? Zumindest
-       das Editorfenster geht nicht zu
+   [?] Ein paar Fragen zur Bedienung:
+
+	- Was macht der Knopf: editor->remove? Zumindest
+          das Editorfenster geht nicht zu
+        - 
+
+       - 
 
 
    [?] momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
@@ -67,6 +72,14 @@ o   editor        jacobs.finn, eckloff.alexander
        den Transitionen). 
 
 
+    [?] Ein paar Fragen zur Bedienung:
+
+	 - Wie macht man das channel-edit fenster wieder zu?
+	 - Wie macht man den Editor wieder zu?
+	 - Was macht das close an der GUI
+
+	 - Position1: graph (was macht das?
+	 - pos.2: graph: der bleibt stecken?
 
     [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art, vielleicht
 	m"ussen die gif-bilder einfach in das current directory? geht
@@ -101,7 +114,7 @@ o simulator     goemann.michael, nimser.michael
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
 
-    [?] eingebunden in die Gui?
+    [?] eingebunden in die Gui? => Nullpointer exception
 
 
     - ein wenig Code vohanden, aber noch nicht integriert
@@ -195,6 +208,11 @@ position2:
 
 
  integration   kyas.marcel, stahl.karsten, steffen.Martin
+
+
+      o Simulator scheint zumindest mit einem Fenster eingebunden
+
+      o Modelchecker: NullPointerException 
 
       o keine "Anderung.
 	h"angt im Grunde von allen anderen Gruppen ab, momentan
