@@ -58,8 +58,12 @@ public class Simulator {
      */
     public String[] start(Program program) {
 	this.p = program;
-	this.active = true;
-	return (null) ;
+	this.active = true; 
+	String[] result= new String[3];
+	result[0]="first debugmessage from start(Program program)";
+	result[1]="second debugmessage from start(Program program)";
+	result[2]="third debugmessage from start(Program program)";
+	return (result) ;
     }
 
     /**
@@ -71,11 +75,16 @@ public class Simulator {
      * Debuglevel Debugmeldungen des letzten Programmschritts der Simulation enthaelt.
      */
     public String[] step() {
+	String[] result= new String[3];
+	result[1]="second debugmessage from step()";
+	result[2]="third debugmessage from step()";
 	if (this.active) {
-	    return (null) ;
+	    result[0]="first debugmessage from step() : stepped one step !";
+	    return (result) ;
 	}
 	else {
-	    return (null );	    
+	    result[0]="first debugmessage from step() : CANNOT step , haven't started yet !";
+	    return (result);	    
 	}
     }
 
@@ -85,7 +94,7 @@ public class Simulator {
      * Aktiv heiﬂt hier, daﬂ das Programm noch nicht terminiert ist.
      * @return Ein boolescher Wert, true wenn Prog aktiv, false sonst.
      */
-    public boolean isProgamRunning() {
+    public boolean isProgramRunning() {
 	return (this.active);
     }
 
