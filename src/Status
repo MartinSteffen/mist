@@ -1,5 +1,5 @@
 ##################################################
-## $Id: Status,v 1.10 2000-07-09 09:48:35 unix01 Exp $
+## $Id: Status,v 1.11 2000-07-09 10:12:06 unix01 Exp $
 ##################################################
 
 
@@ -34,7 +34,7 @@ o   editor        jacobs.finn, eckloff.alexander
     den Transitionen). 
 
 
-    - Kompilationsfehler, bitte ausbessern!
+    - die Gif-bilder sind nicht portabel, Grund: ungekl"art
 
     - Integration mit dem PrettyPrinter zum Debuggen vorhanden.
 
