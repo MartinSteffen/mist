@@ -1,4 +1,4 @@
-package absyn;
+package absynt;
 import java.io.Serializable;
 
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
  * so in most cases, the code is self-explanatory.
  * 
  * @author Initially provided by Martin Steffen.
- * @version  $Id: Absyn.java,v 1.2 2000-05-28 11:11:21 unix01 Exp $
+ * @version  $Id: Absyn.java,v 1.3 2000-05-28 12:57:08 unix01 Exp $
  */
 
 
@@ -30,9 +30,12 @@ abstract public class Absyn implements Serializable {
 //	Abstract Syntax for Mist programs
 //	------------------------------------
 //
-//	$Id: Absyn.java,v 1.2 2000-05-28 11:11:21 unix01 Exp $
+//	$Id: Absyn.java,v 1.3 2000-05-28 12:57:08 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2000/05/28 11:11:21  unix01
+//	ok
+//	
 //	Revision 1.1  2000/05/28 08:51:46  unix01
 //	ok
 //	
