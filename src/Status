@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.20 2000-07-11 05:59:30 unix01 Exp $
+## $Id: Status,v 1.21 2000-07-11 06:01:12 unix01 Exp $
 ######################################################
 
 
@@ -51,9 +51,11 @@ o  gui           kraas.helge, schuemann.broder
    	 - Wie l"ost man das gif/jar-Problem?
 	 - Vorlesung + Folien? etc
 
-     [?] plu-and-play: die Gui-Leute wollen sich Gedanken machen, wie man als
+     [?] plug-and-play: 
+	  die Gui-Leute wollen sich Gedanken machen, wie man als
 	 Benutzer des endg"utligen Jarfiles keine gro"sen Klimmz"uge
-	 machen mu"s um das Ding zum laufen zu bringen.
+	 machen mu"s um das Ding zum laufen zu bringen. (java gui.GUI
+	 ist ein wenig kryptisch)
 
 o   editor        jacobs.finn, eckloff.alexander
 
@@ -95,7 +97,7 @@ o simulator     goemann.michael, nimser.michael
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
 
-    - eingebunden in die Gui (zumindest als Knopf)
+    [?] eingebunden in die Gui?
 
 
     - ein wenig Code vohanden, aber noch nicht integriert
