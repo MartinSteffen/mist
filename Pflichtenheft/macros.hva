@@ -12,6 +12,9 @@
 \usepackage{hevea}
 
 
+
+
+
 \newcommand{\marginpar}[1]{}
 \newcommand{\finish}[1]{}
 \newcommand{\status}[1]{{\marginpar{\tiny #1}}}
@@ -25,5 +28,5 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: macros.hva,v 1.2 2000-05-22 11:09:14 softtech Exp $
+%% $Id: macros.hva,v 1.3 2000-06-05 18:02:12 unix01 Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

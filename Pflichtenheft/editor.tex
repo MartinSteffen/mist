@@ -23,7 +23,47 @@ implementiert werden. Er soll folgende Eigenschaften besitzen:
 \end{itemize}
 
 
+\subsubsection*{Designentscheidungen der Editorgruppe/Gui-Gruppe/Graphplatzierungsgruppe:}
+\begin{itemize}
+\item Es wird \emph{ein} Fenster pro Prozess gezeichnet, mit anderen
+  Worten, das komplette Programm (bestehend aus mehreren Prozessen, bleibt
+  bei der Gui).
+\item Es wird vorläufig mit Swing gearbeit, um ein einheitliches
+  \textit{schau-und-fühl} zu bekommen. Falls es Probleme mit der Effizienz
+  gibt, wird es nicht schwer sein, auf AWT umzusatteln.\footnote{Bemerkung
+    (ms): glaube ich nicht; selbst wenn es stimmt, am Ende des Projektes
+    wird niemand schnell irgendwohin umsatteln wollen.}
+\item Koordinaten werden relativ genommen, und zwar in Fließkommawerten
+  \textbf{zwischen $0$ und $1$}. Dies sind die Werte die für Zustände die
+  Position relativ zur Umgebenden Fläche bestimmen.
+\end{itemize}
 
+
+
+
+
+\subsubsection*{Schnittstelle}
+
+Mit der Gui (Abschnitt~\ref{sec:gui}). Desweiterern mit dem Simulator
+(Abschnutt~\ref{sec:simulator}). Es jedoch ist noch zu diskutieren, ob der
+Simulator sich \emph{direkt} an den Editor werdet oder ob dies
+\emph{vermittels} der Gui passiert, da ein Editor nur due Übersicht über
+einen Prozess hat.
+
+Auf jeden Fall: eine Methode \texttt{highlight\_state}, als Übergabe
+entweder
+\begin{itemize}
+\item der Bezeichner des Zustandes, oder
+\item der Zustand als Objekt.
+\end{itemize}
+Die Wahl muß mit dem Simulator oder der Gui vereinbart werden, abhängig
+davon, wer die Methode aufruft.
+
+Eine \emph{wichtige} Schnittstelle (wie bei allen) ist die abstrakte
+Syntax. \textbf{Noch ungeklärt:} sollen die Graphischen Koordinaten in die
+abstakte Syntax mit aufgenommen werden, oder sollen sie davon getrennt
+gehalten werden (durch eine geeignete, um Graphik-Information erweiterte
+Datenstrukturen.
 
 %%% Local Variables: 
 %%% mode: latex

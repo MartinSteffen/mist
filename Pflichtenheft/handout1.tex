@@ -1,5 +1,5 @@
 
-\newif\ifweb\webfalse%%%%%% htmlonly geht irgendwie nicht
+\newif\ifweb\webtrue%%%%%% htmlonly geht irgendwie nicht
 
 
 \documentclass[11pt]{article}
@@ -10,31 +10,34 @@
 \usepackage{handout}
 \usepackage[latin1]{inputenc}
 
-\begin{latexonly}
+\ifweb\else
+%%---------
 \uebungfalse
 \handoutfalse
 \freeformtrue
-\end{latexonly}
+%%----------
+\fi
 
-%\begin{htmlonly}
-%\htmlfoot{\copyright Public License}
-%\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
-%\title{Pflichtenheft(2):  \Mist}
-%\end{htmlonly}
+\ifweb
+\htmlfoot{\copyright Public License}
+\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
+\title{Pflichtenheft(2):  \Mist}
+\else
+\fi
 
 \input{../tex/inputs/macros}
 
 
 
 \begin{document}
-%\begin{latexonly}  % Doesn't work  for HTML/LATEX, comment that out
-  \ausgabe{5.\ Juni 2000}
-  \abgabe{x}
-  \maketitle{Pflichtenheft (2): \Mist}{}
-%\end{latexonly}
-%\begin{htmlonly}
-%  \maketitle{}
-%\end{htmlonly}
+\ifweb
+\maketitle{}
+\else
+\ausgabe{5.\ Juni 2000}
+\abgabe{x}
+\maketitle{Pflichtenheft (2): \Mist}{}
+\fi
+
 
 
 \thispagestyle{empty}
@@ -50,6 +53,7 @@
 \input{checks}
 \input{assert}
 \input{codegenerierung}
+\input{utils}
 \appendix
 
 
