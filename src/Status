@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.29 2000-07-13 11:19:46 unix01 Exp $
+## $Id: Status,v 1.30 2000-07-14 05:28:45 unix01 Exp $
 ######################################################
 
 
@@ -32,9 +32,10 @@ o  gui           kraas.helge, schuemann.broder
 
 	- Was macht der Knopf: editor->remove? Zumindest
           das Editorfenster geht nicht zu
-        - 
-
-       - 
+        - ich finde den Start bei Verzeichnissen grunds"atzlich im $HOME
+	  l"astig. Das ist insbesondere dumm, wenn man ein blob l"adt
+	  und dann einfach save macht.
+	
 
 
    [?] momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
@@ -73,9 +74,51 @@ o   editor        jacobs.finn, eckloff.alexander
     [?] Commandline interface
 
 
+    [?] Array exception beim `Remove' eines Editors, von der 
+	Gui aus aufgerufen.
+
+	Situation: zwei Prozesse, der zweite ist im Editorfenster
+	offen, das Fenster ist aber leer, der Prozess hat auch noch
+	keinen Namen. 
+
+
+
+       java.lang.ArrayIndexOutOfBoundsException: 0 >= 0
+        at java.util.Vector.elementAt(Compiled Code)
+        at javax.swing.table.DefaultTableModel.getValueAt(Compiled Code)
+        at javax.swing.JTable.getValueAt(Compiled Code)
+        at gui.GUI.removeEdMenuItemActionPerformed(Compiled Code)
+        at gui.GUI.access$10(Compiled Code)
+        at gui.GUI$11.actionPerformed(Compiled Code)
+        at javax.swing.AbstractButton.fireActionPerformed(Compiled Code)
+        at javax.swing.AbstractButton$ForwardActionEvents.actionPerformed(Comed Code)
+        at javax.swing.DefaultButtonModel.fireActionPerformed(Compiled Code)
+        at javax.swing.DefaultButtonModel.setPressed(Compiled Code)
+        at javax.swing.AbstractButton.doClick(Compiled Code)
+        at javax.swing.plaf.basic.BasicMenuItemUI$MouseInputHandler.mouseReled(Compiled Code)
+        at java.awt.Component.processMouseEvent(Compiled Code)
+        at java.awt.Component.processEvent(Compiled Code)
+        at java.awt.Container.processEvent(Compiled Code)
+        at java.awt.Component.dispatchEventImpl(Compiled Code)
+        at java.awt.Container.dispatchEventImpl(Compiled Code)
+        at java.awt.Component.dispatchEvent(Compiled Code)
+        at java.awt.LightweightDispatcher.retargetMouseEvent(Compiled Code)
+        at java.awt.LightweightDispatcher.processMouseEvent(Compiled Code)
+        at java.awt.LightweightDispatcher.dispatchEvent(Compiled Code)
+        at java.awt.Container.dispatchEventImpl(Compiled Code)
+        at java.awt.Window.dispatchEventImpl(Compiled Code)
+        at java.awt.Component.dispatchEvent(Compiled Code)
+        at java.awt.EventQueue.dispatchEvent(Compiled Code)
+        at java.awt.EventDispatchThread.run(Compiled Code)
+
+
+
     [?] "Anderung von new-session: mist/blob
     [?] Ein paar Fragen zur Bedienung:
-         - Wie gibt man einem ``Program'' einen Namen, wie geht das rename?
+
+         - Wie gibt man einem ``Program'' einen Namen, 
+         - wie geht das rename?
+	 - Wie werden assertions eingefuegt?
 	 - Wie macht man das channel-edit fenster wieder zu?
 	 - Wie macht man den Editor wieder zu?
 	 - Was macht das close an der GUI
