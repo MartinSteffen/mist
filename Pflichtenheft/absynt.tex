@@ -2,6 +2,19 @@
 \section{Abstrakte Syntax}
 \label{sec:AbstrakteSyntax}
 
+Folgende \emph{erweiterte BNF}-Notation fa"st die \emph{abstrakte Syntax}
+als gemeinsame Zwischenrepresentierung zusammen. Abgesehen von einigen
+Namenkonventionen (Gro"sschreibgung) ist die Umsetzung in \Java{} trivial.
+Jeder nichtterminale Eintrag wird ein \emph{Klasse.} Alternativen,
+gekennzeichnet durch $\bnfbar$, sind Unterklassen der\emph{abstrakten
+  Klasse,} deren Unterf"alle sie bilden. Die Eintr"age der mittlere Spalte
+wird als \emph{Felder} der Klassen repr"asentiert. Die Konstruktoren sind,
+bis auf die Reihenfolge der Argument, durch die Felder der Klasse
+festgelegt.
+
+
+\medskip
+
 \begin{supertabular}{rclcl}
   program & \bnfdef & 
   chans &\of & chandec list
@@ -98,7 +111,7 @@
   variable
   \\
   b\_expr
-  & \of &
+  & \bnfdef &
   left\_expr & \of & expr 
   \\
   & &
@@ -107,11 +120,17 @@
   & & op
   & \of & operand
   \\
+  & & type 
+  & \of & m\_atom\_type
+  \\
   u\_expr
   & \bnfdef &
   sub\_expr & \of & expr 
   \\
   & & op & \of & operand
+  \\
+  & & type 
+  & \of & m\_atom\_type
   \\
   operand
   & \bnfdef &
@@ -142,8 +161,6 @@
   & &
   var & \of & variable
   \\
-  &\bnfbar&
-  \\
   output\_action
   & \bnfdef &
   chan &\of & channel
@@ -171,11 +188,21 @@
   \\
   chandec & \bnfdef & chan & \of & channel
   \\
+  & & type & \of & m\_chan
+  \\
   variable & \bnfdef & name & \of & string
+  \\
+  & & type & \of & m\_atom\_type
+  
   \\
   channel  & \bnfdef & name & \of & string
   \\
-  constval & \bnfdef & val& \of  & \textit{Object}
+  & & type & \of & m\_chan
+  \\
+  constval & \bnfdef 
+  & val& \of  & \textit{Object}
+  \\
+  & & type & \of & m\_atom\_type
   \\
   m\_type & \bnfdef  & & & m\_atom\_type
   \\
@@ -194,12 +221,51 @@
   &  & y & \of & float
 \end{supertabular}
 
-Neu sind die \emph{Positionen} (momentan $x$- und $y$-Koordinate, die der
-graphischen Platzierung der Zustände dienen. Weiter hat sich die Syntax der
-\textit{Prozesse} geändert: es werden Transitionen und Zustände
-gespeichert, wobei der \emph{initiale} Zustand \emph{extra} gespeichert
-ist. D.h., der initiale Zustand ist \emph{ebenfalls} in der Liste aller
-Zustände enthalten.
+
+\subsubsection*{Neu in Version 5}
+
+Neu is die Hinzunahme von \emph{Typen}.  Im Wesentlichen sind dies:
+\begin{itemize}
+\item integer und
+\item boolean, und dazu noch ein Typ 
+\item \texttt{chan} f"ur Kan"ale.
+\end{itemize}
+
+
+
+
+
+
+Um nicht mit den Standardklassen von Java ins Gehege zu kommen, besitzen in
+der Implementierung die Namen der Klassen ein \texttt{M\_} f"ur \Mist{} als
+Pr"afix. Der Typ f"ur Kan"ale ist gedacht f"ur die Deklaration von
+Kan"alen, eine \texttt{Chan Bool} kann nur boolesche Werte "ubertragen,
+entsprechend f"ur ganze Zahlen.
+
+
+Es wurde weiterhin folgende Einschr"ankung vereinbart: \emph{Deklarationen}
+sind grunds"atzlich mit \emph{Angabe des Typs.}
+
+Betroffen von der Erweiterung sind die \emph{Ausdr"ucke,} (\texttt{expr}
+und ihre Unterklassen) die nun typisiert sind. Daneben die
+\emph{Deklaration} f"ur Variablen und f"ur Kan"ale.
+
+Bemerkung: Es wurde festgelegt, da"s Deklarationen grunds"atzlich typisiert
+sein sollen, um die Aufgabe der Modelchecker und der Simulatorgruppe zu
+vereinfachen.
+
+
+
+\subsubsection*{Neu in Version 3}
+
+
+
+Neu sind die \emph{Positionen} (momentan $x$- und
+$y$-Koordinate, die der graphischen Platzierung der Zustände dienen. Weiter
+hat sich die Syntax der \textit{Prozesse} geändert: es werden Transitionen
+und Zustände gespeichert, wobei der \emph{initiale} Zustand \emph{extra}
+gespeichert ist. D.h., der initiale Zustand ist \emph{ebenfalls} in der
+Liste aller Zustände enthalten.
 
 
 %%% Local Variables: 
