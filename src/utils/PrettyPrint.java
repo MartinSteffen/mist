@@ -52,8 +52,9 @@ public class PrettyPrint {
 	    output((TransitionList)absyn);
 	if(absyn instanceof AstateList)
 	    output((AstateList)absyn);
-	/*if(absyn instanceof Initstate)
-	  output((Initstate)absyn); */
+	/*
+	if(absyn instanceof Initstate)
+	output((Initstate)absyn); */
 	if(absyn instanceof Vardec)
 	    output((Vardec)absyn);
 	if(absyn instanceof Variable)
@@ -66,10 +67,10 @@ public class PrettyPrint {
 	    output((U_expr)absyn);
 	if(absyn instanceof Transition)
 	    output((Transition)absyn);
-	if(absyn instanceof Astate)
+	/*if(absyn instanceof Astate)
 	    output((Astate)absyn);
 	if(absyn instanceof State)
-	  output((State)absyn);
+	output((State)absyn);*/
 	if(absyn instanceof Label)
 	    output((Label)absyn);
 	if(absyn instanceof Action)
@@ -347,7 +348,7 @@ public class PrettyPrint {
 
 
 
-    private void print(Initstate initstate){
+    public void print(Initstate initstate){
 	if(initstate !=null){
 	    System.out.println(whiteSpace(column) + "[Initstate] " + 
 			       initstate.name);
@@ -368,21 +369,20 @@ public class PrettyPrint {
 	}
     }
     
-    public void output(Astate astate){
+    public void print(Astate astate){
 	if(astate !=null){
 	    System.out.println(whiteSpace(column) + "[Astate] " +
 			       astate.name);
 			       
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
-	    /*
 	    prettyprint.print(astate.assert);
 	    prettyprint.print(astate.pos);
-	    */
+	    
 	}
     }
     
     
-    public void output(State state){
+    public void print(State state){
 	if(state !=null){
 	    System.out.println(whiteSpace(column) + "[State] " + 
 			       state.name);
