@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.16 2000-07-10 08:01:54 unix01 Exp $
+## $Id: Status,v 1.17 2000-07-10 10:56:14 unix01 Exp $
 ######################################################
 
 
@@ -149,10 +149,19 @@ o  check1         nitsche.andree
       + Ansonsten habe ich keine konkreten Eindruck, wie es 
 	so vorangeht.
 
+position1:
+	[?] Integriert.
+position2:
+	[?] Getestet, integiert?
+
+	(``Log: sollte inzwischen eine gültige Positionierung liefern (noch
+          nicht richtig getestet'')
+
 
  integration   kyas.marcel, stahl.karsten, steffen.Martin
 
-      o das h"angt im Grunde von allen anderen Gruppen ab, momentan
+      o keine "Anderung.
+	h"angt im Grunde von allen anderen Gruppen ab, momentan
 	ist es auf dem Zustand ``compilierbar'' und javadoc funktioniirt.
 	globale Funktionstests haben wir noch nicht richtig gemacht.
 	Eine GUI-Editor-Integrations-Demo, die f"ur heute geplant war,
@@ -175,43 +184,6 @@ o  check1         nitsche.andree
 
 ``Kurzfassung'':
 
-	Es geht _langsam_ voran (soweit ich sehen kann). Gui/Editor haben
-	den Vorteil da"s sie relativ bald was laufendes vorf"uhrbar haben,
-	auch wenn noch nicht alles l"auft. Die Natur der Sache bedingt es,
-	da"s das bei den meisten anderen Gruppen nicht so ist. Da dort oft
-	nocht nichts l"auft, ist es schwierig, den Fortschritt zu
-	beurteilen.
-
-	Falls es inhaltliche oder sonstige Probleme gibt, bitte
-	vorbeikommen (am besten vorher bescheidsagen).
-
-	Konkret k"onnte ich mir beispielsweise eine
-	gemeinschaftsbesprechung
-	
-	  - Modcheck
-	  - Simulator
-
-	vorstellen, da ich diese beide Gruppen f"ur eine komplexe Aufgabe
-	halte und bei beiden w"are es sch"on, wenn man am Ende etwas s"ahe.
-
-	Pos1/2 ist kann auch komplex gemacht werden, aber man kann auch gut
-	mit einfacheren Daumenregeln leben, was momentan anscheinend
-	angestebt ist. Man kann auch gut eine gemeinsame Besprechung:
-
-	  - modcheck
-	  - simulator
-	  - check1
-
-	machen, da (wie oben erw"ahnt) check1 momentan etwas aussen vor
-	ist, obwohl ich erwartet h"atte, da"s simulator/modchek 
-	verschiedene Anforderungen an ihn haben (aber vielleicht
-	sind ja alle gl"ucklich).
-
-	Bei sonstigem Beratungsbedarf, kann man nat"urlich auch
-	vorbeikommen/mailen.
-
-
-Martin
  
 
 
@@ -220,21 +192,22 @@ C = Kompilierbar
 M = Makefile
 F = Fortschritt seit letzter Woche (soweit eingecheckt)
 Q = Fragen die mehr als ein Paket betreffen, die aufgetreten sind (numeriert)
+I = In die Gui integriert?
 
 
-             C   F Q
-gui         [+]  +
-editor       -   + 1
-simulator    +   - 
-modcheck     +   -   
-parser       -   -
-checks1      -   -  
+             C   F  Q  I
+gui          +   +
+editor       +   +  1
+simulator    +   ? 
+modcheck     +   ?  2) 
+parser       +   +  
+checks1      +   ?  
 [checks2]    -   -
-position1    +   - 
-position2    +   -
-integration  +   - 
+position1    +   ?
+position2    +   +
+integration  +   o 
 absynt       +   o
-utils/pp     +   -
+utils/pp     +   ?
      
 
 
@@ -243,6 +216,9 @@ utils/pp     +   -
     parsen kann, d.h. einen Sting bekommt und daraus einen expression
     zur"uckliefert, bzw eine Exception. Namen der Klassen und Methoden
     sind noch festzulegen.
+
+2) - Modcheck hat fragen in Bezug auf Un"are operationen
+   - Clonen von (Teilen der) abstrakten Syntax?
 
 
     
