@@ -1,62 +1,72 @@
-##################################################
-## $Id: Status,v 1.11 2000-07-09 10:12:06 unix01 Exp $
-##################################################
+######################################################
+## $Id: Status,v 1.12 2000-07-10 05:33:13 unix01 Exp $
+######################################################
 
 
 
-Stand: Montag 3. Juli, abends
-=======================
-
-nach der Anpassung der abstrakten Syntax, wie in der "Ubung besprochen,
-==========================
+Stand: Montag 10. Juli, morgens, vor 8
+=======================================
 
 
 o absynt: 
 
       bis auf die (m"oglicherweise noch kommenden "Anderungsw"unsche)
-      momentan stabil
+      momentan stabil.
+
+      [?] model-check Gruppe hat Wunsch nach Klonierbarkeit angemeldet.
 
 o  gui           kraas.helge, schuemann.broder
 
-   momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
-   von der Checkergruppe, wie die Checks eingebunden werden soll (?)
+
+   [?] momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
+       von der Checkergruppe, wie die Checks eingebunden werden soll (?)
+    -    Aus den Log-Kommentaren gehen inhaltliche "Anderungen nicht hervor
 
 
-   Integration mit Editor bereits relativ eng
+    -  Integration mit Editor bereits relativ eng
    
-   noch keine vollst"andige ``Abh"angigkeitsanalyse'' (simulieren nur nach
-   checken...)
+    -   noch keine vollst"andige ``Abh"angigkeitsanalyse'' (simulieren nur nach
+        checken...)?
 
 o   editor        jacobs.finn, eckloff.alexander
 
-    einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
-    noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
-    den Transitionen). 
+     - einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
+       noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
+       den Transitionen). 
+
+     
 
 
-    - die Gif-bilder sind nicht portabel, Grund: ungekl"art
+    [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art
 
     - Integration mit dem PrettyPrinter zum Debuggen vorhanden.
 
-    - Abh"angigkeit Schnittstelle mit Parser auf dem kritischen pfad
-      momentan f"ur den Editor (das Parsen eines Ausdrucks, assignments)
+    [?] Was wurde aus dem Wunsch, expressions zu parsen? [-> Parsergruppe]
 
-    - Schnittstelle mit einer Ausgabefunktion noch offen, feature
-      request an die utils/gruppe
+    [?] Schnittstelle mit einer Ausgabefunktion noch offen, feature
+        request an die utils/gruppe?
 
 o simulator     goemann.michael, nimser.michael
 
     - Fragenverwaltung.
+
     - Stub-code vorhanden, aber momentan noch nicht mehr.
+
     - Spezifikation vorhanden
-    - etwas hinter dem eigenen Zeitplan
+
+    [?] etwas hinter dem eigenen Zeitplan (laut eigenen Angaben)
 
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
     - ein wenig Code vohanden, aber noch nicht testf"ahig
     - Planung f"ur Datenstrukturen
-    - Momentan plan f"ur Model-checking eines Prozesses
+    [?] Momentan plan f"ur Model-checking eines Prozesses
+    [?] Feature request => absynt: das Zeug soll cloneable sein (zumindest
+	VarDec)
+  
+    [?] Fortschritte seit letzter Woche? Zumindest keine Ver"anderung
+	im Code
 
 
 o parser        scott.andreas, hegener.alexander
