@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.13 2000-07-05 10:03:20 unix01 Exp $
+# $Id: Makefile,v 1.14 2000-07-07 04:36:02 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -46,6 +46,7 @@ jar:
 	    ./utils/*.class \
 	    ./editor/*.class \
 	    ./editor/einterface/*.class\
+	    ./editor/images/*.gif\
 	    ./gui/*.class \
 	    ./checks1/*.class \
 	    ./parser/*.class \
