@@ -2,14 +2,11 @@ package absynt;
 import java.io.Serializable;
 
 
-
-
-
 /**
  * Zustand (au"ser initialem Zustand)
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: State.java,v 1.5 2000-06-19 17:17:38 unix01 Exp $
+ * @version $Id: State.java,v 1.6 2000-07-18 22:14:49 unix01 Exp $
  */
 
 
@@ -18,7 +15,7 @@ public class State extends  Astate implements Serializable {
   public State (String s, Expr e) {
     name     = s;
     assert   = e;
-    pos = null;
+    pos = new Position();
   };  
   public State (String s, Expr e, Position p) {
     name     = s;
@@ -35,9 +32,14 @@ public class State extends  Astate implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: State.java,v 1.5 2000-06-19 17:17:38 unix01 Exp $
+//	$Id: State.java,v 1.6 2000-07-18 22:14:49 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2000/06/19 17:17:38  unix01
+//	-  Zus"atzliche "uberladene Konstruktoren eingef"ugt
+//	
+//	-  Felder f"ur State/Initstate nach  Astate verschoben.
+//	
 //	Revision 1.4  2000/06/07 14:11:51  unix01
 //	Nur zur Demo
 //	
