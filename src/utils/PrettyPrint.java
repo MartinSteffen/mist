@@ -11,6 +11,8 @@ public class PrettyPrint {
     public static final int NORM_TAB = 4;
 
     
+    
+    
     public PrettyPrint(int i, int j) {
         try {
             column = i >= 0 ? i - i % j : 0;
@@ -26,11 +28,12 @@ public class PrettyPrint {
     public PrettyPrint() {
         this(NORM_COLUMN, NORM_TAB);
     }
+    
     /* public print methode
      * Hier wird gecheckt welche Instanz das uebergebene Objekt hat
      * und output wird aufgerufen.
      * Da wir auf die Instanz typecasten, reicht es aus
-     * output zu ueberladen
+     * die output methode entsprechend zu ueberladen
      */
     public void print(Absyn absyn) {
         if(absyn instanceof Program)
@@ -100,7 +103,7 @@ public class PrettyPrint {
 	     /*	       
 	      * Neuen Abstand erzeugen...die naechste Spalte ist einen
 	      * tab weiter
-	     */
+	      */
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
             prettyprint.print(program.chans);
             prettyprint.print(program.procs);
@@ -263,12 +266,16 @@ public class PrettyPrint {
     }
 
     
+    /* Wird im Moment nicht ausgegeben, da dies meiner Meinung nach
+     * die Listings uebersichtlicher macht.
+     
     public void output(Expr expr){
 	if(expr !=null){
 	    System.out.println(whiteSpace(column) + "[Expr] " );
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	}
     }    
+    */
     
     public void output(B_expr bexpr){
 	if(bexpr !=null){
@@ -340,20 +347,6 @@ public class PrettyPrint {
     }
 
 
-
-
-    
-    public void print(Initstate initstate){
-	if(initstate !=null){
-	    System.out.println(whiteSpace(column) + "[Initstate] " + 
-			       initstate.name);
-	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
-	    prettyprint.print(initstate.assert);
-	    prettyprint.print(initstate.pos);
-	}
-    }
-    
-    
     public void output(Transition transition){
 	if(transition !=null){
 	    System.out.println(whiteSpace(column) + "[Transition] " );
@@ -365,18 +358,17 @@ public class PrettyPrint {
     }
     
     public void output(Astate astate){
+	String string;
+	string="[Astate] ";
 	if(astate !=null){
 	    if(astate instanceof State){
-		print((State)astate);
-		return;
+		string="[State] ";
 	    }
 	    if(astate instanceof Initstate){
-		print((Initstate)astate);
-		return;
+		string="[Initstate] ";
 	    }
-	    System.out.println(whiteSpace(column) + "[Astate] " +
+	    System.out.println(whiteSpace(column) + string +
 			       astate.name);
-	    
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(astate.assert);
 	    prettyprint.print(astate.pos);
@@ -385,16 +377,6 @@ public class PrettyPrint {
     }
     
     
-    public void print(State state){
-	if(state !=null){
-	    System.out.println(whiteSpace(column) + "[State] " + 
-			       state.name);
-	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
-	    prettyprint.print(state.assert);
-	    prettyprint.print(state.pos);
-	    
-	}
-    }
     
     /* Hier wird festgelegt, wie weit die Ausgabe eingerueckt
      * wird. Bei allen "tab" Abstaenden drucken
@@ -408,7 +390,6 @@ public class PrettyPrint {
 	
         return s;
     }      
-    
 }
 
 
