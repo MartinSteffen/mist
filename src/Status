@@ -1,5 +1,5 @@
 ##################################################
-## $Id: Status,v 1.6 2000-06-26 14:49:01 unix01 Exp $
+## $Id: Status,v 1.7 2000-07-03 17:45:26 unix01 Exp $
 ##################################################
 
 
@@ -13,7 +13,6 @@ o  gui           kraas.helge, schuemann.broder
 
    + kompilierbar, allerdings mit ``deprecated warning!''
    + mehr als nur Stubcode
-   -  kein Makefile.
 
    + scheint bereits mit editor zusammenzupassen, zumindest beim kompilieren.
 
@@ -21,25 +20,19 @@ o  gui           kraas.helge, schuemann.broder
 o   editor        jacobs.finn, eckloff.alexander
 
     + komilierbar
-    - kein Makefile
-
-
 
 o simulator     goemann.michael, nimser.michael
 
-    + funktionierendes Makefile (make all geht)
                               make localdoc geht auch (ich habe ein Verzeichnis: ``editor/Doc'' angelegt
 	                      damit ging es dann.
 
     + Textuelle Spezifikation + Fragenverwaltung: das ist ein sehr gutes Organisationsmittel.
 
-    - keine "Anderung seit 19.6
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
     + kompilierbarer Stubcode
-    - kein Makefile
-    - keine Neuigkeiten seit letzter Woche
+    + keine Neuigkeiten seit letzter Woche
 	
 
 
@@ -121,19 +114,19 @@ F = Fortschritt seit letzter Woche (soweit eingecheckt)
 Q = Fragen die mehr als ein Paket betreffen, die aufgetreten sind (numeriert)
 
 
-             C  M  F Q
-gui         [+] -  +
-editor       +  -  + 1
-simulator    +  +  - 
-modcheck     +  -  -   
-parser      --  -  -
-checks1      -  -  -  
-checks2      -  -  -
-position1    +  +  - 
-position2    +  +  -
-integration  o  +  - 
-absynt       +  +  o
-utils/pp     +  +  -
+             C   F Q
+gui         [+]  +
+editor       -   + 1
+simulator    +   - 
+modcheck     +   -   
+parser       -   -
+checks1      -   -  
+[checks2]    -   -
+position1    +   - 
+position2    +   -
+integration  +   - 
+absynt       +   o
+utils/pp     +   -
      
 
 
