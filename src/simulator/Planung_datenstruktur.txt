@@ -1,0 +1,9 @@
+DATENSTRUKTUR
+=============
+
+anzulegen sind:
+
+- Variablen ( Typ unbekannt ! ): Nach Prozessen streng getrennt !
+- Channel   ( Typ unbekannt ! ): Global.
+- Speicher fuer die aktiven Zustaende der Prozesse ( ein Speicher
+  je Prozess ). 

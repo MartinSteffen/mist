@@ -1,0 +1,46 @@
+Ablauf einer Simulation
+=======================
+
+1.: BASISZYKLUS
+---------------
+
+  - durchgehen der Prozessliste und abchecken der Prozesse auf Transitionen,
+    welche Konzession zum feuern haben.
+  - loeschen aller Channels
+
+problematisch ist, dass ein Prozess eine Ausgabe in einem Channel generieren
+kann, die ein anderer braucht, um eine Transition auszufuehren. Wenn also
+eine Ausgabe in einem Channel generiert wurde, sind Prozesse, welche keine
+konzessionierte Transition hatten, erneut abzuchecken. 
+
+		Was aber, wenn ein Prozess bereits eine Transiton gefeuert
+		hat, durch einen Channel aber eine zweite konzessioniert
+		gewesen waehre ? Strategie zur Reihenfolge der Prozesse
+		nicht machbar. Ausweg: Transitionen vormerken, Channels
+		beruecksichtigen, erst ganz am Ende des Basiszyklus
+		alle Transitionen ausfuehren / Entscheidung faellen, welche
+		ausgefuehrt werden.
+
+		Was, wenn zwei Prozesse im selben "Takt" in den gleichen
+		Channel schreiben wollen ? 
+
+		Nochmal Channel: Speicher immer nur waehrend eines Taktes
+		zur Verfuegung ? Oder soll er doch bis zum naechsten Takt
+		zur verfuegung stehen ?
+
+2.: Prozesse abchecken
+----------------------
+
+  - durchsehen der Transitionsliste, Quellstate muss der markierte sein.
+  - alle gefundenen Transitionen abchecken, ob sie feuern koennen.
+
+Initstate als ersten aktiven Zustand.
+Nach einer Transition neuen State merken.
+Nun abchecken, ob Konzession da: assertion nicht verletzt ?
+				 Guard O.K. ?
+
+		Guard MUSS boolean sein, alles andere macht keinen Sinn !
+		Wird das gecheckt ?
+
+                assertion: muessen wir das abchecken ? Wenn ja:
+		Wann ? Bezueglich der Quelle oder dem Target ?
