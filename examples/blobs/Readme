@@ -1,3 +1,22 @@
 #######################################################
-## $Id: Readme,v 1.1 2000-07-12 06:48:58 unix01 Exp $
+## $Id: Readme,v 1.2 2000-07-12 07:19:20 unix01 Exp $
 #######################################################
+
+
+
+
+
+
+o Einige Beispiele zum testen der Positionierung.
+
+
+   + die ersten Beispiele enthalten nur 1 Prozess, und nur
+     Zust"ande, denn die Transitionen sollten keine Rolle
+     spielen. Es ist jeweils 1 initialer Zustand vorhanden.
+     Die beispiele sind vermutlich syntaktisch korrekt (sie
+     sollten den checker "uberstehen, sobald er anst"andig
+     eingebunden ist)
+
+     - position1.1.blob:   10 verschiedene Zust"ande
+     - position1.2.blob:   20 verschiedene Zust"ande
+
