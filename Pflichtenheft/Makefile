@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.2 2000-05-22 11:09:11 softtech Exp $
+## $Id: Makefile,v 1.3 2000-05-22 18:26:45 softtech Exp $
 ########################################################
 
 
@@ -17,18 +17,15 @@ index.html: $(DOC).html
 xinstall:  index.html
 	mv *.html $(WWWDIR)
 
-$(DOC).html: macros.hva $(DOC).tex
-	$(HEVEA) $(HEVEAOPTS) macros.hva $(DOC).tex
-
-html:
-	hevea macros.hva handout1.tex
-	$(HACHA) -o index.html $(DOC).html
-## 	hacha main-web.html
+html: macros.hva $(DOC).tex
+	$(HEVEA) $(HEVEAOPTS) macros.hva -o $(DOC)-sec.html $(DOC).tex
+	$(HACHA) -o $(DOC).html $(DOC)-sec.html
 
 
 
 clean:
 	rm -f *.aux *.log *.dvi *.ps *.bbl *.blg *~
+	rm *.html *.gif
 
 www:
 	cp *.html *.ps   $(WWWDIR)
