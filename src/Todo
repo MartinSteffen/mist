@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.12 2000-07-07 09:32:30 unix01 Exp $
+# $Id: Todo,v 1.13 2000-07-10 16:28:04 unix01 Exp $
 #######################################################
 
       
@@ -50,6 +50,10 @@ position2:
 	  status: repariert
 
 absynt:    
+
+	- Vardec anpassen, das Feld mit der Expression soll
+	  auf Constval gesetzt werden, auch die 
+	  "uberflussigen Konstruktoren sollen raus.
 
 utils/pp  
         - Code fehlerhaft: Endlosschleife
