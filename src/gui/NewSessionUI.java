@@ -37,10 +37,10 @@ public class NewSessionUI extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 	if (e.getActionCommand().equals("ok")) {
 	    g.actualsession = new GUI.Session(sessionname.getText());
-	    hide();
+	    setVisible(false);
 	    dispose();
 	} else if (e.getActionCommand().equals("cancel")) {
-	    hide();
+	    setVisible(false);
 	    dispose();
 	}
 
