@@ -98,7 +98,8 @@ public class PrettyPrint {
     
     public void output(Program program) {
         if(program != null) {
-            System.out.println(whiteSpace(column) + "[Program] ");
+            System.out.println(whiteSpace(column) + "[Program] " + 
+			       program.name);
             
 	    /* Neuen Abstand erzeugen...die naechste Spalte ist einen
 	     * tab weiter
@@ -148,7 +149,8 @@ public class PrettyPrint {
 
     public void output(absynt.Process process){
 	if(process !=null){
-	    System.out.println(whiteSpace(column)+"[Process] ");
+	    System.out.println(whiteSpace(column)+"[Process] " + 
+			       process.name);
 	    PrettyPrint prettyprint = new PrettyPrint(column +tab, tab);
 	    prettyprint.print(process.vars);
 	    prettyprint.print(process.steps);
