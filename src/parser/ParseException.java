@@ -7,6 +7,7 @@ package parser;
  * weiterzuleiten.
  *
  * @author Andreas Scott, Alexander Hegener (unix13)
+ * @version $Id: ParseException.java,v 1.2 2000-06-07 13:13:04 unix01 Exp $
  */
 
 public class ParseException extends Exception{
