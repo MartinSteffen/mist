@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.17 2000-07-10 10:56:14 unix01 Exp $
+## $Id: Status,v 1.18 2000-07-10 17:55:14 unix01 Exp $
 ######################################################
 
 
@@ -14,6 +14,8 @@ o absynt:
       momentan stabil.
 
       [?] model-check Gruppe hat Wunsch nach Klonierbarkeit angemeldet.
+
+      [?] Enumerator nicht-standardgem"a"s verwendet. 
 
 o  gui           kraas.helge, schuemann.broder
 
@@ -150,12 +152,11 @@ o  check1         nitsche.andree
 	so vorangeht.
 
 position1:
-	[?] Integriert.
+         -  integriert
 position2:
-	[?] Getestet, integiert?
-
-	(``Log: sollte inzwischen eine gültige Positionierung liefern (noch
-          nicht richtig getestet'')
+         - integriert
+	[?] Getestet
+         - im Zeitplan
 
 
  integration   kyas.marcel, stahl.karsten, steffen.Martin

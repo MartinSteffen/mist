@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.14 2000-07-07 04:36:02 unix01 Exp $
+# $Id: Makefile,v 1.15 2000-07-10 17:55:14 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -33,7 +33,7 @@ packets:
 	(cd ./gui; make)
 	(cd ./checks1; make) # -->  compilation error
 #	(cd ./checks2; make) -->  No code, no compilation
-	(cd ./parser; make)
+#	(cd ./parser; make)
 	(cd ./simulator; make)
 	(cd ./modcheck; make)
 	(cd ./position1; make)

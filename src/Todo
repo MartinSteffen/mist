@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.13 2000-07-10 16:28:04 unix01 Exp $
+# $Id: Todo,v 1.14 2000-07-10 17:55:14 unix01 Exp $
 #######################################################
 
       
@@ -56,9 +56,7 @@ absynt:
 	  "uberflussigen Konstruktoren sollen raus.
 
 utils/pp  
-        - Code fehlerhaft: Endlosschleife
         - Unkommentiert, nichtmal Autoren angegeben
-	  status: die Gruppe benachrichtigt.
 
 
 

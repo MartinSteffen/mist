@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Variablendeklaration.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Vardec.java,v 1.6 2000-07-10 17:41:09 unix01 Exp $
+ * @version $Id: Vardec.java,v 1.7 2000-07-10 17:55:15 unix01 Exp $
  */
 
 
@@ -14,7 +14,7 @@ public class Vardec extends Absyn implements Serializable {
 
   public Variable   var;
   public Expr       val = null;    // Wir werden verlangen, da"s es nicht null sein darf
-  public M_AtomType mype;          // Wir werden verlangen, da"s es immer gesetzt ist
+  public M_AtomType type;          // Wir werden verlangen, da"s es immer gesetzt ist
 
 
   /**
@@ -74,9 +74,18 @@ public class Vardec extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Vardec.java,v 1.6 2000-07-10 17:41:09 unix01 Exp $
+//	$Id: Vardec.java,v 1.7 2000-07-10 17:55:15 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.6  2000/07/10 17:41:09  unix01
+//	Variablendeklaration an die Vereinbarungen/"Anderungen im Pflichtenheft
+//	angepasst. => Typ hinzugefuegt.
+//	
+//	Die alten Konstruktoren zeitweise zur Kompatibilit"at
+//	beibehalten.
+//	
+//	[Steffen]
+//	
 //	Revision 1.5  2000/07/10 14:55:33  unix01
 //	Neue Klassen fuer die Abstrakte Syntax hinzugefuegt, fuer die
 //	typisierung:
