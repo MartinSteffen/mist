@@ -416,7 +416,7 @@ public class GUI extends javax.swing.JFrame {
 		p.flush();
 		ostream.close();
 	    } catch (IOException e) {
-		System.err.println("IOException in saveAsMenuItemActionPerformed: Save\n" + e);
+		System.err.println("IOException in saveAsMenuItemActionPerformed\n" + e);
 		actualsession.filename = "";
 	    }
 	} 
@@ -440,7 +440,7 @@ public class GUI extends javax.swing.JFrame {
 		p.flush();
 		ostream.close();
 	    } catch (IOException e) {
-		System.err.println("IOException in saveMenuItemActionPerformed: Save\n" + e);
+		System.err.println("IOException in saveMenuItemActionPerformed\n" + e);
 	    }
 	}
 	
@@ -463,10 +463,10 @@ public class GUI extends javax.swing.JFrame {
 	int returnVal = chooser.showOpenDialog(this); 
 	if(returnVal == javax.swing.JFileChooser.APPROVE_OPTION) { 
 	    f = chooser.getSelectedFile();
-	    System.out.println("trying to load: " + f.getAbsolutePath() + " ..."); 
+	    System.out.println("loading: " + f.getAbsolutePath() + " ..."); 
 	    
 	    if (! f.isFile()) {
-		System.err.println("Konnte " + f.getAbsolutePath() + " nicht finden");
+		System.err.println("Couldn't find  " + f.getAbsolutePath());
 		return;
 	    }        
 	    try {
@@ -498,23 +498,26 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void newMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-
-	//HIERHERKOPIERT, da new editor Exception wirft und Sim so nicht getestet werden kann.
-	toolsMenu.setEnabled(true);  
-
 	if (actualsession != null)
 	    saveMenuItemActionPerformed(evt);
 	actualsession = null;
 	// Dialog zum starten einer neuen Session
 	new NewSessionUI(this, "Creating new Session", true);
-		
+	// Bemerkung: actualsession ist jetzt neu angelegt (ueber this)
+	
 	// Editor starten mit dem aktuellen workProgram
-	if (actualeditor == null) // Editor wurde noch nie gestartet
-	    actualeditor = new editor.Editor(this, actualsession.workProgram);
-	if (actualeditor != null) // Dem Editor das refresh-Signal senden
-	    actualeditor.refresh(actualsession.workProgram);
-	actualeditor.show();
-
+	try {
+	    if (actualeditor == null) // Editor wurde noch nie gestartet
+		actualeditor = new editor.Editor(this, actualsession.workProgram);
+	    if (actualeditor != null) // Dem Editor das refresh-Signal senden
+		actualeditor.refresh(actualsession.workProgram);
+	} catch (Exception e) {
+	    System.err.println("Exception in: newMenuItemActionPerformed" + e.getMessage());
+	    return;
+	}
+	if (!actualeditor.isShowing())
+	    actualeditor.show();
+	
 	redrawProcessTable(actualeditor.getProcessIds());
 	// GUI anpassen
 	editorMenu.setEnabled(true);
