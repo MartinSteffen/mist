@@ -63,11 +63,16 @@ public class Eprogram {
  * Erzeugt Processwindows fuer alle Processe.
  */
   void createProcessWindows(Editor editroot, JDesktopPane dpane) {
+    System.out.println("(Eprogram.createProcessWindows()) ...");
     if (processlist != null) {
+      System.out.println("processlist not null !");
       Eprocess sucher = processlist;
       while (sucher != null) {
+      	System.out.println("creating a window ...");
         sucher.createProcessWindow(editroot, dpane);
+        System.out.println("window was created");
         sucher = sucher.next;
+        System.out.println("switched to next process");
       }
     }
   }
@@ -76,9 +81,11 @@ public class Eprogram {
  * liefert die Namen aller Processes des Programms als Stringliste zurueck.
  */
   String[] getProcessNames() {
+    System.out.println("(Eprogram.getProcessNames) starting ...");
     String[] outarray;
     if (processlist != null) outarray = processlist.getProcessNames();
     else outarray = new String[0];
+    System.out.println("... ready (Eprogram.getProcessNames)");
     return(outarray);
   }
 

@@ -24,6 +24,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     EditorToolbar editbar;			// Toolbar zur Linken
     TopMenuToolbar topmenubar;			// Buttenleiste oben im Window
     TopMenuBar topmenu;
+    boolean graficbuffer;
     Font buttonfont;
     Font menufont;
     Font zeichenfont;
@@ -65,6 +66,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       gui = rootgui;
       zoom = 100;
       prettyprint = new PrettyPrint();
+      graficbuffer = true;
 
       /* Initialisierung der Variablen   */
 
@@ -182,6 +184,17 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     void setActiveWindow (ProcessWindow processwindow) {
       activewindow = processwindow;
       activeprocess = processwindow.getEprocess();
+      refreshVariablenEditor();
+    }
+
+    void refreshChannelEditor() {
+      if (channeleditor != null) {
+      	if (activeprogram != null) channeleditor.refresh(activeprogram.getProgram());
+        else channeleditor.refresh(null);
+      } else {
+//      	if (activeprocess != null) variableneditor = new VariablenEditor(this, activeprocess.getProcess());
+//      	else variableneditor = new VariablenEditor(this, null);
+      }
     }
 
     void refreshVariablenEditor() {
@@ -209,6 +222,16 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
         }
       }
       return(outname);
+    }
+
+    boolean getGraficBufferStatus() {
+      boolean wert = false;
+      if (graficbuffer) wert = true;
+      return(wert);
+    }
+    
+    void setGraficBufferStatus(boolean newstatus) {
+      graficbuffer = newstatus;
     }
 
     String checkProcessName (String inname) {
@@ -274,9 +297,11 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
 //      if (debug) debugText("addProgram : inname = "+inname);
 //      String outname = "";
 //      outname = checkProgramName(inname);
+      System.out.println("addProgram ...");
       String progname = "";
       boolean nameset = false;
       if (inprogram == null) {
+      	System.out.println("inprogram was null !!");
       	nameset = true;
       	progname = checkProgramName("unnamed");
       }
@@ -289,7 +314,11 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
       if (nameset) activeprogram.setName(progname);
 //      setTitle(editorname+" - "+outname);
       setTitle(editorname+" - "+activeprogram.getName());
+      refreshChannelEditor();
+      refreshVariablenEditor();
+      System.out.println("starting to create Windows ...");
       activeprogram.createProcessWindows(this, dpane);
+      System.out.println("... windows created (addProgram)!");
     }
 
     void addProcess (absynt.Process inproccess) {
@@ -303,7 +332,11 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     void exitEditor () {
       closeEditor();
       if (debug) debugText("exitEditor : Nr."+Integer.toString(editor_id));
-      if (editor_count == 0 && gui == null) ; // ist denn das so schwer??? System.exit(0);
+      if (editor_count == 0 && gui == null) System.exit(0);
+      // soll das etwa witzig sein ?
+      // vielleicht solltet ihr mir lieber beschreiben unter welchen
+      // Umstaenden bei Euch Fehler auftauchen, als heimlich am Code
+      // zu werkeln, dann kann ich auch nachschauen, woran das liegt.
     }
 
     void closeEditor () {
@@ -372,6 +405,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
 */
    
     void cleanDesktop () {
+      System.out.println("cleanDesktop() ...");
       JInternalFrame[] framelist = dpane.getAllFrames();
       if (framelist.length > 0) {
         for (int i=0; i < framelist.length; i++) {
@@ -379,6 +413,10 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
           ((ProcessWindow)framelist[i]).closeWindow();
         }
       }
+    }
+
+    void popUp() {
+      setVisible(true);
     }
 
     void removeActiveProgram() {
@@ -401,9 +439,13 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     }
 
     public String [] getProcessIds() {
+      System.out.println("(getProcessIds)");
       String[] outarray;
       if (activeprogram != null) outarray = activeprogram.getProcessNames();
-      else outarray = new String[0];
+      else {
+      	System.out.println("activeprogram was null");
+      	outarray = new String[0];
+      }
       return(outarray);
     }
     
@@ -449,14 +491,18 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     
     // Das Programm wurde in der GUI ausgetauscht => neues Programm darstellen (und altes wegnehmen)
     public void refresh(absynt.Program inprogram) {
-	removeActiveProgram();
-	addProgram(inprogram);
+      System.out.println("Gui uses refresh(absynt.Program)");
+      removeActiveProgram();
+      addProgram(inprogram);
+      popUp();
     }
 
     // Das Programm wurde in der GUI geschlossen, der Editor soll alle Fenster schliessen,
     // bloss sich selbst nicht, und auf ein 'refresh(absynt.Program p)' warten
     public void refresh() {
+      System.out.println("Gui uses refresh()");
       removeActiveProgram();
+      popUp();
     }
     
     void guiAddProcess(String id) {

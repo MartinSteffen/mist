@@ -75,30 +75,53 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
       procwin.editor.debugText("Zeichenflaeche (Paint): >> start <<");
 //      BufferedImage bufferimage = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_RGB);
 //      Graphics ig = bufferimage.getGraphics();
-      g.setFont(procwin.editor.zeichenfont);
-      g.setColor(Color.white);
+
+      boolean buffer = procwin.editor.getGraficBufferStatus();
+
+      Image virtual = null;
+      Graphics g_alt = null;
+
+      if (buffer) {
+      	System.out.println("buffer active");
+        virtual = createImage(getSize().width, getSize().height);
+        System.out.println("image created, getting graphics");
+        g_alt = virtual.getGraphics();
+      } else {
+      	System.out.println("buffer inactive");
+        g_alt = g;
+        g_alt.clearRect(0, 0, dimension.width, dimension.height);
+      }
+
+      System.out.println("start painting ...");
+      g_alt.setFont(procwin.editor.zeichenfont);
       dimension = getSize();
       calcStateRange();
-      g.fillRect(0, 0, dimension.width, dimension.height);
-      g.setColor(Color.black);
+      g_alt.setColor(Color.black);
       paintBorder();
       if (procwin.isGrid()) {
         for (int gx=10; gx <= dimension.width; gx += 10) {
           for (int gy=10; gy <= dimension.height; gy += 10) {
-            g.drawLine(gx,gy,gx,gy);
+            g_alt.drawLine(gx,gy,gx,gy);
           }
         }
       }
 //      imageUpdate(bufferimage, ALLBITS, 0, 0, dimension.width, dimension.height);
       Etransition tsucher = procwin.eprocess.translist;
       while (tsucher != null) {
-        paintTransition(tsucher, 0);
+        paintTransition(g_alt, tsucher, 0);
         tsucher = tsucher.next;
       }      
       Estate ssucher = procwin.eprocess.statelist;
       while (ssucher != null) {
-        paintState(ssucher, 0);
+        paintState(g_alt, ssucher, 0);
         ssucher = ssucher.next;
+      }
+      
+      if (buffer) {
+      	System.out.println("buffer active");
+        g.drawImage(virtual, 0, 0, null);
+      } else {
+
       }
 
 //      procwin.editor.debugText("Zeichenflaeche (Paint): >> end <<");
@@ -108,12 +131,11 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
       procwin.checkActivation();
     }
 
-    void paintState (Estate estate, int mode) {
+    void paintState (Graphics g, Estate estate, int mode) {
       float x_cor = estate.getX();
       float y_cor = estate.getY();
       int int_x_cor = calcDistanceToInt(x_cor, dimension.width);
       int int_y_cor = calcDistanceToInt(y_cor, dimension.height);
-      Graphics g = getGraphics();
       g.setFont(procwin.editor.zeichenfont);
       if (mode == 0) g.setColor(Color.black);
 
@@ -145,7 +167,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
       }
     }
 
-    void paintTransition (Etransition etransition, int mode) {
+    void paintTransition (Graphics g, Etransition etransition, int mode) {
       Estate source_state = etransition.getSource();
       Estate target_state = etransition.getTarget();
 
@@ -157,7 +179,6 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
       float y2 = target_state.getY();
       int int_x2 = calcDistanceToInt(x2, dimension.width);
       int int_y2 = calcDistanceToInt(y2, dimension.height);
-      Graphics g = getGraphics();
       g.setColor(Color.black);
       g.drawLine(int_x1, int_y1, int_x2, int_y2);
     }
@@ -189,7 +210,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
           procwin.processselection = new EditorSelection();
           procwin.processselection.editorobject = selectedstate;
           selectedstate.select();
-          paintState(selectedstate, 1);
+          paintState(getGraphics(), selectedstate, 1);
           if (procwin.processselection != null) procwin.processselection.print();
       	}
       } else {
@@ -225,7 +246,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
               SetStateDialog dialog = new SetStateDialog(procwin.editor, procwin.eprocess, selectedstate, false);
             } else {
               System.out.println("state selected to move");
-              paintState(selectedstate, 1);
+              paintState(getGraphics(), selectedstate, 1);
             }
           } else {
             System.out.println("set state :");
@@ -233,7 +254,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
             Estate instate = new Estate(statename, null, fx1, fy1, 0);
             SetStateDialog ssdialog = new SetStateDialog(procwin.editor, procwin.eprocess, instate, true);
 //            procwin.eprocess.addState(instate);
-            if (procwin.eprocess.stateIsInProcess(instate)) paintState(instate, 0);
+            if (procwin.eprocess.stateIsInProcess(instate)) paintState(getGraphics(), instate, 0);
           }
         } else if (procwin.editor.toolcommand.compareTo("trans") == 0) {
           System.out.println("draw transition");
@@ -260,9 +281,9 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
 //              selectedstate.x_cor = fx2;
 //              selectedstate.y_cor = fy2;
               procwin.processselection.move(fx2 - fx1, fy2 - fy1);
-              if (selectedstate != null) paintState(selectedstate, 1);
+              if (selectedstate != null) paintState(getGraphics(), selectedstate, 1);
               paint(getGraphics());
-            } else { paintState(selectedstate,0); }
+            } else { paintState(getGraphics(), selectedstate,0); }
           } else {
             if ((x2 != x1) || (y2 != y1)) {
               g.setXORMode(Color.white);
@@ -277,7 +298,7 @@ public class Zeichenflaeche extends Canvas implements MouseListener, MouseMotion
         } else if (procwin.editor.toolcommand.compareTo("state") == 0) {
           if ((selectedstate != null) && ((x1 != x2) && (y1 != y2))) {
             selectedstate.setPosition(fx2, fy2);
-            paintState(selectedstate, 0);
+            paintState(getGraphics(), selectedstate, 0);
             paint(getGraphics());
           }
         } else if (procwin.editor.toolcommand.compareTo("trans") == 0) {

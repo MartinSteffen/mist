@@ -11,21 +11,36 @@ public class Etransition extends EditorObject {
   absynt.TransitionList translist;
   Estate sourcestate;
   Estate targetstate;
-  absynt.Label lab;
+//  absynt.Label lab;
   static AbsyntInterface einterface = new AbsyntInterface();
   boolean highlighted;
 
   public Etransition (Estate s, Estate t, absynt.Label l) {
-    lab = l;
+//    lab = l;
     sourcestate = s;
     targetstate = t;
     einterface = new AbsyntInterface();
-    transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), null);
+    transition = einterface.makeNewTransition(sourcestate.getAstate(), targetstate.getAstate(), l);
     translist = einterface.makeNewTransitionList();
     translist.head = transition;
     next = null;
     last = null;
     highlighted = false;
+  }
+
+/**
+ * wrappt eine Etransition um eine uebergebene absynt.Transition mit Liste
+ */
+  public Etransition(Etransition lastetransition, absynt.Transition intransition, absynt.TransitionList intransitionlist) {
+    highlighted = false;
+    // Transition & List
+    transition = intransition;
+    translist = intransitionlist;
+    // last & next
+    last = lastetransition;
+    next = null;
+    if (intransitionlist.next != null) next = new Etransition(this, intransitionlist.next.head, intransitionlist.next);
+    
   }
 
   boolean isConnectedTo(Estate instate) {

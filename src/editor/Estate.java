@@ -25,6 +25,25 @@ public class Estate extends EditorObject {
       highlighted = false;
     }
 
+/**
+ * wrappt einen Estate um einen gegebenen Astate mit Liste
+ */
+    public Estate (Estate lastestate, absynt.Astate instate, absynt.AstateList instatelist) {
+      highlighted = false;
+      // type
+      if (instate != null) {
+        if (instate instanceof absynt.Initstate) type = 1;
+        else type = 0;
+      } else System.out.println("Error !! (Estate(Constructor) instate was null !!)");
+      // state & list
+      state = instate;
+      statelist = instatelist;
+      // last & next
+      next = null;
+      last = lastestate;
+      if (instatelist.next != null) next = new Estate(this, instatelist.next.head, instatelist.next);
+    }
+
     float getX() {
       float outx = -1;
       if (state != null) {

@@ -51,6 +51,23 @@ public class Eprocess {
     proclist = inproclist;
     grid = false;
     program = rootprogram;
+    // States wrappen
+    if (process.states != null) {
+      statelist = new Estate(null, process.states.head, process.states);
+    }
+    // Transitionen wrappen
+    if (process.steps != null) {
+      translist = new Etransition(null, process.steps.head, process.steps);
+      // sourceEstates und TargetEstates ermitteln und anpassen
+      Etransition esucher = translist;
+      while (esucher != null) {
+      	System.out.println("Reconnecting Estates with Etransitions ...");
+      	esucher.sourcestate = getEstateWithAstate(esucher.transition.source);
+      	esucher.targetstate = getEstateWithAstate(esucher.transition.target);
+        esucher = esucher.next;
+      }
+    }
+
     if (proclist.next != null) next = new Eprocess(program, proclist.next.head, proclist.next);
   }
 
@@ -84,12 +101,17 @@ public class Eprocess {
  * Erzeugt ein ProcessWindow fuer den Eprocess.
  */  
   void createProcessWindow(Editor editroot, JDesktopPane dpane) {
+    System.out.println("(Eprocess.createProcessWindow()) ...");
     if (processwindow == null) {
+      System.out.println("processwindow is null");
       processwindow = new ProcessWindow(editroot, this);
       processwindow.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       processwindow.addInternalFrameListener(editroot);
+      System.out.println("adding window to dpane");
       dpane.add(processwindow);
+      System.out.println("moving window to front");
       processwindow.moveToFront();
+      System.out.println("... ready");
     }
   }
 
@@ -115,16 +137,21 @@ public class Eprocess {
  * Gibt die Namen der Processe als Stringliste zurueck.
  */
   String[] getProcessNames() {
+    System.out.println("(Eproces.getProcessNames) starting ...");
     String[] outarray;
     if (next != null) {
+      System.out.println("next NOT null");
       String[] restarray = next.getProcessNames();
       outarray = new String[restarray.length+1];
       for (int i = 0; i < restarray.length; i++) outarray[i] = restarray[i];
       outarray[restarray.length] = getName();
     } else {
+      System.out.println("next IS null");
       outarray = new String[1];
-      outarray[1] = getName();
+      System.out.println("array was initialized");
+      outarray[0] = getName();
     }
+    System.out.println("... ready (Eproces.getProcessNames)");
     return(outarray);
   }
 
@@ -149,9 +176,11 @@ public class Eprocess {
  * liefert den Namen des Process zurueck
  */
   String getName() {
+    System.out.println("(Eproces.getName()) starting ...");
     String outname = "";
     if (process != null) outname = process.name;
     else System.out.println("Error !!!! (Eprocess.getName) no absynt.Process in Eprocess");
+    System.out.println("... ready (Eproces.getName())");
     return(outname);
   }
 

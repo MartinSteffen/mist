@@ -80,6 +80,10 @@ public class TopMenuBar extends JMenuBar {
       JMenuItem o_toggle_debug = new JMenuItem("debug");
       o_toggle_debug.addActionListener(new ToggleDebugListener(editor));
       o_toggle_debug.setFont(editor.menufont); 
+      
+      JCheckBoxMenuItem o_gbuffer = new JCheckBoxMenuItem("buffered painting", true);
+      o_gbuffer.addActionListener(new GraficBufferListener(editor, o_gbuffer));
+      o_gbuffer.setFont(editor.menufont);
 
 // Program-Menu
       JMenuItem p_setchannels = new JMenuItem("edit Channels");
@@ -137,6 +141,7 @@ public class TopMenuBar extends JMenuBar {
       menu_edit.add(e_cut);
 
       menu_options.add(o_toggle_debug);
+      menu_options.add(o_gbuffer);
 
       menu_program.add(p_setchannels);
       menu_program.add(p_programrename);
@@ -156,7 +161,9 @@ public class TopMenuBar extends JMenuBar {
 
   /* Menus zu der Menubar hinzufuegen */
 
-      add(menu_file);
+      if (editor.gui == null) {
+        add(menu_file);
+      }
       add(menu_edit);
       add(menu_options);
       add(menu_program);
@@ -188,5 +195,19 @@ public class TopMenuBar extends JMenuBar {
       public void actionPerformed(ActionEvent event) {
         editor.calcPosition2(method);
       }
+    }
+    
+    class GraficBufferListener implements ActionListener {
+        JCheckBoxMenuItem cbitem;
+        Editor editor;
+
+        public GraficBufferListener(Editor editroot, JCheckBoxMenuItem initem) {
+          cbitem = initem;
+          editor = editroot;
+        }
+        
+        public void actionPerformed(ActionEvent event) {
+          editor.setGraficBufferStatus(cbitem.getState());
+        }
     }
 }

@@ -86,9 +86,11 @@ public class TopMenuToolbar extends JToolBar {
 
   /* Buttons in die Toolbar einfuegen */
 
-      add(b_new);
-      add(b_open);
-      add(b_save);
+      if (editor.gui == null) {
+        add(b_new);
+        add(b_open);
+        add(b_save);
+      }
       addSeparator();
 //      add(b_clear);
       add(b_edit_copy);
