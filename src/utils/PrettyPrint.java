@@ -7,7 +7,7 @@ public class PrettyPrint {
 
     private int column;
     private int tab;
-    public static final int NORM_COLUMN = 0;
+    public static final int NORM_COLUMN = 0; 
     public static final int NORM_TAB = 4;
 
     public PrettyPrint(int i, int j) {
@@ -25,6 +25,12 @@ public class PrettyPrint {
     public PrettyPrint() {
         this(0, 4);
     }
+    /* public print methode
+     * Hier wird gecheckt welche Instanz das uebergebene Objekt hat
+     * und die zugehoerige output routine aufgerufen.
+     * Damit die Routinen einfach ausgewaehlt werden koennen
+     * typecasten wir auf den Typen der Instanz
+     */
     public void print(Absyn absyn) {
         if(absyn instanceof Program)
             output((Program)absyn);
@@ -55,10 +61,22 @@ public class PrettyPrint {
 	    output((Expr)absyn);
 	if(absyn instanceof B_expr)
 	    output((B_expr)absyn);
+	if(absyn instanceof U_expr)
+	    output((U_expr)absyn);
 	if(absyn instanceof Transition)
 	    output((Transition)absyn);
 	if(absyn instanceof Astate)
 	    output((Astate)absyn);
+	if(absyn instanceof Label)
+	    output((Label)absyn);
+	if(absyn instanceof Action)
+	    output((Action)absyn);
+	if(absyn instanceof Input_action)
+	    output((Input_action)absyn);
+	if(absyn instanceof Output_action)
+	    output((Output_action)absyn);
+	if(absyn instanceof Assign_action)
+	    output((Assign_action)absyn);
     }
 		   
 
@@ -168,9 +186,43 @@ public class PrettyPrint {
 	}
     }
     
+    public void output(Label label){
+	if(label !=null){
+	    System.out.println(whiteSpace(column) + "[Label] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(label.guard);
+	    prettyprint.print(label.act);
+	}
+    }
     
+    public void output(Action action){
+	if(action !=null){
+	    System.out.println(whiteSpace(column) + "[Action] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	}
+    }
+    
+    
+    public void output(Input_action input_action){
+	if(input_action !=null){
+	    System.out.println(whiteSpace(column)+ "[Input_action] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(input_action.chan);
+	    prettyprint.print(input_action.var);
+	}
+    }
+    
+    public void output(Output_action output_action){
+	if(output_action !=null){
+	    System.out.println(whiteSpace(column)+ "[Output_action] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(output_action.chan);
+	    prettyprint.print(output_action.val);
+	}
+    }
     public void output(Expr expr){
 	if(expr !=null){
+
 	    System.out.println(whiteSpace(column) + "[Expr] ");
             PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	}
@@ -187,6 +239,18 @@ public class PrettyPrint {
 	}
 	
     }   
+    
+    public void output(U_expr uexpr){
+	if(uexpr !=null){
+	    System.out.println(whiteSpace(column) + "[U_Expr] ");
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    /*
+	    prettyprint.print(u_expr.sub_expr);
+	    prettyprint.print(u_expr.op);
+	    */
+	    }
+    }
+    
     private void print(int op){
 	String string;
 	if(op!=0){
