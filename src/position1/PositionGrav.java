@@ -15,7 +15,7 @@ import absynt.*;
 
 public class PositionGrav implements position1.Position
 {
-	private static final int ITERATIONS = 1;		// Iterationstiefe
+	private static final int ITERATIONS = 50;		// Iterationstiefe
 	private static final float WORKSPACE = 1.0f;	// La"nge der quadr. Zeichenfläche
 
 	private absynt.Process process;	// aktueller Prozess
@@ -34,7 +34,7 @@ public class PositionGrav implements position1.Position
 
 	private void init() {			// Initialisierung der Variablen
 		area = WORKSPACE*WORKSPACE;	// Gro"sse der Zeichenfla"che
-		t = WORKSPACE;				// Temperatur des Atommodells
+		t = WORKSPACE*1000;				// Temperatur des Atommodells
 
    		// Za"hlen der Zusta"nde:
 		AstateList ZList = process.states;
@@ -87,10 +87,9 @@ public class PositionGrav implements position1.Position
 //	Anordnung der n Knoten in einem n-Eck,
 //	als Ausgangssituation fu"r den Algorithmus:
 	private void assign_initial_positions()	{
-   		float r = WORKSPACE/2.5f;
    		for (int i=0; i<ZCount; i++) {
-   			SA[i].pos.x = (float)(Math.cos((double)(i)/ZCount*Math.PI*2.0)*r+WORKSPACE/2.0f);
-   			SA[i].pos.y = (float)(Math.sin((double)(i)/ZCount*Math.PI*2.0)*r+WORKSPACE/2.0f);
+   			SA[i].pos.x = (float)(Math.cos((double)(i)/ZCount*Math.PI*2.0));
+   			SA[i].pos.y = (float)(Math.sin((double)(i)/ZCount*Math.PI*2.0));
    		}  	
 	} 
 
@@ -121,10 +120,27 @@ public class PositionGrav implements position1.Position
 
 
 	private void normalize() {
-		for (int i=0; i<ZCount; i++) {
-					SA[i].pos.x /= WORKSPACE;
-					SA[i].pos.y /= WORKSPACE;
-		}
+	    float minx = WORKSPACE;
+	    float maxx = 0;
+	    float miny = WORKSPACE;
+	    float maxy = 0;
+	    
+	    for (int i=0; i<ZCount; i++) {
+		if (minx > SA[i].pos.x) { minx = SA[i].pos.x; }
+		if (maxx < SA[i].pos.x) { maxx = SA[i].pos.x; }
+		if (miny > SA[i].pos.y) { miny = SA[i].pos.y; }
+		if (maxy < SA[i].pos.y) { maxy = SA[i].pos.y; }
+	    }
+
+	    float len = (float)Math.abs(maxx-minx);
+	    System.out.println("-= Graph Positionierung 1 =-");
+	    for (int i=0; i<ZCount; i++) {
+		SA[i].pos.x = (SA[i].pos.x-minx)/(len+0.4f)+0.1f;
+		SA[i].pos.y = (SA[i].pos.y-miny)/(len+0.5f)+0.1f;
+		System.out.print("State: "); System.out.print(i);
+		System.out.print(", x: "); System.out.print(SA[i].pos.x);
+		System.out.print(", y: "); System.out.println(SA[i].pos.y);
+	    }
 	}
 
 	public void positioniere (absynt.Process process) {
@@ -135,9 +151,9 @@ public class PositionGrav implements position1.Position
 			init();
 			assign_initial_positions();
    			
-			absynt.Position[] disp = new absynt.Position[ZCount];
+   			absynt.Position[] disp = new absynt.Position[ZCount];
 			absynt.Position delta;
-		
+		       
 			// Pro Iteration Berechnung der
 			// - Abstossungskra"fte,
 			// - Anziehungskra"fte,
@@ -168,7 +184,7 @@ public class PositionGrav implements position1.Position
 					disp[TA[idx][1]].x += (delta.x/VecLen(delta))*f_a(VecLen(delta));
 					disp[TA[idx][1]].y += (delta.y/VecLen(delta))*f_a(VecLen(delta));
 				}	
-				
+				/*
 				// Begrenzung des Displacements durch die Temperatur:
 				for (int v=0; v<ZCount; v++) {
 					SA[v].pos.x += (disp[v].x/VecLen(disp[v]))*Math.min(disp[v].x,t);
@@ -177,10 +193,10 @@ public class PositionGrav implements position1.Position
 					SA[v].pos.y = Math.min(WORKSPACE/2,Math.max(-WORKSPACE/2,SA[v].pos.y));
 				}
 				
-				t = cool(t);				
+				t = cool(t);	*/			
 			}
-			
-//			normalize();		// Positioniert Graph auf [0,1.0]x[0,1.0]-Intervall
+		       
+			normalize();		// Positioniert Graph auf [0,1.0]x[0,1.0]-Intervall
 		}
 	}
 }
