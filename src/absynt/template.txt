@@ -9,7 +9,7 @@ import java.io.Serializable;
  * <Klasse> Tr.
  * Bla
  * @author Initially provided by Martin Steffen.
- * @version $Id: template.txt,v 1.1 2000-05-28 09:17:14 unix01 Exp $
+ * @version $Id: template.txt,v 1.1 2000/05/28 09:17:14 unix01 Exp <dollar>	
  */
 
 
@@ -23,8 +23,9 @@ public class <xxxx> extends ...{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	\$Id: template.txt,v 1.1 2000-05-28 09:17:14 unix01 Exp $
+//	$Id: template.txt,v 1.1 2000/05/28 09:17:14 unix01 Exp <dollar>
 //
-//	\$Log: not supported by cvs2svn $
+//	$Log: temp <dollar>
+//	
 //---------------------------------------------------------------------
 
