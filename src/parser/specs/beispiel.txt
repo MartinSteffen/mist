@@ -13,11 +13,10 @@ program HelloWorld {
       put (c1, x);              // s4
     }
     if(x)
-    {
-      x = x + y;
-      put (c1, x);
-    }	
-    x = 18;
+	x = 1;  
+    else
+        x = 18;
+
   }                             // s5
 
   // und noch einer
