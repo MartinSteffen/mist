@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.21 2000-07-11 06:01:12 unix01 Exp $
+## $Id: Status,v 1.22 2000-07-11 06:31:17 unix01 Exp $
 ######################################################
 
 
@@ -30,6 +30,9 @@ o absynt:
 
 o  gui           kraas.helge, schuemann.broder
 
+
+   [?] Was macht der Knopf: editor->remove? Zumindest
+       das Editorfenster geht nicht zu
 
 
    [?] momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
@@ -62,6 +65,7 @@ o   editor        jacobs.finn, eckloff.alexander
      - einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
        noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
        den Transitionen). 
+
 
 
     [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art, vielleicht
