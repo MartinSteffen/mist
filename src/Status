@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.19 2000-07-11 05:45:49 unix01 Exp $
+## $Id: Status,v 1.20 2000-07-11 05:59:30 unix01 Exp $
 ######################################################
 
 
@@ -51,8 +51,8 @@ o  gui           kraas.helge, schuemann.broder
    	 - Wie l"ost man das gif/jar-Problem?
 	 - Vorlesung + Folien? etc
 
-     [?] Gui-Leute wollen sich Gedanken mache, wie man als
-	 Benutzer des endg"utligen Jarfiles keine Gro"sen Klimmz"uge
+     [?] plu-and-play: die Gui-Leute wollen sich Gedanken machen, wie man als
+	 Benutzer des endg"utligen Jarfiles keine gro"sen Klimmz"uge
 	 machen mu"s um das Ding zum laufen zu bringen.
 
 o   editor        jacobs.finn, eckloff.alexander
