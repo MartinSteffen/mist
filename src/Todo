@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.6 2000-06-27 08:28:13 unix01 Exp $
+# $Id: Todo,v 1.7 2000-06-27 08:28:46 unix01 Exp $
 #######################################################
 
       
@@ -25,7 +25,7 @@ parser:
 
 	- Parsen eines Strings in eine Expression
 	  status: bislang keine Stellungnahme von parsergruppe,
-	          schnittstelle noch nicht festgelegt.
+	          Schnittstelle noch nicht festgelegt.
 	
 
 checks1:    
