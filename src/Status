@@ -1,83 +1,180 @@
 ##################################################
-## $Id: Status,v 1.7 2000-07-03 17:45:26 unix01 Exp $
+## $Id: Status,v 1.8 2000-07-04 07:26:50 unix01 Exp $
 ##################################################
 
 
 
-Stand: 26. Juni, Mittag
+Stand: Montag 3. Juli, abends
 =======================
 
 
+nach der Anpassung der abstrakten Syntax, wie in der "Ubung besprochen,
+
+
+==========================
+
+
+o absynt: 
+
+      bis auf die (m"oglicherweise noch kommenden "Anderungsw"unsche)
+      momentan stabil
 
 o  gui           kraas.helge, schuemann.broder
 
-   + kompilierbar, allerdings mit ``deprecated warning!''
-   + mehr als nur Stubcode
+   momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
+   von der Checkergruppe, wie die Checks eingebunden werden soll (?)
 
-   + scheint bereits mit editor zusammenzupassen, zumindest beim kompilieren.
 
+   Integration mit Editor bereits relativ eng
+   
+   noch keine vollst"andige ``Abh"angigkeitsanalyse'' (simulieren nur nach
+   checken...)
 
 o   editor        jacobs.finn, eckloff.alexander
 
-    + komilierbar
+    einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
+    noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
+    den Transitionen). 
+
+
+    - Kompilationsfehler, bitte ausbessern!
+
+    - Integration mit dem PrettyPrinter zum Debuggen vorhanden.
+
+    - Abh"angigkeit Schnittstelle mit Parser auf dem kritischen pfad
+      momentan f"ur den Editor (das Parsen eines Ausdrucks, assignments)
+
+    - Schnittstelle mit einer Ausgabefunktion noch offen, feature
+      request an die utils/gruppe
 
 o simulator     goemann.michael, nimser.michael
 
-                              make localdoc geht auch (ich habe ein Verzeichnis: ``editor/Doc'' angelegt
-	                      damit ging es dann.
-
-    + Textuelle Spezifikation + Fragenverwaltung: das ist ein sehr gutes Organisationsmittel.
+    - Fragenverwaltung.
+    - Stub-code vorhanden, aber momentan noch nicht mehr.
+    - Spezifikation vorhanden
+    - etwas hinter dem eigenen Zeitplan
 
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
-    + kompilierbarer Stubcode
-    + keine Neuigkeiten seit letzter Woche
-	
-
+    - ein wenig Code vohanden, aber noch nicht testf"ahig
+    - Planung f"ur Datenstrukturen
+    - Momentan plan f"ur Model-checking eines Prozesses
 
 
 o parser        scott.andreas, hegener.alexander
 
-    + compilierbarer Stubcode
-    + Makefile
-    + Docu vorrbereitet
-    - keine "Anderung seit letzter Woche
+    - Stubcode
+    - unver"andertes Makefile, da die abh"angigkeiten
+        hier etwas komplexer sind, (Aufruf von Yacc/Lex)	
+	sollte das Makefile entsprechend angep"a"st werden.
 
+     - sehr einfache konkrete Syntax festgelegt,
+        -> in eine ersten Version sollte der parser sehr
+	einfach und schnell zu implementieren sein.
 
+     - komplexere Syntax (wie im urspr"unglichen Pflichtenheft)
+       ``angedacht''.
 
-  check1         nitsche.andree
+     - Feature-Request von der editor-Gruppe ausstehend. Da Espression so
+       oder so geparst werden mu"ssen, sollte das kein extra-Auffwand sein.
 
-     -  Stub code
-     -  kein Makefile 
-     --  javac *.java kompiliert nicht!
+	
 
+o  check1         nitsche.andree
 
-  check2         dagefoerde.jonas, lukosch.andreas, 
+     -  Code vorhanden
 
-    - kein Code, 
-    - keinerlei R"uckmeldung.
-	ohne eindeutige Reaktion bis morgen fr"uh ist die Gruppe raus.
+     -  Das Paket ist relativ isoliert momentan, scheint mir.
+	Im wesentliche aus 2 Gr"unden: 
 
+	 1.) Andree ist selten bei den "Ubungen, 
+
+         2.) Die Gruppen, die vor allen W"unsche an die Checkergruppe haben
+	     k"onnten (Model-checker, Simulator), sind mit konkreten
+	     Feature-requests noch nicht herausger"uckt, d.h. ich
+	     wei"s nicht, ob die Checks, die, die von check1 angeboten
+	     werden, allen anderen Gruppen zufriedenstellen (falls
+	     es W"usche gibt, bitte nicht in der allerletzen Woche damit
+	     rausr"ucken...)
 
 
  position1     dietrich.daniel, zahorsky.moritz, buck.christian
-
-
-      +  stub code
-      +  compilierbar
-      -  kein Makefile
-
-
  position2     thoehle.ralf, mallach.paul
 
-      + Code
-      + Makefile
-      -- nicht kompilierbar (s.u)
+      + teilweise code vorhanden
 
-      - kein Fortschritt seit 19.
+      + gemeinsames interface der beiden gruppen
 
-    Komplilationsfehler (bei make all)
+      + Ansonsten habe ich keine konkreten Eindruck, wie es 
+	so vorangeht.
+
+
+ integration   kyas.marcel, stahl.karsten, steffen.Martin
+
+      o das h"angt im Grunde von allen anderen Gruppen ab, momentan
+	ist es auf dem Zustand ``compilierbar'' und javadoc funktioniirt.
+	globale Funktionstests haben wir noch nicht richtig gemacht.
+	Eine GUI-Editor-Integrations-Demo, die f"ur heute geplant war,
+	wurde auf n"achste Woche verschoben.
+
+
+ utils/pp     kraus.oliver, labenda.holger
+
+	  +  Pp scheint im Gro"sen und Ganzen funktionsf"ahig
+          +  bereits im Editor integriert (zum debuggen)
+
+          + Feature request von Editor -> pp/utils-gruppen
+
+	    Funktionalit"at "ahnich wie beim PP erw"unscht, Umwandlung
+	    Absynt.Expr -> String (ist das korrent, Editor?), nur nicht
+	    Zeilenweise.  Idealerweise sollte die Ausgabe f"ur diesen
+	    Zweck mit der konkreten Syntax (parser-Gruppe) "ubereinstimmen.
+
+==============
+
+``Excecutive Summary'':
+
+	Es geht _langsam_ voran (soweit ich sehen kann). Gui/Editor haben
+	den vorteil da"s sie relativ bald was laufendes vorf"uhrbar haben,
+	auch wenn noch nicht alles l"auft. Die natur der Sache bedingt es,
+	da"s das bei den meisten anderen Gruppen nicht so ist. Da dort oft
+	nocht nichts l"auft, ist es schwierig, den Fortschritt zu
+	beurteilen.
+
+
+	Falls es inhaltliche oder sonstige Probleme gibt, bitte
+	vorbeikommen (am besten vorher bescheidsagen).
+
+	Konkret k"onnte ich mir beispielsweise eine
+	gemeinschaftsbesprechung
+	
+	  - Modcheck
+	  - Simulator
+
+	vorstellen, da ich diese beide Gruppen f"ur eine komplexe Aufgabe
+	halte und bei beiden w"are es sch"on, wenn man am Ende etwas s"ahe.
+
+	Pos1/2 ist kann auch komplex gemacht werden, aber man kann auch gut
+	mit einfacheren Daumenregeln leben, was momentan anscheinend
+	angestebt ist. Man kann auch gut eine gemeinsame Besprechung:
+
+	  - modcheck
+	  - simulator
+	  - check1
+
+	machen, da (wie oben erw"ahnt) check1 momentan etwas aussen vor
+	ist, obwohl ich erwartet h"atte, da"s simulator/modchek 
+	verschiedene Anforderungen an ihn haben (aber vielleicht
+	sind ja alle gl"ucklich).
+
+	Bei sonstigem Beratungsbedarf, kann man nat"urlich auch
+	vorbeikommen/mailen.
+
+
+Martin
+ 
+
 
    PositionGrav.java:9: class position2.PositionGrav must be declared abstract. It does not define void positioniere(absynt.Process) from interface position2.Position.
 
