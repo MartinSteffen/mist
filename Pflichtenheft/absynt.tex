@@ -110,6 +110,8 @@
   TIMES
   \bnfbar
   DIV
+  & &
+  \textit{(Operand als Konstanten in \textnormal{expr})}
   \\
   & \bnfbar &
   AND
@@ -118,9 +120,12 @@
   \bnfbar
   NEG
   \\
+  & \bnfbar &
+  LESS \bnfbar GREATER \bnfbar LEQ \bnfbar GEQ
+  \\
   input\_action
   & \bnfdef &
-  chan &\of & string
+  chan &\of & channel
   \\
   & &
   var & \of & variable
@@ -129,7 +134,7 @@
   \\
   output\_action
   & \bnfdef &
-  chan &\of & string
+  chan &\of & channel
   \\
   & & 
   val  & \of & expr
@@ -148,17 +153,13 @@
   vardec &\bnfdef &
   var  & \of & variable
   \\
-  chandec & \bnfdef & chan & \of & string
+  chandec & \bnfdef & chan & \of & channel
   \\
   variable & \bnfdef & name & \of & string
   \\
-  constval & \bnfdef & & & b\_val
+  channel  & \bnfdef & name & \of & string
   \\
-  & \bnfbar & &  & i\_val
-  \\
-  b\_val &\bnfdef &  & & bool
-  \\
-  i\_val &\bnfdef  & & & int
+  constval & \bnfdef & val& \of  & \textit{Object}
 \end{tabular}
 
 %%% Local Variables: 

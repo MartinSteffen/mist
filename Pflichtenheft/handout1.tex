@@ -1,3 +1,7 @@
+
+\newif\ifweb\webfalse%%%%%% htmlonly geht irgendwie nicht
+
+
 \documentclass[11pt]{article}
 
 \usepackage[english, german]{babel}
@@ -12,25 +16,25 @@
 \freeformtrue
 \end{latexonly}
 
-\begin{htmlonly}
-\htmlfoot{\copyright Public License}
-\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
-\title{Pflichtenheft(1):  \Mist}
-\end{htmlonly}
+%\begin{htmlonly}
+%\htmlfoot{\copyright Public License}
+%\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
+%\title{Pflichtenheft(2):  \Mist}
+%\end{htmlonly}
 
 \input{../tex/inputs/macros}
 
 
 
 \begin{document}
-%\begin{latexonly}  % Doesn't work, comment that out
-  \ausgabe{22.\ Mai 2000}
+%\begin{latexonly}  % Doesn't work  for HTML/LATEX, comment that out
+  \ausgabe{5.\ Juni 2000}
   \abgabe{x}
-  \maketitle{Pflichtenheft (1): \Mist}{}
+  \maketitle{Pflichtenheft (2): \Mist}{}
 %\end{latexonly}
-\begin{htmlonly}
-  \maketitle{}
-\end{htmlonly}
+%\begin{htmlonly}
+%  \maketitle{}
+%\end{htmlonly}
 
 
 \thispagestyle{empty}

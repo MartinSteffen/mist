@@ -1,13 +1,22 @@
-\section{Model-Checker (optional)}
+\section{Model-Checker}
 \label{sec:assert}
+
+
+\team{Aneta Kümper, Frank Naumann, Eike Schulz}
 
 Es soll die Möglichkeit gegeben werden, die \emph{Korrektheit} des
 eingegebenen Programmes zu überprüfen. Dies soll in einfacher Weise dadurch
 geschehen, daß überprüft wird, ob auf allen Ausführungen des Programmes die
-\emph{Assertions} nicht verletzt sind. Es ist freigestellt, diese
-Funktionalität durch eine Übersetzung in ein bestehendes Tool zu
-implementieren. Alternativ kann man es in Java implementieren (es wird
-vermutlich sehr viel weniger effizient).
+\emph{Assertions} nicht verletzt sind. 
+
+\medskip
+
+Im wesentlichen wird eine \emph{Graphsuche} implementiert werde: die
+abstrakte Syntax wird in einem ersten Schritt in einen (expliziten oder
+impliziten) Graphen übersetzt, der danach mittels \emph{Tiefensuche} nach
+verletzung der Zusicherungen abgesucht wird.
+
+
 
 
 %%% Local Variables: 
