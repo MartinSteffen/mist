@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.15 2000-07-10 05:56:29 unix01 Exp $
+## $Id: Status,v 1.16 2000-07-10 08:01:54 unix01 Exp $
 ######################################################
 
 
@@ -63,16 +63,20 @@ o simulator     goemann.michael, nimser.michael
 
     - Spezifikation vorhanden
 
-    [?] etwas hinter dem eigenen Zeitplan (laut eigenen Angaben)
+    [?] etwas hinter dem eigenen Zeitplan (vor einer Woche, laut eigenen Angaben)
 
     [?] was sind die Fortschritte seit letzter Woche?
 	
-    [?] gibt es W"unsche an die checks-Gruppe?
+    [?] gibt es W"unsche an die checks-Gruppe? Wenn es nun keine
+	gibt ist es eh zu sp"at.
+
+    [?] Zeitplan?
 
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 
-    - ein wenig Code vohanden, aber noch nicht testf"ahig
+    - ein wenig Code vohanden, aber noch nicht integriert
+
     - Planung f"ur Datenstrukturen
 
     [?] Momentan Plan f"ur Model-checking eines Prozesses
@@ -84,15 +88,16 @@ o modcheck      neumann.frank, kuemper.aneta, schulz.eike
 	im Code
 
     [?] W"unsche an die checks-Gruppe? 
+
     [?] Ist das mit den U_Expr gekl"art (Frage auch an die  Parserleute)
+
+    [?] Zeitplan
 
 
 o parser        scott.andreas, hegener.alexander
 
-    - Stubcode
 
-
-    - 
+    - Lex/Yacc Ger"ust scheint vorhanden, inclusive Makefile
 
      - sehr einfache konkrete Syntax festgelegt,
         -> in eine ersten Version sollte der parser sehr
@@ -104,7 +109,17 @@ o parser        scott.andreas, hegener.alexander
      - Feature-Request von der editor-Gruppe ausstehend. Da Espression so
        oder so geparst werden mu"ssen, sollte das kein extra-Auffwand sein.
 
-	
+     - Zeitplan?
+
+
+     [?] Beispieldatei zum Testen des parsers?
+
+     [?] Token.java: ist das so standard? mit den ganzen integers?
+	 Vergleiche das mit der Dok und dem Parserbuch?
+	 oder ist das generiert
+
+
+
 
 o  check1         nitsche.andree
 
