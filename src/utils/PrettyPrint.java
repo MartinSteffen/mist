@@ -51,8 +51,10 @@ public class PrettyPrint {
 	    output((Vardec)absyn);
 	if(absyn instanceof Variable)
 	    output((Variable)absyn);
-	/*if(absyn instanceof Expr)
-	  output((Expr)absyn); */
+	if(absyn instanceof Expr)
+	    output((Expr)absyn);
+	if(absyn instanceof B_expr)
+	    output((B_expr)absyn);
 	if(absyn instanceof Transition)
 	    output((Transition)absyn);
 	if(absyn instanceof Astate)
@@ -60,7 +62,7 @@ public class PrettyPrint {
     }
 		   
 
-    private void output(Program program) {
+    public void output(Program program) {
         if(program != null) {
             System.out.println(whiteSpace(column) + "[Program] ");
             PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
@@ -166,11 +168,29 @@ public class PrettyPrint {
 	}
     }
     
-    /*
-    private void print(Expr expr){
+    
+    public void output(Expr expr){
 	if(expr !=null){
-	    String string;
-	    switch(expr){
+	    System.out.println(whiteSpace(column) + "[Expr] ");
+            PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	}
+	
+    }    
+    
+    public void output(B_expr bexpr){
+	if(bexpr !=null){
+	    System.out.println(whiteSpace(column) + "[B_Expr] ");
+            PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(bexpr.left_expr);
+	    prettyprint.print(bexpr.right_expr);
+	    prettyprint.print(bexpr.op);
+	}
+	
+    }   
+    private void print(int op){
+	String string;
+	if(op!=0){
+	    switch(op){
 	    case 0 :
 		string ="<PLUS> ";
 		break;
@@ -199,7 +219,7 @@ public class PrettyPrint {
 		string ="<LESS> ";
 		break;
 	    case 9:
-		string ="<GREATER ";
+		string ="<GREATER> ";
 		break;
 	    case 10:
 		string ="<LEQ> ";
@@ -211,13 +231,16 @@ public class PrettyPrint {
 		string =" ";
 		break;
 	    }
-	    System.out.println(whiteSpace(column) + "[Expr] " + string);
-            PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	}
-		
-    }    
-    */
-    public void output(Initstate initstate){
+	else
+	    string ="NULL";
+	System.out.println(whiteSpace(column)+ string);
+    }
+
+
+
+
+public void output(Initstate initstate){
 	if(initstate !=null){
 	    System.out.println(whiteSpace(column) + "[Initstate] " + 
 			       initstate.name);
@@ -227,12 +250,11 @@ public class PrettyPrint {
 	}
     }
     
-    public void output(Position position){
+    private void print(Position position){
 	if(position !=null){
 	    System.out.println(whiteSpace(column) + "[Position] " + 
 			       position.x + " : " +
 			       position.y);
-	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	}
     }
 
@@ -256,13 +278,6 @@ public class PrettyPrint {
 	}
     }
     
-    private void print(Position position){
-	if(position !=null){
-	    System.out.println(whiteSpace(column) + "[Position] " +
-			       position.x +" : " + position.y);
-	    
-	}
-    }
     
     private String whiteSpace(int i) {
         String s = "";
@@ -273,3 +288,8 @@ public class PrettyPrint {
     }      
     
 }
+
+
+
+
+ 
