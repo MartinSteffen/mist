@@ -4,7 +4,7 @@
  * @author pm@ariva.de
  * @version 1.0
  */
-package Position2;
+package position2;
 
 import absynt.Process;
 
