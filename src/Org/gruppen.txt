@@ -1,5 +1,5 @@
 ######################################################
-# $Id: gruppen.txt,v 1.3 2000-06-07 15:32:37 unix01 Exp $
+# $Id: gruppen.txt,v 1.4 2000-06-09 11:14:02 unix01 Exp $
 ######################################################
 ## Gruppeneinteilung + Mailadressen der Teilnehmer: .mailrc-Syntax
 ##
@@ -52,7 +52,9 @@ alias editor        jacobs.finn, eckloff.alexander
 alias simulator     goemann.michael, nimser.michael
 alias modcheck      neumann.frank, kuemper.aneta, schulz.eike
 alias parser        scott.andreas, hegener.alexander
-alias check         dagefoerde.jonas, lukosch.andreas, nitsche.andree
+alias check1        nitsche.andree
+alias check2        dagefoerde.jonas, lukosch.andreas
+alias check         check1 check2
 alias position1     dietrich.daniel, zahorsky.moritz, buck.christian
 alias position2     thoehle.ralf, mallach.paul
 alias pp            kraus.oliver, labenda.holger
