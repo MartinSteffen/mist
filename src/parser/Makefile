@@ -2,7 +2,7 @@
 #	Parser for Mist
 #	------------------------------------
 #
-#	$Id: Makefile,v 1.5 2000-07-14 10:09:55 unix01 Exp $
+#	$Id: Makefile,v 2.0 2000-07-17 10:45:22 unix01 Exp $
 #
 #----------------------------------------------------------------------
 
@@ -11,30 +11,22 @@
 LOCALDOCDIR=Doc
 WEBDIR     = /home/info/www/inf/deRoever/SS00/Java/Mist/absynt/
 LEXLOGFILE = JLex.log
+CUPLOGFILE = cup.log
+PACKAGE = parser
 ################################################
 
-all:	Token.class Scanner.class Parser.class 
-
-Token.class:	Token.java
-	javac Token.java
-
-Parser.class:	Parser.java
-	javac Parser.java
-
-Scanner.class:	Scanner.lex
+all:	Scanner.cup	Scanner.lex
+	java java_cup.Main -parser Parser -nonterms -package $(PACKAGE) Scanner.cup >$(CUPLOGFILE)
 	java JLex.Main Scanner.lex >$(LEXLOGFILE)
-	mv Scanner.lex.java Scanner.java
-	javac Scanner.java
+	mv Scanner.lex.java Yylex.java
+	javac Parser.java sym.java Yylex.java
 
-
-testsuite:	LineParser.java	FileParser.java
-	javac LineParser.java FileParser.java
 
 
 clean:
-	\rm -f *.class *~ Scanner.java $(LEXLOGFILE)
+	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java $(LEXLOGFILE) $(CUPLOGFILE)
 
-localdoc:	Scanner.class
+localdoc:	parser.java	sym.java
 	javadoc  -version -author -d $(LOCALDOCDIR) *.java
 
 www:
@@ -44,6 +36,9 @@ www:
 
 # -----------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.5  2000/07/14 10:09:55  unix01
+#	Tippfehler beseitigt (Scott)
+#	
 #	Revision 1.4  2000/07/14 06:16:58  unix01
 #	Abhaengigkeiten abgestimmt
 #	Target testsuite erstellt (zur Uebersetzung von LineParser, FileParser)
@@ -59,6 +54,11 @@ www:
 #	Makefile entsprechend angepasst
 #	Token.java stellt Klasse Token und Symbole zur Verfuegung
 # ------------------------------------------------------------------------	
+
+
+
+
+
 
 
 

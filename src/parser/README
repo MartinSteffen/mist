@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2000-07-11 11:34:18 unix01 Exp $
+$Id: README,v 2.0 2000-07-17 10:45:22 unix01 Exp $
 
 von:
 	Andreas Scott & Alexander Hegener
@@ -11,20 +11,16 @@ abstrakten Syntaxbaum.
 
 Folgende Dateien:
 
-Parser.java:	Stellt die Klasse Parser mit den Methoden parseFile
-				und parseExpression zur Verfuegung
+Scanner.cup:	Generiert Parser.java und sym.java. 
 
 ParseException.java: Exception-Klasse
 
-Scanner.lex:	Aus dieser Datei wird die Datei Scanner.java
-				generiert. Eigentlicher Parser. JLex muss installiert
-				sein.
+Scanner.lex:	Aus dieser Datei wird die Datei Yylex.java
+		generiert. JLex muss installiert
+		sein.
 
-Token.java:		Enthaelt die Token-Klasse und somit auch die
-				Symboltypen.
-
-specs/:			Enthaelt die "konkrete Syntax" und ein
-				Beispielprogramm.
+specs/:		Enthaelt die "konkrete Syntax" und ein
+		Beispielprogramm.
 
 Makefile:		das Makefile
 

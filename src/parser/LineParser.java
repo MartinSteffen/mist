@@ -7,9 +7,12 @@ import java.io.*;
 /**
  * Zum Testen des Parsers mit einzelnen Ausdruecken
  * @author Andreas Scott &amp; Alexander Hegener
- * @version $Id: LineParser.java,v 1.1 2000-07-14 06:09:33 unix01 Exp $
+ * @version $Id: LineParser.java,v 2.0 2000-07-17 10:45:22 unix01 Exp $
  * <-- ================
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2000/07/14 06:09:33  unix01
+ * Klasse um den Parser zu testen [Scott]
+ *
  * ============== //-->
  */
 class LineParser{
