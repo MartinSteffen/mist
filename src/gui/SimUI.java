@@ -6,8 +6,7 @@
  
 package gui;
 
-
-
+import simulator.*;
 
 /** 
  *
@@ -17,9 +16,10 @@ package gui;
 public class SimUI extends javax.swing.JFrame {
 
   /** Creates new form SimUI */
-  public SimUI(simulator.Simulator _sim) {
+  public SimUI(simulator.Simulator _sim, absynt.Program _prog) {
       mySim = _sim;
-
+      myProgram = _prog;
+      autorunState = 0;
     initComponents ();
     pack ();
   }
@@ -105,18 +105,33 @@ public class SimUI extends javax.swing.JFrame {
 
     getContentPane ().add (new javax.swing.JScrollPane(debugTextArea));
 
+    setTitle("Simulator");
+
   }//GEN-END:initComponents
 
   private void autorunTButtonActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autorunTButtonActionPerformed
 // Add your handling code here:
+      //sowas in der art wie:
+      if(autorunState==0) {
+	  autorunState=1;
+	  autorun();
+      }
+      else autorunState=0;
+
+      //jajaja.... hier liegt der hund begraben..... die performedroutine kann nicht rekursiv
+      //funktionieren..... wie soll das gehen ?? multithreaded is wohl zu hart ....... SHIT!
+      //idee: evtl sich selbst mehrfach clicken mit doClick() ????
+     
   }//GEN-LAST:event_autorunTButtonActionPerformed
 
   private void stepButtonActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepButtonActionPerformed
 // Add your handling code here:
+      mySim.step(); //returns String[] . diesen in debugTextArea einfuegen!!
   }//GEN-LAST:event_stepButtonActionPerformed
 
   private void startButtonActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-// Add your handling code here:
+// Add your handling code here
+      mySim.start(myProgram); //returns String[] . diesen in debugTextArea einfuegen!!
   }//GEN-LAST:event_startButtonActionPerformed
 
   /** Exit the Application */
@@ -134,16 +149,17 @@ public class SimUI extends javax.swing.JFrame {
     public java.awt.Dimension getPreferredSize() {
 	return new java.awt.Dimension(650,400);
     }
-
-
-
-  /**
-  * @param args the command line arguments
-  */
-    /*  public static void main (String args[]) {
-    new SimUI ().show ();
-  } 
-    */
+    private void autorun() {
+	/*
+	System.out.println("autorun("+autorunState+") called.\n");
+	while(autorunState==1
+	      // && mySim.isProgamRunning() 
+	      ) {
+	    mySim.step();
+	    System.out.println("sim:STEP called.\n");
+	}
+	*/
+    }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton startButton;
@@ -155,5 +171,6 @@ public class SimUI extends javax.swing.JFrame {
   // End of variables declaration//GEN-END:variables
 
     protected simulator.Simulator mySim;
-
+    protected absynt.Program myProgram;
+    protected int autorunState;
 }

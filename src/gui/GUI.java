@@ -295,8 +295,8 @@ public class GUI extends javax.swing.JFrame {
     
     private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
-	// mySimUI = new gui.SimUI(new simulator.Simulator(this));
-	// mySimUI.show();
+	mySimUI = new gui.SimUI(new simulator.Simulator(this), actualsession.workProgram);
+	mySimUI.show();
     }
 
     private void removeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
@@ -472,6 +472,35 @@ public class GUI extends javax.swing.JFrame {
     
     
     // *** weiter Prozeduren ***
+
+    /**
+     * highlighting interface fuer simulator<-->editor
+     */
+    public void highlightState(absynt.Astate state, absynt.Process process,  absynt.Program program) {
+	actualeditor.highlightState( state,  process,  program);
+    }
+
+    /**
+     * highlighting interface fuer simulator<-->editor
+     */   
+    public void unhighlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
+	actualeditor.unhighlightTransition( transition,  process,  program);
+    }
+    /**
+     * highlighting interface fuer simulator<-->editor
+     */
+    public void unhighlightState(absynt.Astate state, absynt.Process process,  absynt.Program program) {
+	actualeditor.unhighlightState( state,  process,   program);
+    }
+
+    /**
+     * highlighting interface fuer simulator<-->editor
+     */   
+    public void highlightTransition(absynt.Transition transition, absynt.Process process, absynt.Program program) {
+	actualeditor.highlightTransition( transition,  process,  program);
+    }
+
+
     /*
       // Methoden zur Verwaltung der Editoren
       public void addEditor() {
