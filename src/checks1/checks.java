@@ -49,11 +49,11 @@ public class checks {
    //sucht Variablen Fehler
    varCheck vc=new varCheck();
    if(vl.hasMoreElements() && tl.hasMoreElements())
-     varError=(varError && varCheck.start_check(vl,tl));
+     varError=(varError && VarCheck.start_check(vl,tl));
     //sucht Zustands - Fehler
-   stateCheck sc=new stateCheck();
+   StateCheck sc=new StateCheck();
    if(al.hasMoreElements() && tl.hasMoreElements())
-    stateError=(stateError && stateCheck.start_check(al,tl));
+    stateError=(stateError && StateCheck.start_check(al,tl));
 
    return (channelError && varError && stateError);
  }

@@ -11,10 +11,10 @@
 package checks1;
 import absynt.*;
 
-public class varCheck {
+public class VarCheck {
   static checkWindow anzeige=new checkWindow("Variablen-Check");
 
-  public varCheck() {
+  public VarCheck() {
   anzeige.setLocation(250,0);
   anzeige.show();
   }
