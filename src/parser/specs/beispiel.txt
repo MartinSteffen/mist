@@ -12,6 +12,12 @@ program HelloWorld {
       x = x + y;                // s3
       put (c1, x);              // s4
     }
+    if(x)
+    {
+      x = x + y;
+      put (c1, x);
+    }	
+    x = 18;
   }                             // s5
 
   // und noch einer

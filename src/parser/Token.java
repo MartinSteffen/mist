@@ -16,16 +16,17 @@ public class Token{
     /** "channel"     */ public static final int CHANNEL =  8;
     /** "while"       */ public static final int WHILE   =  9;
     /** "if"          */ public static final int IF      = 10;
-    /** "assert"      */ public static final int ASSERT  = 11;
-    /** ";"           */ public static final int SEMICOL = 12;
-    /** "="           */ public static final int ASSIGN  = 13;
-    /** Operatoren    */ public static final int OP      = 14;
-    /** "put"         */ public static final int PUT     = 15;
-    /** "get"         */ public static final int GET     = 16;
-    /** ","           */ public static final int COMMA   = 17;
-    /** wahr          */ public static final int TRUE    = 18;
-    /** falsch        */ public static final int FALSE   = 19;
-    /** Typ           */ public static final int TYPE    = 20;
+    /** "else"        */ public static final int ELSE    = 11;
+    /** "assert"      */ public static final int ASSERT  = 12;
+    /** ";"           */ public static final int SEMICOL = 13;
+    /** "="           */ public static final int ASSIGN  = 14;
+    /** Operatoren    */ public static final int OP      = 15;
+    /** "put"         */ public static final int PUT     = 16;
+    /** "get"         */ public static final int GET     = 17;
+    /** ","           */ public static final int COMMA   = 18;
+    /** wahr          */ public static final int TRUE    = 19;
+    /** falsch        */ public static final int FALSE   = 20;
+    /** Typ           */ public static final int TYPE    = 21;
 
     /*
      * Operatoren

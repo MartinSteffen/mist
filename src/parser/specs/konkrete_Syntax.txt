@@ -1,5 +1,8 @@
-$Id: konkrete_Syntax.txt,v 1.4 2000-07-11 20:28:37 unix01 Exp $
+$Id: konkrete_Syntax.txt,v 1.5 2000-07-12 20:47:21 unix01 Exp $
 $Log: not supported by cvs2svn $
+Revision 1.4  2000/07/11 20:28:37  unix01
+Einbau von M_Typen
+
 Revision 1.3  2000/07/09 17:36:45  unix01
 oops? Wiederum keine Aenderung...?
 
@@ -27,7 +30,7 @@ Statement   ::= Statement ";" Statement             // Hintereinander
             |   "while" "(" Expr ")" Statement      // Schleife
             |    Type Id "=" Expr                 // Zuweisung
             |   "put" "(" Id "," Expr ")"           // Senden
-            |   "get" "(" Id "," Identifier ")"     // Empfangen
+            |   "get" "(" Id "," Id ")"     // Empfangen
 	    |	"assert" Expr			
 
 Type	    ::= "int" | "bool"

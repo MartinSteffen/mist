@@ -6,11 +6,14 @@ import java.io.IOException;
  * Klasse Scanner - automatisch generiert von JLex aus Scanner.lex
  *
  * @author Andreas Scott &amp; Alexander Hegener 
- * @version $Id: Scanner.lex,v 1.2 2000-07-11 20:28:36 unix01 Exp $
+ * @version $Id: Scanner.lex,v 1.3 2000-07-12 20:47:20 unix01 Exp $
  * @see <a href="../../Scanner.lex">Scanner.lex</a>
  *
  * <!-- Log ==========
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2000/07/11 20:28:36  unix01
+ * Einbau von M_Typen
+ *
  * Revision 1.1  2000/07/11 11:31:36  unix01
  * Umbenennung von Parser.lex in Scanner.lex - einfacher fuer die anderen
  * Gruppen
@@ -80,7 +83,7 @@ import java.io.IOException;
       token = nextToken();
       if (token.type != Token.NAME)
 	  lexerror ("Identifikator (Programmname) erwartet.");
-      progname = token.textValue;  // setze Namen des Programms      
+      //    progname = token.textValue;  // setze Namen des Programms      
 
       if (debug)
 	  System.out.println ("Programm "+token.textValue);
@@ -98,6 +101,7 @@ import java.io.IOException;
 				new absynt.Chandec(buildChannel()), channels);
 	  } else if (token.type == Token.PROCESS) {
 	      buildProcess();
+
 	  } else 
 	      lexerror ("'channel' oder 'process' erwartet.");
 
@@ -162,78 +166,264 @@ import java.io.IOException;
 
 
   protected void buildProcess() throws IOException, ParseException{
+      //      absynt.Process process = null;
+      //      absynt.VardecList vardecs = null;
+      //      absynt.TransitionList transitions = null;
+      //      absynt.AstateList astates = null;
+      //      absynt.Initstate init = null;
+      //      String processname = null; 
+      
+      int i= 0;
 	  /* Name erwartet */
 	  token = nextToken();
-	  if (token.type == Token.NAME)
-		  System.out.println("  process "+token.textValue);
-	  else
-		  lexerror("Identifikator (Prozessname) erwartet");
+	  if (token.type != Token.NAME)
+	      lexerror("Identifikator (Prozessname) erwartet");
+
+	  if(debug)
+	      System.out.println("  process "+token.textValue);
 
 	  token = nextToken();
+
+	  /* '{' erwartet */
 	  if (token.type == Token.LBRACE){
+	      /* bis '}' ... */
+	      while (token.type != Token.RBRACE){
 		  token = nextToken();
-		  while (token.type != Token.RBRACE){
-			  /* statements erwartet */
-			  System.out.println("statement");
-			  token = nextToken();
-		  }
+		  /* ...statements erwartet */
+		  buildStatement();
+		  System.err.println(i++);
+	      }
 	  } else
-		  lexerror("'{'erwartet");
-
-	  if (token.type == Token.RBRACE){
-		  System.out.println("Ende Prozess");
-	  } else
-		  lexerror("'}'erwartet");
-  }
-
-  protected void buildStatement() throws IOException, ParseException{
-	  switch (token.type){
-	  case Token.NAME:    buildAssignment(); break;
-	  case Token.WHILE:   buildWhileStatement(); break;
-	  case Token.ASSERT:  System.out.println ("Assertion"); break;
-	  case Token.PUT:     System.out.println ("'put'-statement"); break; 
-	  case Token.GET:     System.out.println ("'get'-statement"); break;
-	  case Token.IF:      System.out.println ("'if'-statement"); break;
-	  case Token.LBRACE:  System.out.println ("statement-block"); break;
-	  }
-	  token = nextToken();
-  }
-
-  protected void buildAssignment() throws IOException, ParseException{
-	  System.out.print("    Zuweisung: "+token.textValue+"=");
-	  token = nextToken();
-
-	  if (token.type == Token.ASSIGN){
-		  token = nextToken();
-		  buildExpression();
-	  } else 
-		  lexerror ("'=' erwartet.");
-  }
-
-  protected void buildWhileStatement() throws IOException, ParseException{
-	  System.out.print("    while ");
-	  token = nextToken();
+	      lexerror("'{'erwartet");
 	  
-	  if (token.type == Token.LPAREN){
-		  token = nextToken();
-		  buildExpression();
-		  if (token.type == Token.RPAREN){
-			  token = nextToken();
-			  buildStatement();
-		  } else
-			  lexerror("')' erwartet.");
+	  if (token.type == Token.RBRACE){
+	      System.out.println("Ende Prozess");
 	  } else
-		  lexerror("'(' erwartet.");
+	      lexerror("'}'erwartet");
+
+
+  }/* ende buildProcess() */
+  
+  protected void buildStatement() throws IOException, ParseException{
+      if (token.type == Token.LBRACE){
+	  buildBlock();
+	  if(debug)
+	      System.out.println("Ende Block");
+      } 
+      
+      switch (token.type){
+      case Token.NAME:    buildAssignment(); break;
+      case Token.WHILE:   buildWhileStatement(); break;
+      case Token.ASSERT:  buildAssertStatement(); break;
+      case Token.PUT:     buildPutStatement(); break; 
+      case Token.GET:     buildGetStatement(); break;
+      case Token.IF:      buildIfStatement(); break;
+      case Token.SEMICOL: buildTauStatement(); break;
+      }
+      /* erwartetes Token: SEMICOL oder RBRACE */ 
+  }
+  
+
+  protected void buildTauStatement() throws IOException, ParseException{
+      token = nextToken();
+  }
+  
+  protected void buildAssignment() throws IOException, ParseException{
+      String varname = null;
+
+      /* aktueller Token-Typ: Token.NAME */
+      if (token.type != Token.NAME)
+	  lexerror("Parserfehler");
+
+      varname = token.textValue;
+
+      /* erwartetes Token: ASSIGN '=' */
+      token = nextToken();
+      if (token.type != Token.ASSIGN)
+	  lexerror ("'=' erwartet.");	  
+      
+      if(debug)
+	  System.out.print("    Zuweisung: "+varname+"=");
+
+
+      /* erwartetes Token: Teil einer Expr, 
+       * also Konstante, Operator, '(' oder Id
+       */
+      token = nextToken();
+      buildExpression();      
+      
+      /* erwartetes Token: SEMICOL */
+
+  }
+  
+  protected void buildWhileStatement() throws IOException, ParseException{
+      /* aktuelles Token: WHILE */
+      if (token.type != Token.WHILE)
+	  lexerror("Parserfehler.");
+
+      if(debug)
+	  System.out.print("    while ");
+
+      /* erwartetes Token: '(' */
+      token = nextToken();
+      if (token.type != Token.LPAREN)
+	  lexerror("'(' erwartet.");
+      
+      if(debug)
+	  System.out.print("(");
+
+      /* erwartetes Token: Teil einer Expr, 
+       * also Konstante, Operator, '(' oder Id
+       */
+      token = nextToken();
+      buildExpression();
+      
+      /* erwartetes Token: ')' */
+      if (token.type != Token.RPAREN)
+	  lexerror("')' erwartet.");	  
+      
+      if(debug)
+	  System.out.print(")");
+
+      /* erwartetes Token: Statement */
+      token = nextToken();
+      buildStatement();
+  }
+  
+  protected void buildAssertStatement() throws IOException, ParseException{
+      if(debug)
+	  System.out.print("   assert ");
+      
+      token = nextToken();
+      buildExpression();
+
   }
 
-  protected void buildExpression() throws IOException, ParseException{
-	  while ((token.type != Token.SEMICOL) && (token.type != Token.RPAREN)){
-		  System.out.print("expression ");
-		  token = nextToken();
-	  }
+  protected void buildPutStatement() throws IOException, ParseException{
+      if(debug)
+	  System.out.print("    put ");
+
+      /* '(' erwartet */
+      token = nextToken();
+      if(token.type != Token.LPAREN)
+	 lexerror("'(' erwartet");
+      
+       /* Identifikator erwartet */
+      token = nextToken();
+      if(token.type != Token.NAME)
+	  lexerror("Identifikator  erwartet");
+
+      if(debug)
+	  System.out.print(token.textValue);
+
+
+       /* ',' erwartet */
+      token = nextToken();
+      if(token.type != Token.COMMA)
+	  lexerror("',' erwartet");
+
+      if(debug)
+	  System.out.print(",");
+
+
+      token = nextToken();
+      buildExpression();
+
+      if(token.type != Token.RPAREN)
+	  lexerror("')' erwartet");
+  }
+
+  protected void buildGetStatement() throws IOException, ParseException{
+      if(debug)
+	  System.out.print("   get ");
+      
+      /* '(' erwartet */
+      token = nextToken();
+      if(token.type != Token.LPAREN)
+	  lexerror("'(' erwartet");
+
+      /* Identifikator erwartet */
+      token = nextToken();
+      if(token.type != Token.NAME)
+	  lexerror("Identifikator  erwartet");
+      
+      /* ',' erwartet */
+      token = nextToken();
+      if(token.type != Token.COMMA)
+	  lexerror("',' erwartet");
+      
+      /* Identifikator erwartet */
+      token = nextToken();
+      if(token.type != Token.NAME)
+	  lexerror("Identifikator  erwartet");
+
+  }
+  
+  protected void buildIfStatement() throws IOException, ParseException{
+      /* akt. Token: IF */
+
+      if(debug)
+	  System.out.print("  if ");
+
+      /* erwartetes Token: '(' */
+      token = nextToken();
+      if (token.type != Token.LPAREN)
+	  lexerror("'(' erwartet.");
+      
+      if(debug)
+	  System.out.print("(");
+
+      /* erwartetes Token: Teil einer Expr, 
+       * also Konstante, Operator, '(' oder Id
+       */
+      token = nextToken();
+      buildExpression();
+      
+      /* erwartetes Token: ')' */
+      if (token.type != Token.RPAREN)
+	  lexerror("')' erwartet.");	  
+      
+      if(debug)
+	  System.out.print(")");
+
+      /* erwartetes Token: Statement */
+      token = nextToken();
+      buildStatement();
+
+  }
+
+
+  protected void buildBlock() throws IOException, ParseException{
+      /* aktuelles Token: LBRACE */
+      if (token.type != Token.LBRACE)
+	  lexerror ("Parserfehler");
+
+      if(debug)
+	  System.out.println("  block ");
+
+      /* erwartetes Token: Statement */      
+      while(token.type != Token.RBRACE){
+	  token = nextToken();
+	  buildStatement();
 	  System.out.println();
-  }
+      }
 
+      /* aktuelles Token: RBRACE */
+
+      /* erwartetes Token: naechstes Statement oder Prozessende ('}' */
+      token = nextToken();
+  }
+  
+  protected void buildExpression() throws IOException, ParseException{
+      /* erwartetes Token: Konstante, Variable, '(' oder Operator */
+
+      while ((token.type != Token.SEMICOL) && (token.type != Token.RPAREN)){
+	  System.out.print("expression ");
+	  token = nextToken();
+      }
+
+  }
+  
 %}
 
 comment	= ("//".*)
@@ -256,6 +446,7 @@ name	= ({letter}({letter}|{digit})*)
 "bool"              { return new Token(Token.TYPE, Token.BOOL); }
 "int"               { return new Token(Token.TYPE, Token.INT) ; }
 "if"                { return new Token(Token.IF)              ; }
+"else"              { return new Token(Token.ELSE)            ; }
 "put"               { return new Token(Token.PUT)             ; }
 "get"               { return new Token(Token.GET)             ; }
 "assert"            { return new Token(Token.ASSERT)          ; }
