@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * One process = local variables + transitions
  * @author Initially provided by Martin Steffen.
- * @version  $Id: Process.java,v 1.6 2000-07-03 16:25:05 unix01 Exp $
+ * @version  $Id: Process.java,v 1.7 2000-07-03 16:31:05 unix01 Exp $
  */
 
 
@@ -26,6 +26,15 @@ public class Process extends Absyn implements Serializable {
     init    = _init;
 
   };
+
+  public Process (VardecList vl, TransitionList _steps, AstateList _states, Initstate _init) {
+    name    = "";
+    vars    = vl;
+    steps   = _steps;
+    states  = _states;
+    init    = _init;
+
+  };
 };
 
 
@@ -40,9 +49,15 @@ public class Process extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Process.java,v 1.6 2000-07-03 16:25:05 unix01 Exp $
+//	$Id: Process.java,v 1.7 2000-07-03 16:31:05 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.6  2000/07/03 16:25:05  unix01
+//	Program/Process;  Name als String hinzugefuegt
+//	Entsprechend auch das Beispiel angepa"st.
+//	
+//	[Steffen]
+//	
 //	Revision 1.5  2000/06/26 16:49:38  unix01
 //	Einen expliziten ``Initstate'' fuer jeden Prozess hinzugef"ugt (wie
 //	vor einer Woche besprochen und im Pflichtenheft festgehalten). [Steffen]

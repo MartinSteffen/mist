@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * Toplevel syntactic contruct for Mist programs.
  * @author Initially provided by Martin Steffen.
- * @version  $Id: Program.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $
+ * @version  $Id: Program.java,v 1.5 2000-07-03 16:31:05 unix01 Exp $
  */
 
 
@@ -24,6 +24,11 @@ public class Program extends Absyn implements Serializable {
     chans    = cl;
     procs    = pl;
   };
+  public Program (ChandecList cl, ProcessList pl) {
+    name     = "";
+    chans    = cl;
+    procs    = pl;
+  };
 };
 
 
@@ -31,9 +36,15 @@ public class Program extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Program.java,v 1.4 2000-07-03 16:25:05 unix01 Exp $
+//	$Id: Program.java,v 1.5 2000-07-03 16:31:05 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2000/07/03 16:25:05  unix01
+//	Program/Process;  Name als String hinzugefuegt
+//	Entsprechend auch das Beispiel angepa"st.
+//	
+//	[Steffen]
+//	
 //	Revision 1.3  2000/05/28 12:57:12  unix01
 //	Zwischenzustand, vor Reorganisation
 //	

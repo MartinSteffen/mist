@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.8 2000-07-03 16:25:04 unix01 Exp $
+# $Id: Makefile,v 1.9 2000-07-03 16:31:05 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -21,7 +21,7 @@ debug:	; make JAVACOPTS="-g" all
 packets:
 	(cd ./absynt; make)
 	(cd ./utils; make)
-	(cd ./editor; make)
+#	(cd ./editor; make)
 	(cd ./gui; make)
 #	(cd ./checks1; make) # -->  compilation error
 #	(cd ./checks2; make) -->  No code, no compilation
