@@ -81,11 +81,17 @@ public class PrettyPrint {
 	    output((Assign_action)absyn);
 	if(absyn instanceof Constval)
 	    output((Constval)absyn);
-	
-
-}
+    }
 		   
 
+    private void print(Position position){
+	if(position !=null){
+	    System.out.println(whiteSpace(column) + "[Position] " + 
+			       position.x + " : " +
+			       position.y);
+	}
+    }
+    
     public void output(Program program) {
         if(program != null) {
             System.out.println(whiteSpace(column) + "[Program] ");
@@ -266,58 +272,54 @@ public class PrettyPrint {
     
     private void print(int op){
 	String string;
-	if(op!=0){
-	    switch(op){
-	    case 0 :
-		string ="<PLUS> ";
-		break;
-	    case 1:
-		string ="<MINUS> ";
-		break;
-	    case 2:
-		string ="<TIMES> ";
-		break;
-	    case 3:
-		string ="<DIV> ";
-		break;
-	    case 4:
-		string ="<AND> ";
-		break;
-	    case 5:
-		string ="<OR> ";
-		break;
-	    case 6:
-		string ="<NEG>";
-		break;
-	    case 7:
-		string ="<EQ> ";
-		break;
-	    case 8:
-		string ="<LESS> ";
-		break;
-	    case 9:
-		string ="<GREATER> ";
-		break;
-	    case 10:
-		string ="<LEQ> ";
-		break;
-	    case 11:
-		string ="<GEQ> ";
-		break;
-	    default:
-		string =" ";
-		break;
-	    }
+	switch(op){
+	case 0 :
+	    string ="<PLUS> ";
+	    break;
+	case 1:
+	    string ="<MINUS> ";
+	    break;
+	case 2:
+	    string ="<TIMES> ";
+	    break;
+	case 3:
+	    string ="<DIV> ";
+	    break;
+	case 4:
+	    string ="<AND> ";
+	    break;
+	case 5:
+	    string ="<OR> ";
+	    break;
+	case 6:
+	    string ="<NEG>";
+	    break;
+	case 7:
+	    string ="<EQ> ";
+	    break;
+	case 8:
+	    string ="<LESS> ";
+	    break;
+	case 9:
+	    string ="<GREATER> ";
+	    break;
+	case 10:
+	    string ="<LEQ> ";
+	    break;
+	case 11:
+	    string ="<GEQ> ";
+	    break;
+	default:
+	    string ="NULL ";
+	    break;
 	}
-	else
-	    string ="NULL";
-	System.out.println(whiteSpace(column)+ string);
+    	System.out.println(whiteSpace(column)+ string);
     }
 
 
 
 
-public void output(Initstate initstate){
+    public void output(Initstate initstate){
 	if(initstate !=null){
 	    System.out.println(whiteSpace(column) + "[Initstate] " + 
 			       initstate.name);
@@ -327,14 +329,7 @@ public void output(Initstate initstate){
 	}
     }
     
-    private void print(Position position){
-	if(position !=null){
-	    System.out.println(whiteSpace(column) + "[Position] " + 
-			       position.x + " : " +
-			       position.y);
-	}
-    }
-
+    
     public void output(Transition transition){
 	if(transition !=null){
 	    System.out.println(whiteSpace(column) + "[Transition] " );
