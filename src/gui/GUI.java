@@ -498,18 +498,22 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void newMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+
+	//HIERHERKOPIERT, da new editor Exception wirft und Sim so nicht getestet werden kann.
+	toolsMenu.setEnabled(true);  
+
 	if (actualsession != null)
 	    saveMenuItemActionPerformed(evt);
 	actualsession = null;
 	// Dialog zum starten einer neuen Session
 	new NewSessionUI(this, "Creating new Session", true);
-	
+		
 	// Editor starten mit dem aktuellen workProgram
 	if (actualeditor == null) // Editor wurde noch nie gestartet
 	    actualeditor = new editor.Editor(actualsession.workProgram);
 	if (actualeditor != null) // Dem Editor das refresh-Signal senden
 	    actualeditor.refresh(actualsession.workProgram);
-	
+
 	redrawProcessTable(actualeditor.getProcessIds());
 	// GUI anpassen
 	editorMenu.setEnabled(true);

@@ -48,6 +48,7 @@ public class SimUI extends javax.swing.JFrame {
     );
 
     startButton.setText ("Start");
+
     startButton.addActionListener (new java.awt.event.ActionListener () {
       public void actionPerformed (java.awt.event.ActionEvent evt) {
         startButtonActionPerformed (evt);
@@ -59,6 +60,7 @@ public class SimUI extends javax.swing.JFrame {
     getContentPane ().add (startButton);
 
     stepButton.setText ("Step");
+    stepButton.setEnabled(false);
     stepButton.addActionListener (new java.awt.event.ActionListener () {
       public void actionPerformed (java.awt.event.ActionEvent evt) {
         stepButtonActionPerformed (evt);
@@ -70,6 +72,7 @@ public class SimUI extends javax.swing.JFrame {
     getContentPane ().add (stepButton);
 
     autorunTButton.setText ("Autorun");
+    autorunTButton.setEnabled(false);
     autorunTButton.addActionListener (new java.awt.event.ActionListener () {
       public void actionPerformed (java.awt.event.ActionEvent evt) {
         autorunTButtonActionPerformed (evt);
@@ -98,7 +101,7 @@ public class SimUI extends javax.swing.JFrame {
     getContentPane ().add (debuglvlSlider);
 
     debugTextArea.setPreferredSize (new java.awt.Dimension(600, 300));
-    //    debugTextArea.setMaximumSize (new java.awt.Dimension(600, 300));
+    debugTextArea.setMaximumSize (new java.awt.Dimension(600, 10000));
     debugTextArea.setMinimumSize (new java.awt.Dimension(600, 300));
     debugTextArea.setEditable(false);
     debugTextArea.setText("Hier erscheinen die DebugMessages............. spaeter mal ... hoffentlich denn endlich........ tja.");
@@ -126,21 +129,49 @@ public class SimUI extends javax.swing.JFrame {
 
   private void stepButtonActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepButtonActionPerformed
 // Add your handling code here:
-      mySim.step(); //returns String[] . diesen in debugTextArea einfuegen!!
+      int i;
+      String[] tempstr = mySim.step(); //returns String[] . diesen in debugTextArea einfuegen!!
+      for(i=0;i<tempstr.length;i++) {
+	   debugTextArea.setRows(debugTextArea.getRows() +1);
+	  debugTextArea.append(tempstr[i]+"\n");
+      }
+
+      if(false
+	 //!mySim.isProgramRunning() //DEBUG, da Sim immer (noch) false liefert....
+	 ) {
+	  stepButton.setEnabled(false);
+	  autorunTButton.setEnabled(false);
+      }
+
   }//GEN-LAST:event_stepButtonActionPerformed
 
   private void startButtonActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
 // Add your handling code here
-      mySim.start(myProgram); //returns String[] . diesen in debugTextArea einfuegen!!
+       int i;
+       
+       setDebugLvl();
+
+       debugTextArea.setText("");
+
+       String[] tempstr = mySim.start(myProgram); //returns String[] . diesen in debugTextArea einfuegen!!
+       for(i=0;i<tempstr.length;i++) {
+	   debugTextArea.setRows(debugTextArea.getRows() +1);
+	   debugTextArea.append(tempstr[i]+"\n");
+       }
+
+       if(true
+	  //mySim.isProgramRunning() //DEBUG, da Sim immer (noch) false liefert....
+	  ) stepButton.setEnabled(true);
   }//GEN-LAST:event_startButtonActionPerformed
 
   /** Exit the Application */
   private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-      this.hide();
+      this.dispose();
   }//GEN-LAST:event_exitForm
 
 
     private void setDebugLvl() {
+	mySim.setDebugLvl(debuglvlSlider.getValue());
 
     }
 
