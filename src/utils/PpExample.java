@@ -1,12 +1,14 @@
 /**
    Beispiel fuer die Verwendung des Pretty Printers.
  * @author Initially provided by Martin Steffen.
- * @version  $Id: PpExample.java,v 1.3 2000-06-28 05:44:49 unix01 Exp $    
+ * @version  $Id: PpExample.java,v 1.4 2000-07-05 05:13:45 unix01 Exp $    
  */
 
 package utils;
-import absynt.Example;
-import utils.PrettyPrint;
+import absynt.*;
+import utils.*;
+
+
 
 public class PpExample {
 
@@ -29,9 +31,12 @@ public class PpExample {
 //	Utilites for Mist Programs
 //	------------------------------------
 //
-//	$Id: PpExample.java,v 1.3 2000-06-28 05:44:49 unix01 Exp $
+//	$Id: PpExample.java,v 1.4 2000-07-05 05:13:45 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2000/06/28 05:44:49  unix01
+//	ok
+//	
 //	Revision 1.2  2000/06/04 12:06:16  unix01
 //	Stubs implementiert
 //	
