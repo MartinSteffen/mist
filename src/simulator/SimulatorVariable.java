@@ -32,12 +32,19 @@ public class SimulatorVariable{
      */
     protected SimulatorValue value;
 
+    /**
+     * Instanzfeld, um Zugriff auf Debugfunktionen zu haben
+     */
+    protected SimulatorDebug debug;
+
 
     /** Konstruktor, um eine in Absynt deklarierte Variable im Simulator handhabbar zu machen
      *
      * @param _vardec Variablendeklaration in Absynt
      */
     protected SimulatorVariable (SimulatorProcess _process, Vardec _vardec) {
+
+	debug = new SimulatorDebug();
 
 	process = _process ;
 
@@ -51,11 +58,14 @@ public class SimulatorVariable{
 		 Ausdruck, der frei von anderen Variablen des Prozesskontextes ist */
 	    
 	    SimulatorExprEvaluator expr = new SimulatorExprEvaluator(process, _vardec.val);
+	    debug.addMsg(">> trying to initialize Variable with value of an expression ...",3);
 	    value = expr.giveResult();
+      	    debug.addMsg("<< Variable set to value of expression.",3);
 	    hasValue = true;
 	}
 	else {
 	    /* es gibt keine Expression zu evaluieren */
+	    // Exception , da Variable ohne zuweisung deklariert
 	    hasValue = false ;
 	    }
 

@@ -25,6 +25,11 @@ public class SimulatorExprEvaluator {
      */
     private SimulatorValue value;
 
+    /**
+     * Instanzfeld, um Zugriff auf Debugfunktionen zu haben
+     */
+    protected SimulatorDebug debug;
+
 
     /** Konstruktor für einen Expression Evaluator, der in einem Prozesskontext arbeitet
      * 
@@ -34,6 +39,7 @@ public class SimulatorExprEvaluator {
     protected SimulatorExprEvaluator(SimulatorProcess _process, Expr _expr) {
 	process = _process;
 	expr = _expr;
+	debug = new SimulatorDebug();
     }
 
 
@@ -41,17 +47,32 @@ public class SimulatorExprEvaluator {
 	an die entsprechenden Expression-Evaluatoren
     */
     private void evalExpression () {
-	if (expr.type instanceof M_Bool) {
-	    // Expression ist eine boolesche, also :
-	    SimulatorBoolEvaluator boolExpr = new SimulatorBoolEvaluator(process, expr);
-	    value = new SimulatorBoolValue ( boolExpr.giveResult() );
-	}
-	if (expr.type instanceof M_Int) {
-	    // Expression ist eine zu Integer evaluierende, also :
-	    SimulatorIntEvaluator intExpr = new SimulatorIntEvaluator(process, expr);
-	    value = new SimulatorIntValue ( intExpr.giveResult() );    
-	}
-	/* Platz für Exception, da Expression nicht oder falsch getypt */
+	if (expr.type != null) {
+	    // Expression ist wie vorgesehen getypt
+	    if (expr.type instanceof M_Bool) {
+		// Expression ist eine boolesche, also :
+		debug.addMsg("# expression to evaluate is boolean.",3);
+		SimulatorBoolEvaluator boolExpr = new SimulatorBoolEvaluator(process, expr);
+		value = new SimulatorBoolValue ( boolExpr.giveResult() );
+	    }
+	    else if (expr.type instanceof M_Int) {
+		// Expression ist eine zu Integer evaluierende, also :
+		debug.addMsg("# expression to evaluate is integer.",3);
+		SimulatorIntEvaluator intExpr = new SimulatorIntEvaluator(process, expr);
+		value = new SimulatorIntValue ( intExpr.giveResult() );    
+	    }
+	    else {
+	    /* Platz für Exception, da Expression falsch getypt */
+	    debug.addMsg("!!! EXCEPTION !!! : Expression not properly typed ",0);
+	    debug.addMsg("!!! Class: SimulatorExprEvaluator \n!!! Method : evalExpression\n!!! Pos.:1 ",0);
+	    }
+
+	} //--------- end if(1) ------------
+	else {
+	    // Expression ist nicht getypt also :
+	    debug.addMsg("!!! EXCEPTION !!! : Expression not typed ",0);
+	    debug.addMsg("!!! Class: SimulatorExprEvaluator \n!!! Method : evalExpression\n!!! Pos.:2 ",0);
+	} //-------- end else --------------
     }
 
 

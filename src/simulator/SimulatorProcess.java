@@ -30,17 +30,28 @@ public class SimulatorProcess{
      */
     protected absynt.Process progProcess;
     
+    /**
+     * Instanzfeld, um Zugriff auf Debugfunktionen zu haben
+     */
+    protected SimulatorDebug debug;
 
     /** Konstruktor für einen Simulator-Prozess.
      * @param _process Referenz auf den zu simulierenden Prozess
      * macht derzeit noch nicht wirklich viel.
      */
     protected SimulatorProcess (absynt.Process _process) {
+	debug = new SimulatorDebug();
 	progProcess = _process ;
+	debug.addMsg(">> Starting to generate varList ...",2);
 	varList = this.makeVarList();
-	activeState = progProcess.init;
-	permittedTransitions = this.generatePermittedTransList();
+	debug.addMsg("<< VarList built up.",2);
+       	activeState = progProcess.init;
+	debug.addMsg("# Set up initial State.",2);
+	debug.addMsg(">> Starting to generate List of permitted Transitions ...",2);
+      	permittedTransitions = this.generatePermittedTransList();
+	debug.addMsg("<< List of permitted Transitions built up.",2);
     }
+
     
     /** Methode um für einen Prozess die benötigten Variablen und evtl. deren Werte
      * in varList zu generieren .
@@ -65,6 +76,7 @@ public class SimulatorProcess{
 	    
 	    /* Neue Variable in die Liste hinzufügen */
 	    result.add( new SimulatorVariable(this, pointer.head) );
+	    debug.addMsg("# added one SimulatorVariable to varList.",2);
 
 	    /* Die Variable wurde nun in die ArrayList der Prozessvariablen aufgenommen,
 	       also weiter ....
@@ -117,6 +129,8 @@ public class SimulatorProcess{
 	    if (dummy.checkPermission()) {
 	    /* Neue Transition evtl. in die Liste hinzufügen */
 		result.add(dummy);
+		debug.addMsg("# found one permitted Transition and added it to list.",2);
+
 	    }
 	    /* Die Transition wurde gecheckt und evtl. in die ArrayList der permitted Transitions 
 	       aufgenommen, also weiter ....
@@ -172,6 +186,8 @@ public class SimulatorProcess{
 		if (pointer.head.lab.act instanceof Input_action){
 		    Counter = 0;
 
+		    Input_action iAction = (Input_action) pointer.head.lab.act;
+		    
 		    /* Schleife ueber alle Channels */
 
 		    while (Counter<MaxEl) {
@@ -181,8 +197,8 @@ public class SimulatorProcess{
 			 * gefunden wurde, so wird die Transition dort in die
 			 * ReaderListe eingetragen.
 			 */
-
-			if (Examine == pointer.head.lab.act.chan){
+			
+			if (Examine.progChannel == iAction.chan){
 			    Examine.addReader(pointer.head);
 				Counter = MaxEl;
 			}
@@ -190,10 +206,11 @@ public class SimulatorProcess{
 		    }
 		   }
 		if (pointer.head.lab.act instanceof Output_action){
+		    Output_action oAction = (Output_action) pointer.head.lab.act;
 		    Counter = 0;
 		    while (Counter<MaxEl) {
 			Examine = (SimulatorChannel)result.get(Counter);
-			if (Examine == pointer.head.lab.act.chan){
+			if (Examine.progChannel == oAction.chan){
 			    Examine.addWriter(pointer.head);
 				Counter = MaxEl;
 			}
@@ -224,7 +241,7 @@ public class SimulatorProcess{
      */
     protected SimulatorVariable getVariable (Variable var) {
 	SimulatorVariable dummy; 
-	int maxIndex = varList.size()-1;	
+	int maxIndex = varList.size();	
 	for (int count=0 ; count < maxIndex; count++) {
 	    dummy = (SimulatorVariable) varList.get(count);
 	    if (dummy.name == var.name) {

@@ -74,7 +74,9 @@ public class SimulatorProgram {
 	while (go) {
 	    
 	    /* Neuen Prozess in die Liste hinzufügen */
+	    
 	    result.add( new SimulatorProcess(pointer.head) );
+	    debug.addMsg("# added one SimulatorProcess to processList ",2);
 
 	    /* Der Prozess wurde nun in die ArrayList aufgenommen,
 	       also weiter ....
@@ -94,7 +96,6 @@ public class SimulatorProgram {
 	return result;
 	
     }
-
 
 
 
@@ -119,6 +120,7 @@ public class SimulatorProgram {
 	    
 	    /* Neuen Channel in die Liste hinzufügen */
 	    result.add( new SimulatorChannel(pointer.head.chan) );
+	    debug.addMsg("# added one SimulatorChannel to channelList ",2);
 
 	    /* Der Kanal wurde nun in die ArrayList aufgenommen,
 	       also weiter ....
@@ -156,6 +158,16 @@ public class SimulatorProgram {
 	}
 	return result;
     }
+
+    /*
+      protected makeStep () {
+      
+
+
+      }
+    */
+
+
 
     protected void askQuestion () {
 	String[] ask= new String[3];

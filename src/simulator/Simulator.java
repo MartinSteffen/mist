@@ -108,6 +108,7 @@ public class Simulator {
 	debug.clear(); // Debugmeldungen löschen
 	if (this.active) {
 	    debug.addMsg(">> Simulator taking one step forwards ...",1);
+	    // 
 	}
 	else {
 	    debug.addMsg("# PRESS <Start> to start up Simulation of Program !!!",0);

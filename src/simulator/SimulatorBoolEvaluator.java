@@ -27,6 +27,10 @@ public class SimulatorBoolEvaluator {
      */
     private boolean value;
 
+    /**
+     * Instanzfeld, um Zugriff auf Debugfunktionen zu haben
+     */
+    protected SimulatorDebug debug;
 
     /** Konstruktor für einen Expression Evaluator mit Prozesskontext
      * 
@@ -34,6 +38,7 @@ public class SimulatorBoolEvaluator {
      * @param _expr Referenz auf die zu evaluierende Expression
      */
     protected SimulatorBoolEvaluator(SimulatorProcess _process, Expr _expr) {
+	debug = new SimulatorDebug();
 	process = _process;
 	expr = _expr;
     }
@@ -43,7 +48,6 @@ public class SimulatorBoolEvaluator {
      *
      * @param expr, der auszurechnende boolesche Ausdruck
      * @return booleschen Wert des Ausdrucks
-     * Bisher noch KEINE echte Funktionalität !!!
      */
     private boolean evalExpression (){
 	/* Typ der Expression abchecken und je nachdem weiter */
@@ -75,12 +79,15 @@ public class SimulatorBoolEvaluator {
 	Boolean dummy;    // Wrapper für boolean
 	boolean result;   // echter boolescher Wert für Ergebnis
 	if (cVal.val instanceof Boolean) {
+	    debug.addMsg("!!! Haaaloooo !!! : ",0);
 	    dummy = (Boolean)cVal.val;
 	    result = dummy.booleanValue();
 	    return result;
 	}
 	/* Platz für Exception, da die Konstante nicht boolean ist */
-	return false;
+	debug.addMsg("!!! EXCEPTION !!! : ",0);
+	debug.addMsg("!!! Class: SimulatorBoolEvaluator, Method : evalConstval, pos.:1 ",0);
+       	return false;
     }
 
 
