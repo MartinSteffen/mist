@@ -81,6 +81,15 @@ public class GUI extends javax.swing.JFrame {
 		    openMenuItemActionPerformed (evt);
 		}});
 	sessionMenu.add (openMenuItem);
+
+	openParseEdMenuItem.setText ("Open Parsed File");
+	openParseEdMenuItem.setActionCommand ("OpenParseEd");
+	openParseEdMenuItem.addActionListener (new java.awt.event.ActionListener () {
+	    public void actionPerformed (java.awt.event.ActionEvent evt) {
+		openParseEdMenuItemActionPerformed (evt);
+	    }});
+	sessionMenu.add (openParseEdMenuItem);
+
 	
 	saveMenuItem.setText ("Save");
 	saveMenuItem.addActionListener (new java.awt.event.ActionListener () {
@@ -146,13 +155,6 @@ public class GUI extends javax.swing.JFrame {
 		}});
         editorMenu.add (closeEdMenuItem);
 
-	openParseEdMenuItem.setText ("Open Parsed File");
-	openParseEdMenuItem.setActionCommand ("OpenParseEd");
-		openParseEdMenuItem.addActionListener (new java.awt.event.ActionListener () {
-	    public void actionPerformed (java.awt.event.ActionEvent evt) {
-		openParseEdMenuItemActionPerformed (evt);
-	    }});
-	editorMenu.add (openParseEdMenuItem);
     
 	editorMenu.add (jSeparator5);
     
@@ -261,10 +263,14 @@ public class GUI extends javax.swing.JFrame {
 			String name = (String) projBrowserTableModel.getValueAt(row, 0);
 			Boolean visible = (Boolean) projBrowserTableModel.getValueAt(row, 1);
 			Boolean inproject = (Boolean)  projBrowserTableModel.getValueAt(row, 3);
-			// actualsession.modifyEditors(name, visible, inproject);
-			
+			// Den call an den Editor umleiten
+			if (actualeditor == null)
+			    return;
+			if (visible.booleanValue())
+			    actualeditor.OpenProcess(name);
+			else actualeditor.CloseProcess(name);
 		    }
-		} 
+} 
 	    });
 	projBrowserTable.setModel(projBrowserTableModel);
 	getContentPane ().add (new javax.swing.JScrollPane(projBrowserTable), java.awt.BorderLayout.CENTER);
@@ -284,55 +290,98 @@ public class GUI extends javax.swing.JFrame {
     private void contentsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	// Add your handling code here:
     }
-    
+
+       
+    // ******  Callbacks aus Tools  ******
+
     private void checkAllMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
     }
     
     private void checkProcessMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
     }
     
     private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
 	mySimUI = new gui.SimUI(new simulator.Simulator(this), actualsession.workProgram);
 	mySimUI.show();
     }
 
-    private void removeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
-    }
-      
-    private void openParseEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
-    }
+    
+    // ******  Callbacks aus Editor  ******
 
-    private void closeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
-	Vector names = new Vector();
-	int i;
-	while((i = projBrowserTable.getSelectedRow()) != -1) {
-	    names.addElement((String) projBrowserTable.getValueAt(i, 0));
-	    projBrowserTableModel.removeRow(i);
-	}
-	
-	// actualsession.closeEditors(names);
+    private void newEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null)
+	    return;
+	if (actualeditor == null)
+	    return;
+	// Editor soll neuen Prozess anholen ...
+	String id = actualeditor.NewProcess(); 
+	// ... und eintragen
+	projBrowserTableModel.addRow(new Object[] {
+	    id, new Boolean(true), new Boolean(false), new Boolean(true) });
     }
     
     private void openEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
+	if (actualsession == null)
+	    return;
+	if (actualeditor == null)
+	    return;
+	// An Editor umleiten und TableModel updaten
+	String id;
+	int i;
+	while((i = projBrowserTable.getSelectedRow()) != -1) {
+	    id = (String) projBrowserTable.getValueAt(i, 0);
+	    actualeditor.OpenProcess(id);
+	    projBrowserTableModel.setValueAt( new Boolean(true), i, 1) ;
+	    projBrowserTable.removeRowSelectionInterval(i,i);
+	}
+    }
+      
+    private void closeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null)
+	    return;
+	if (actualeditor == null)
+	    return;
+	// An Editor umleiten und TableModel updaten
+	String id;
+	int i;
+	while((i = projBrowserTable.getSelectedRow()) != -1) {
+	    id = (String) projBrowserTable.getValueAt(i, 0);
+	    actualeditor.CloseProcess(id);
+	    projBrowserTableModel.setValueAt( new Boolean(false), i, 1) ;
+	    projBrowserTable.removeRowSelectionInterval(i,i);
+	}
     }
     
-    private void newEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	// Add your handling code here:
-	// if(actualsession!=null)
-	//     actualsession.addEditor();
-    
+    private void removeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null)
+	    return;
+	if (actualeditor == null)
+	    return;
+	
+	String id;
+	int i;
+	while((i = projBrowserTable.getSelectedRow()) != -1) {
+	    id = (String) projBrowserTable.getValueAt(i, 0);
+	    actualeditor.RemoveProcess(id);
+	    projBrowserTableModel.removeRow(i);
+	}
     }
+    
+
+    // ******  Callbacks aus Session  ******
     
     private void closeMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	if (actualsession == null)
+	    return;
+	
 	saveMenuItemActionPerformed(evt);
 	actualsession = null;
+	actualeditor.refresh(); // Der Editor soll  den Kram verwerfen
+
+	// Alle Eintraege aus der ProjectTable entferning
+	while(projBrowserTableModel.getRowCount() > 0)
+	    projBrowserTableModel.removeRow(0);
+	
 	// Menues setzen
 	editorMenu.setEnabled(false);
 	toolsMenu.setEnabled(false);
@@ -340,13 +389,11 @@ public class GUI extends javax.swing.JFrame {
 	projNameTextField.setText("No Session opened.");
     }
 
-    
-    
     private void saveAsMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
-	File f;
-	
 	if (actualsession == null)
 	    return;
+
+	File f;
 	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
 	ExampleFileFilter filter = new ExampleFileFilter(); 
 	filter.addExtension("mst");
@@ -378,6 +425,7 @@ public class GUI extends javax.swing.JFrame {
     private void saveMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	if (actualsession == null) 
 	    return;
+
 	if (actualsession.filename.equals("")) // Es wurde noch nie gespeichert
 	    saveAsMenuItemActionPerformed(evt); 
 	else { 
@@ -397,12 +445,15 @@ public class GUI extends javax.swing.JFrame {
 	}
 	
     }
+
+    private void openParseEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+    }
     
     private void openMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	if (actualsession != null)
 	    saveMenuItemActionPerformed(evt); // Session speichern
-	actualsession = null;
 
+	actualsession = null;
 	File f;
 	javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
 	ExampleFileFilter filter = new ExampleFileFilter(); 
@@ -414,7 +465,6 @@ public class GUI extends javax.swing.JFrame {
 	    f = chooser.getSelectedFile();
 	    System.out.println("trying to load: " + f.getAbsolutePath() + " ..."); 
 	    
-	   
 	    if (! f.isFile()) {
 		System.err.println("Konnte " + f.getAbsolutePath() + " nicht finden");
 		return;
@@ -432,12 +482,19 @@ public class GUI extends javax.swing.JFrame {
 	    } catch (ClassNotFoundException e) {
 		System.err.println("ClassNotFoundException in: openMenuItemActionPerformed\n" + e.getMessage());
 	    }
+	    // Editor starten mit dem aktuellen workProgram
+	    if (actualeditor == null) // Editor wurde noch nie gestartet
+		actualeditor = new editor.Editor(actualsession.workProgram);
+	    if (actualeditor != null) // Dem Editor das refresh-Signal senden
+		actualeditor.refresh(actualsession.workProgram);
+	    
+	    redrawProcessTable(actualeditor.getProcessIds());
+	    // GUI anpassen
+	    editorMenu.setEnabled(true);
+	    toolsMenu.setEnabled(true);
+	    projNameTextField.setText(actualsession.name);
+	
 	}
-	// Menues setzen
-	editorMenu.setEnabled(true);
-	toolsMenu.setEnabled(true);
-	// Firlefanz
-	projNameTextField.setText(actualsession.name);
     }
     
     private void newMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
@@ -446,7 +503,7 @@ public class GUI extends javax.swing.JFrame {
 	actualsession = null;
 	// Dialog zum starten einer neuen Session
 	new NewSessionUI(this, "Creating new Session", true);
-
+	
 	// Editor starten mit dem aktuellen workProgram
 	if (actualeditor == null) // Editor wurde noch nie gestartet
 	    actualeditor = new editor.Editor(actualsession.workProgram);
@@ -465,12 +522,14 @@ public class GUI extends javax.swing.JFrame {
 	System.exit (0);
     }
     
-    /** Exit the Application */
+    // Is nich ...
     private void exitForm(java.awt.event.WindowEvent evt) {
-	System.exit (0);
+	// System.exit (0);
     }
     
     
+
+
     // *** weiter Prozeduren ***
 
     /**
@@ -539,6 +598,11 @@ public class GUI extends javax.swing.JFrame {
 	*/
     
     private void redrawProcessTable(String [] ids) {
+	// Alle Eintraege wegnehmen ...
+	while(projBrowserTableModel.getRowCount() > 0)
+	    projBrowserTableModel.removeRow(0);
+
+	// ... und neu zeichen
 	for (int i=0; i < ids.length; i++) {
 	    projBrowserTableModel.addRow(new Object[] {
 		ids[i], new Boolean(true), new Boolean(false), new Boolean(true) });
