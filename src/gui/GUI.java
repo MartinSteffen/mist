@@ -54,6 +54,9 @@ public class GUI extends javax.swing.JFrame {
 	toolsMenu = new javax.swing.JMenu ();
 	simulatorMenuItem = new javax.swing.JMenuItem ();
 	jSeparator6 = new javax.swing.JSeparator ();
+	modelcheckerMenuItem = new javax.swing.JMenuItem();
+	jSeparator7 = new javax.swing.JSeparator ();
+
 	checkProcessMenuItem = new javax.swing.JMenuItem ();
 	checkAllMenuItem = new javax.swing.JMenuItem ();
 	helpMenu = new javax.swing.JMenu ();
@@ -180,7 +183,15 @@ public class GUI extends javax.swing.JFrame {
 	toolsMenu.add (simulatorMenuItem);
     
 	toolsMenu.add (jSeparator6);
-    
+	
+	modelcheckerMenuItem.addActionListener (new java.awt.event.ActionListener () {
+		public void actionPerformed (java.awt.event.ActionEvent evt) {
+		    modelcheckerMenuItemActionPerformed (evt);
+		}});
+	toolsMenu.add (modelcheckerMenuItem);
+	
+	toolsMenu.add (jSeparator7);
+	
 	checkProcessMenuItem.setText ("Check Process");
 	checkProcessMenuItem.setActionCommand ("CheckProcess");
 		checkProcessMenuItem.addActionListener (new java.awt.event.ActionListener () {
@@ -299,7 +310,12 @@ public class GUI extends javax.swing.JFrame {
     
     private void checkProcessMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
     }
-    
+
+    private void modelcheckerMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
+	
+	
+    }
+
     private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	mySimUI = new gui.SimUI(new simulator.Simulator(this), actualsession.workProgram);
 	mySimUI.show();
@@ -484,7 +500,7 @@ public class GUI extends javax.swing.JFrame {
 	    }
 	    // Editor starten mit dem aktuellen workProgram
 	    if (actualeditor == null) // Editor wurde noch nie gestartet
-		actualeditor = new editor.Editor(actualsession.workProgram);
+		actualeditor = new editor.Editor(this, actualsession.workProgram);
 	    else if (actualeditor != null) // Dem Editor das refresh-Signal senden
 		actualeditor.refresh(actualsession.workProgram);
 	    
@@ -658,6 +674,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JMenuItem simulatorMenuItem;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JMenuItem modelcheckerMenuItem;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JMenuItem checkProcessMenuItem;
     private javax.swing.JMenuItem checkAllMenuItem;
     private javax.swing.JMenu helpMenu;
