@@ -1,0 +1,18 @@
+#######################################################
+# $Id : $
+#######################################################
+
+      
+
+ o  Merge it with the requirement spec. 
+
+
+ o To make it a CD'able package: 
+     +	add jar-files 
+     +  tools +
+     +   generated web-pages
+     + tars
+     + an own Readme
+
+
+	

@@ -1,0 +1,59 @@
+#######################################################
+# $Id : $
+#######################################################
+
+Developer's sources of the Java-Mist course. It basically contains
+the cvs-sources of the code.
+
+
+	o Requirements: jdk1.2.1 (+ javadoc etc)
+  
+        o content:  
+	   -  Readme:   this file
+           -  tars:      tape archives
+    	          tars/cvs.tgz:  compressed package of the repository
+                  tars/Web.tgz:  compressed package of the Web-directory.
+
+	                         Real-life address
+
+                          http://www.informatik.uni-kiel.de/inf/deRoever/WS9899/Java/
+
+           -  Web:      snapshot of the courses web-pages
+	
+           -  pest1.jar,  Runnable Jar versions of Pest1 and Pest2. 
+	      pest2.jar 
+	      
+
+           - PerlTools-1.1: auxiliary utilities, the
+	                directory must be included in the classpath
+
+
+        o How to make it run from the cvs-source:
+
+	    - cd to an approrpiate directory, in the following
+	      I assume 
+	                 cd ~/Java/PEST
+
+              The directory must be contained in Javas class-path
+
+        o  cvs checkout -d <path-to-this/directory>/cvsroot checkout PEST1 
+ 
+           or
+
+           cvs checkout -d <path-to-this-directory>/cvsroot checkout PEST2
+
+	   If the repository is just kept on CD-ROM, mounted at
+	   /cdrom, for insance, do
+
+	      cvs checkout /cdrom/cvsroot PEST2
+
+
+           
+
+
+	   
+
+	               
+	                
+        
+
