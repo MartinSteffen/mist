@@ -1,13 +1,13 @@
 /**
  * Title:        *M*I*S*T*<p>
- * Description:  Diese Version gibt in start_check() eine boolean Variable als Ergebnis zurueck. Bei TRUE trat kein Fehler auf, bei FALSE trat irgendwo ein Fehler auf. Welcher Fehler genau das ist, wird in den einzelnen Checks abgefragt und in einem Fenster ausgegeben
-	18.7.2000
+ * Description:  Diese Version gibt in start_check() eine boolean Variable 
+ * als Ergebnis zurueck. Bei TRUE trat kein Fehler auf, bei FALSE trat irgendwo ein Fehler auf. 
+ *  Welcher Fehler genau das ist, wird in den einzelnen Checks abgefragt und in einem Fenster ausgegeben.
  * Copyright:    Copyright (c) André Nitsche<p>
  * Company:      <p>
  * @author André Nitsche
- * @version $Id: checks.java,v 1.5 2000-07-19 11:59:09 unix01 Exp $
+ * @version $Id: checks.java,v 1.6 2000-07-19 12:01:18 unix01 Exp $
  */
-
 
 
 package checks1;
@@ -53,9 +53,14 @@ public class checks {
 //	Checker for Mist Programs
 //	------------------------------------
 //
-//	$Id: checks.java,v 1.5 2000-07-19 11:59:09 unix01 Exp $
+//	$Id: checks.java,v 1.6 2000-07-19 12:01:18 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2000/07/19 11:59:09  unix01
+//	Andrees Version (1.4) kompiliert nicht =>
+//	Ich gehe im wesentlichen zur"uck auf die vorangegange
+//	1.3 die zumindest kompilierte. [Steffen]
+//	
 //	Revision 1.4  2000/07/19 11:48:55  unix01
 //	Version, wie von André zugemailt. Ich habe keinen
 //	Test durchgeführt. [Steffen]
@@ -63,19 +68,3 @@ public class checks {
 //	
 //	
 //---------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
