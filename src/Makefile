@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.5 2000-06-27 08:35:57 unix01 Exp $
+# $Id: Makefile,v 1.6 2000-06-27 08:46:00 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -45,6 +45,7 @@ clean:
 	(cd ./simulator; make clean)
 	(cd ./position1; make clean)
 	(cd ./position2; make clean)
+	(cd $(LOCALDOCDIR); make clean)
 
 
 
