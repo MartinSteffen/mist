@@ -63,7 +63,7 @@ nur f. development, kann im cvs raus
 Empirisches Platzieren der Zustaende eines Processes.
 Limitierungen: Ab ca. 140 Zustaenden koennte es etwas unuebersichtlich werden ;-)
 @author Christian Buck ( c.buck@gmx.de )
-@version 1.2
+@version 1.2b [ b=zwei schlimme, schlimme bugs entfernt :-( ]
 @param Process p - der zu pos. Process
 **/
 
@@ -89,23 +89,18 @@ Interne Funktion.
 **/
  void wrapStates(absynt.Process p){
  	AstateList mstatelist=p.states;
- 	if (mstatelist.head==null){
- 		return;					// leere Liste, da passiert i.f. nichts mehr
- 	}
- 	while (mstatelist.hasMoreElements()){
+ 	while (mstatelist!=null && mstatelist.head!=null){
  		Astate tmpAstate=(Astate)mstatelist.head;
  		empState tmpState=new empState(tmpAstate);
  		myStates.add(tmpState);			// alle States in den Vektor
  		mstatelist=(AstateList)mstatelist.next;
  	}
 	TransitionList mtranslist=p.steps;
-	if (mtranslist.head==null){
-		return;
-	}
-	while(mtranslist.hasMoreElements()){
+	while(mtranslist !=null && mtranslist.head!=null){
 		empTrans tmpTrans=new empTrans((Astate)mtranslist.head.source,(Astate)mtranslist.head.target);
+		myTrans.add(tmpTrans);
 		mtranslist=(TransitionList)mtranslist.next;
-	}
+ 	}
  }
 
 
@@ -118,7 +113,7 @@ Interne Funktion.
 	for (int i=0;i<myStates.size();i++){
 		empState tmpState=(empState)myStates.get(i);
 		for (int j=0;j<myTrans.size();j++){
-			empTrans tmpTrans=(empTrans)myTrans.get(i);
+			empTrans tmpTrans=(empTrans)myTrans.get(j);
 			if (tmpTrans.source==tmpState.vater){
 				tmpState.outTrans++;
 			}
@@ -194,8 +189,8 @@ Interne Funktion.
 		} else {
 			//System.out.println("reihenfolge i: "+reihenfolge[i]);
 			empState tmpState=(empState)mempStates.get(reihenfolge[i]);
-			tmpState.x=tmpState.centerx+((float)Math.sin(winkel)*tmpState.delta*0.9f);
-			tmpState.y=tmpState.centery+((float)Math.cos(winkel)*tmpState.delta*0.9f);
+			tmpState.x=tmpState.centerx+((float)Math.sin(winkel)*tmpState.delta);
+			tmpState.y=tmpState.centery+((float)Math.cos(winkel)*tmpState.delta);
 			winkel+=stepping;
 		}
 	}
@@ -224,7 +219,7 @@ Externe Funktion.
 
 // Liste der präferierten Schwerpunkte idF ( (x,y,delta),...,(x,y,delta) )
  float zentren2[]={0.5f,0.33f,0.25f,0.5f,0.66f,0.25f};
- float zentren3[]={0.33f,0.33f,0.25f,0.66f,0.33f,0.25f,0.5f,0.66f,0.25f};
+ float zentren3[]={0.30f,0.30f,0.25f,0.70f,0.30f,0.25f,0.5f,0.70f,0.25f};
  float zentren4[]={0.25f,0.25f,0.25f,0.75f,0.25f,0.25f,0.25f,0.75f,0.25f,0.75f,0.75f,0.25f};
  float zentren5[]={0.16f,0.16f,0.16f,1.0f-0.16f,0.16f,0.16f,0.5f,0.5f-0.16f,0.16f,0.16f,1.0f-0.16f,0.16f,1.0f-0.16f,1.0f-0.16f,0.16f};
  float zentren6[]={0.33f,0.25f,0.16f,0.66f,0.25f,0.16f,0.33f,0.5f,0.16f,0.66f,0.5f,0.16f,0.33f,0.75f,0.16f,0.66f,0.75f,0.16f};
@@ -234,26 +229,11 @@ Externe Funktion.
 
  float[] zentren[]={zentren2,zentren3,zentren4,zentren5,zentren6,zentren7,zentren8,zentren9};
 
- //absynt.Process p;		// !!! weg damit!!!!
-
-
 	wrapStates(p);
 	countTrans(p);
 
-// ein paar dummies zum testen
-	/*
-	myStates.add(new empState(0.2f,0.3f,1,1));
-	myStates.add(new empState(0.3f,0.2f,1,1));
-	myStates.add(new empState(0.5f,0.5f,1,1));
-	myStates.add(new empState(0.7f,0.7f,1,1));
-	myStates.add(new empState(0.1f,0.1f,1,1));
-	myStates.add(new empState(0.1f,0.1f,1,1));
-	myStates.add(new empState(0.1f,0.1f,1,1));
-	myStates.add(new empState(0.1f,0.1f,1,1));
-	myStates.add(new empState(0.1f,0.1f,1,1));
-	myStates.add(new empState(0.1f,0.1f,0,0));
-	*/
 // prüfen, ob sich Vector aufteilen lässt ( i.e. es ex. überhaupt Transitionen )
+
 	boolean isOk=false;
 	for (int i=0;i<myStates.size();i++){
 		empState tmpState=(empState)myStates.get(i);
@@ -298,7 +278,7 @@ Externe Funktion.
 	//System.out.println("interessant sort: 1 it");
 	}
 
-	System.out.println("PositionEmp: Found interesting states -  "+interessant.size());
+	System.out.println("---PositionEmp: Found interesting states:  "+interessant.size());
 
 // touch für den empSort() wieder zurücksetzen
 	for (int i=0;i<interessant.size();i++){
@@ -313,7 +293,7 @@ Externe Funktion.
 		}
 	}
 
-// interessante enfernen
+// interessante von den zugehoerigen trennen
 	for (int i=0;i<interessant.size();i++){
 		empState tmpState=(empState)interessant.get(i);
 		myStates.remove(tmpState);
@@ -341,7 +321,7 @@ Externe Funktion.
 	boolean found=false;
 	for (int i=0;i<mycount-1;i++){		// < ( und nicht <= ) ist kein bug, s.u.
 		Vector toSort=new Vector();
-		empState tmpState=(empState)interessant.get(i); // erster immer Mittelpunkt!
+		empState tmpState=(empState)interessant.get(i); // ein Interessanter ist immer Mittelpunkt!
 		tmpState.centerx=aktzentren[(i*3)];
 		tmpState.centery=aktzentren[(i*3)+1];
 		tmpState.delta=aktzentren[(i*3)+2];
@@ -349,9 +329,9 @@ Externe Funktion.
 		int tmp=(int)Math.floor(summe);
 		for (j=benutzt;j<tmp;j++){
 			found=false;
-			for (int k=0;k<myTrans.size() && !found;k++){	// ausreichend viele zugehörige suchen
+			for (int k=0;k<myTrans.size() && !found;k++){	// jetzt: ausreichend viele zugehörige suchen
 				empTrans tmpTrans=(empTrans)myTrans.get(k);					
-				if (tmpTrans.source==tmpState.vater){
+				if (tmpTrans.source==tmpState.vater){ // lieber folgetransitionen
 					empState objekt=findState(tmpTrans.target);
 					myStates.remove(objekt);
 					objekt.centerx=aktzentren[(i*3)];
@@ -371,10 +351,10 @@ Externe Funktion.
 				}
 			}
 			benutzt++;
-			summe+=anzahl;
+			summe+=anzahl;	// die zugehörigen sind jetzt raus, aber wir streben eine gerechte
+					// verteilung an, daher rechnen wir mit double
 		}
-		empSort(toSort);
-		//a_devfrm.draw(toSort);	// !!!raus!!!
+		empSort(toSort);		// die untermenge noch schön anordnen
 		unwrap(toSort);
 	}
 // der letzte frisst den rest!
@@ -396,6 +376,7 @@ Externe Funktion.
 	unwrap(toSort);
 
 	} // inter.size!=1
+	System.out.println("---PositionEmp: Finish. Everything is fine.");
  }
 
 }
