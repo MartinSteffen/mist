@@ -1,13 +1,15 @@
-$Id: TODO,v 1.1 2000-07-11 11:32:37 unix01 Exp $
+$Id: TODO,v 1.2 2000-07-14 06:03:30 unix01 Exp $
 
 von:
 	Andreas Scott & Alexander Hegener
 
 ---------------
 Folgendes ist noch zu tun
-  - einbauen von Typdeklarationen in die konkrete Syntax
-  - einbauen der Typdeklarationen in den Scanner 
-  - ueberpruefen, ob richtig durchgeparsed wird (tolles Wort)
-  - Objekte erzeugen
-  - testen
-
+  - einbauen von Typdeklarationen in die konkrete Syntax		[done]
+  - einbauen der Typdeklarationen in den Scanner				[done]
+  -	kleine Beispiele entwerfen	 
+  - ueberpruefen, ob richtig durchgeparsed wird (tolles Wort)	
+  - Objekte erzeugen 
+  - testen	
+  - Prioritaeten (Punktrechnung vor Strichrechnung) in den 
+	Expressions einbauen
