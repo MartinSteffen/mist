@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.6 2000-06-27 08:46:00 unix01 Exp $
+# $Id: Makefile,v 1.7 2000-06-27 09:48:27 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -29,7 +29,7 @@ packets:
 	(cd ./simulator; make)
 	(cd ./modcheck; make)
 	(cd ./position1; make)
-#	(cd ./position2; make) # -> compilation error
+	(cd ./position2; make)
 
 
 
