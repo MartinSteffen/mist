@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.5 2000-06-05 18:02:11 unix01 Exp $
+## $Id: Makefile,v 1.6 2000-06-08 14:08:01 unix01 Exp $
 ########################################################
 
 
@@ -23,8 +23,8 @@ html: macros.hva $(DOC).tex
 
 
 clean:
-	rm -f *.aux *.log *.dvi *.ps *.bbl *.blg *~
-	rm *.html *.gif
+	rm -f *.aux *.log *.dvi *.ps *.bbl *.blg *~ 
+	rm *.html *.gif *.haux
 
 www:
 	cp *.html *.ps *.gif  $(WWWDIR)
