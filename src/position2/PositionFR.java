@@ -3,7 +3,7 @@
  * aus der Diplom-Arbeit von Stefan Meier 
  * 
  * @author rthoele@gmx.de
- * @version 1.0
+ * @version 1.1
  */
 
 package position2;
@@ -12,6 +12,7 @@ import absynt.Process;
 import absynt.Position;
 import absynt.*;
 import java.util.Enumeration;
+import java.util.Vector;
 
 public class PositionFR implements position2.Position {
     /** 
@@ -29,7 +30,7 @@ public class PositionFR implements position2.Position {
      * Anzahl der durchzuführenden Iterationen
      *
      */
-    public int iterations = 50;
+    public int iterations = 10;
 
     /**
      * "Temperatur"
@@ -46,47 +47,58 @@ public class PositionFR implements position2.Position {
      * @param process der zu positionierende Prozess
      */
     public void positioniere(Process process){
-	anzZustaende = anzElemente(process.states);
-	k=(float)Math.sqrt(1/anzZustaende);
-	AusgangsPosition(process.states);
+	erwAstateList stateList = new erwAstateList(process.states);
+	erwTransitionList transitionlist = new erwTransitionList(process.steps, stateList);
 
-	AstateList stateList1 = process.states;
-	AstateList stateList2 = process.states;
-	TransitionList tlist = process.steps;
-
+	anzZustaende = stateList.size();
+	k = (float)Math.sqrt(1.0/anzZustaende);
+	AusgangsPosition(stateList);
+	//	ausgabe(stateList);
 	for (int j=1;j<=iterations;j++){
-	    for (;stateList1.hasMoreElements();){
-		erwAstate v = (erwAstate) stateList1.nextElement();
+	    System.out.println("Schleifendurchlauf Nr.: " + j);
+	    for (int i=0;i<stateList.size();i++){
+		erwAstate v = (erwAstate) stateList.elementAt(i);
 		v.disp.x=0;
 		v.disp.y=0;
-		for (;stateList2.hasMoreElements();){
-		    erwAstate u= (erwAstate) stateList2.nextElement();
+		for (int l=0;l<stateList.size();l++){
+		    erwAstate u= (erwAstate) stateList.elementAt(l);
 		    if (v != u){
 			Position delta = new Position();
-			delta.x = v.pos.x - u.pos.x;
-			delta.y = v.pos.y - u.pos.y;
+			if (v.astate.pos==null){ v.astate.pos = new Position();}
+			if (u.astate.pos==null){ u.astate.pos = new Position();}
+			delta.x = v.astate.pos.x - u.astate.pos.x;
+			delta.y = v.astate.pos.y - u.astate.pos.y;
 			v.disp.x += (delta.x/betrag(delta))*f_r(betrag(delta));
 			v.disp.y += (delta.y/betrag(delta))*f_r(betrag(delta));
 		    }
 		}    
 	    }
-	    for (;tlist.hasMoreElements();){
-		Transition trans = (Transition) tlist.nextElement();
+	    for (int i=0;i<transitionlist.size();i++){
+		erwTransition trans = (erwTransition) transitionlist.elementAt(i);
 		Position delta = new Position();
-		delta.x = trans.source.pos.x - trans.target.pos.x;
-		delta.y = trans.source.pos.y - trans.target.pos.y;
-		((erwAstate) trans.source).disp.x -= (delta.x/(betrag(delta))*f_a(betrag(delta)));
-		((erwAstate) trans.source).disp.y -= (delta.y/(betrag(delta))*f_a(betrag(delta)));
+		int index_v = trans.sourceIndex;
+		//stateList.indexOf(trans.source);
+		int index_u = trans.targetIndex;
+		//stateList.indexOf(trans.target);
+		if (index_v != -1 && index_u !=-1) {
+		    // System.out.println(index_v+" --- "+index_u);
+		    erwAstate v= (erwAstate) stateList.elementAt(index_v);
+		    erwAstate u= (erwAstate) stateList.elementAt(index_u);
+		    delta.x = trans.transition.source.pos.x - trans.transition.target.pos.x;
+		    delta.y = trans.transition.source.pos.y - trans.transition.target.pos.y;
+		    v.disp.x -= (delta.x/(betrag(delta))*f_a(betrag(delta)));
+		    v.disp.y -= (delta.y/(betrag(delta))*f_a(betrag(delta)));
+		}
 	    }
-	    stateList1 = process.states;
-	    for (;stateList1.hasMoreElements();){
-		erwAstate v = (erwAstate) stateList1.nextElement();
-		v.pos.x += (v.disp.x/betrag(v.disp))*Math.min(v.disp.x,t);
-		v.pos.y += (v.disp.y/betrag(v.disp))*Math.min(v.disp.y,t);
+	    for (int i=0;i<stateList.size();i++){
+		erwAstate v = (erwAstate) stateList.elementAt(i);
+		v.astate.pos.x += (v.disp.x/betrag(v.disp))*Math.min(v.disp.x,t);
+		v.astate.pos.y += (v.disp.y/betrag(v.disp))*Math.min(v.disp.y,t);
 	    }
 	    t = cool(t);
-	}
-    }
+        }
+	ausgabe(stateList);
+}
 
     /**
      * bestimmt die Anziehungskräfte zwischen zwei Zuständen
@@ -123,42 +135,74 @@ public class PositionFR implements position2.Position {
 	return (float)Math.sqrt(Math.pow(pos.x,2)+Math.pow(pos.y,2));
     }
 
-    /** 
-     * liefert die Anzahl der Elemente einer Enumeration
-     *
-     * @param e Enumeration, dessen Elemente gezählt werden sollen.
-     */
-    int anzElemente(Enumeration e){
-	int i = 0;
-	for(i=0;e.hasMoreElements();i++){
-	    e.nextElement();
-	}
-	return i;
-    }
-
     /**
      * setzt die Zustaende auf eine Ausgangsposition
      * hier: moeglichst Gleichverteilung
      *
      * @param states zu positionierende Zustaende
      */
-    void AusgangsPosition(AstateList states){
-	State state;
+    void AusgangsPosition(erwAstateList statelist){
+	Astate state;
 	float x=0;
 	float y=0;
-	while(states.hasMoreElements()){
-	    state = (State) states.nextElement();
+	for(int i=0;i<statelist.size();i++){
+	    state = ((erwAstate) statelist.elementAt(i)).astate;
+	    state.pos = new Position();
 	    state.pos.x= x;
 	    state.pos.y= y;
 	    x+=k;
-	    if (x>1){
+ 	    if (x>1){
 		x-=1;
 		y+=k;
 	    }
+	    //	    System.out.println("x: "+ x + " y: "+ y + " k: "+k);
 	}
     }
 
-    private abstract class erwAstate extends Astate{
+    private void ausgabe(erwAstateList list){
+	for(int i=0;i<list.size();i++){
+	    erwAstate state = (erwAstate) list.elementAt(i);
+	    System.out.println("State "+ i + ": x="+state.astate.pos.x + " y="+ state.astate.pos.y);
+	} 
+    }
+    private class erwTransitionList extends Vector{
+	public erwTransitionList(TransitionList list, erwAstateList stateList){
+	    for (;list.hasMoreElements();){
+		erwTransition erwtrans = new erwTransition(list.head);
+		this.add(erwtrans);
+		if (erwtrans.transition.source != null){
+		    erwtrans.sourceIndex = stateList.indexOf(erwtrans.transition.source);
+		}
+		if (erwtrans.transition.target != null){
+		    erwtrans.targetIndex = stateList.indexOf(erwtrans.transition.target);
+		}						
+		list = (TransitionList) list.nextElement();
+	    }
+	}
+    }
+    private class erwTransition{
+	public int sourceIndex = -1;
+	public int targetIndex = -1;
+	public Transition transition;
+	public erwTransition(Transition trans){
+	    this.transition = trans;
+	}
+    }	
+    private class erwAstateList extends Vector{
+	public erwAstateList(AstateList stateList){
+	    for (;stateList.hasMoreElements();){
+		this.add(new erwAstate(stateList.head));
+		stateList = (AstateList) stateList.nextElement();
+		//		System.out.println("index: "+ this.indexOf(this.elementAt(0)));
+	    }
+	}
+    }
+    private class erwAstate{
 	public Position disp;
+	public Astate astate;
+	public erwAstate(Astate astate){
+	    this.astate = astate;
+	    disp = new Position();
+	}
     }
 }
