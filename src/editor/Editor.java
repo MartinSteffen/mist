@@ -303,7 +303,7 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     void exitEditor () {
       closeEditor();
       if (debug) debugText("exitEditor : Nr."+Integer.toString(editor_id));
-      if (editor_count == 0 && gui == null) System.exit(0);
+      if (editor_count == 0 && gui == null) ; // ist denn das so schwer??? System.exit(0);
     }
 
     void closeEditor () {
@@ -449,7 +449,8 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     
     // Das Programm wurde in der GUI ausgetauscht => neues Programm darstellen (und altes wegnehmen)
     public void refresh(absynt.Program inprogram) {
-      addProgram(inprogram);
+	removeActiveProgram();
+	addProgram(inprogram);
     }
 
     // Das Programm wurde in der GUI geschlossen, der Editor soll alle Fenster schliessen,
@@ -601,3 +602,6 @@ public class Editor extends JFrame implements InternalFrameListener, ActionListe
     }
 
 }
+
+
+
