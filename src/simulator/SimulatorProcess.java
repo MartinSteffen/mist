@@ -3,6 +3,7 @@ package simulator;
 import java.util.*;
 import absynt.*;
 
+
 /** Klasse zum Darstellen eines Prozesszustandes
  * @author Michael Goemann
  * @author Michael Nimser 
@@ -136,7 +137,85 @@ public class SimulatorProcess{
     }// ---------- end() -----------------------
 
 
+
+    /**
+     * Durchgehen aller Transitionen und abchecken, ob Input / Output actions dabeisind.
+     * Falls ja: Transition bei entsprechendem Channel als Reader / Writer eintragen.
+     */
+
+    protected ArrayList fillInTransitions (ArrayList _ChannelList ){
  
+	/* pointer zeigt auf aktuell zu scannende Transition des Prozesses  */
+	TransitionList pointer = progProcess.steps;
+
+	/* ArrayList in der die Transitionen generiert werden,
+	   ist Rückgabewert dieser Methode */
+	ArrayList result = _ChannelList;
+	SimulatorChannel Examine;
+	int MaxEl = result.size();
+	int Counter = 0;
+
+	/* boolesche Variable für while-Schleifen-Logik */
+	boolean go = false;
+
+	if (pointer != null) // checken, ob eine Transition in der Transitionsliste existiert
+	    go = true;
+
+	/* Schleife ueber alle Transitionen */
+	while (go) {
+            if (pointer.head.source == activeState){
+
+		/* Test, ob Action vom Typ Input-action. Wenn ja, so gehoert sie
+		 * in die ReaderListe
+		 */
+
+		if (pointer.head.lab.act instanceof Input_action){
+		    Counter = 0;
+
+		    /* Schleife ueber alle Channels */
+
+		    while (Counter<MaxEl) {
+			Examine = (SimulatorChannel)result.get(Counter);
+
+			/* Wenn der Channel der Input-Action in der Channelliste
+			 * gefunden wurde, so wird die Transition dort in die
+			 * ReaderListe eingetragen.
+			 */
+
+			if (Examine == pointer.head.lab.act.chan){
+			    Examine.addReader(pointer.head);
+				Counter = MaxEl;
+			}
+			else Counter ++;
+		    }
+		   }
+		if (pointer.head.lab.act instanceof Output_action){
+		    Counter = 0;
+		    while (Counter<MaxEl) {
+			Examine = (SimulatorChannel)result.get(Counter);
+			if (Examine == pointer.head.lab.act.chan){
+			    Examine.addWriter(pointer.head);
+				Counter = MaxEl;
+			}
+			else Counter ++;
+		    }
+		   }
+	    }
+	
+	    if (pointer.hasMoreElements()) {
+		// wenn es noch eine Transition hinter der aktuellen gibt
+		pointer = pointer.next;
+		// dann pointer auf Nachfolger versetzen
+	    }
+	    else
+		/* Abbruchbedingung für While-Schleife setzen */
+		go = false;
+
+	}// ------ end while -------
+
+	return result;
+    }// ---------- end() -----------------------
+
 
     /** Methode zum Loeschen der "permittedTransitions" */
     private void clearPermittedTransList () {

@@ -92,7 +92,7 @@ public class SimulatorProgram {
      */
     protected ArrayList makeChannelList () {
 
-	/* pointer zeigt auf den aktuell zu scannenden CHannel des Programms  */
+	/* pointer zeigt auf den aktuell zu scannenden Channel des Programms  */
 	ChandecList pointer = this.progProgram.chans ;
 
 	/* ArrayList in der die Kanäle generiert werden,
@@ -125,6 +125,24 @@ public class SimulatorProgram {
 
 	}// ------ end while -------
 
+	return result;
+    }
+
+    /**
+     * Fuer jeden Prozess werden die Transitionen, Welche lesend oder
+     * schreibend mit Channels kommunizieren, als reader oder writer
+     * am entsprechenden Ort in die Channelliste eingetragen.
+     */
+
+    protected ArrayList fillChannelList (ArrayList _ChannelList){
+	ArrayList result = _ChannelList;
+        SimulatorProcess CheckThisOut;
+	int MaxEl = processList.size();
+	int Counter = 0;
+	for (Counter=0; Counter < MaxEl; Counter ++){
+            CheckThisOut = (SimulatorProcess)processList.get(Counter);
+	    result = CheckThisOut.fillInTransitions(result);
+	}
 	return result;
     }
 
