@@ -1,5 +1,5 @@
 ######################################################
-# $Id: gruppen.txt,v 1.2 2000-06-04 12:11:53 unix01 Exp $
+# $Id: gruppen.txt,v 1.3 2000-06-07 15:32:37 unix01 Exp $
 ######################################################
 ## Gruppeneinteilung + Mailadressen der Teilnehmer: .mailrc-Syntax
 ##
@@ -14,6 +14,7 @@
 ##  Graphplazierung1: Daniel Dietrich/Moritz Zahorsky/ Christian Buck
 ##  Graphplazierung2: Ralf Thöhle/Paul Mallach (unix11)
 ##  Checking:         Jonas Dageförde/Andreas Lukosch/ André Nitsche
+##  Prettyprinter (o.ä): Oliver Kraus, Holger Labenda
 
 
 
@@ -27,8 +28,10 @@ alias Goemann.Michael 	 Michael@Goemann.de
 alias Hegener.Alexander	 std10239@dial.techfak.uni-kiel.de
 alias Jacobs.Finn	 finnjacobs@gmx.net
 alias Kraas.Helge	 hkraas@web.de
+alias Kraus.Oliver	okraus@computerlabor.math.uni-kiel.de
 alias Kuemper.Aneta	 barecka@gmx.de
 alias Kyas.Marcel        mkyas@gmx.net
+alias Labenda.Holger	labenda@psychologie.uni-kiel.de
 alias Lukosch.Andreas	 stu38212@mail.uni-kiel.de
 alias Mallach.Paul	 pmallach@gmx.de
 alias Neumann.Frank	 frank.all@gmx.de
@@ -52,7 +55,9 @@ alias parser        scott.andreas, hegener.alexander
 alias check         dagefoerde.jonas, lukosch.andreas, nitsche.andree
 alias position1     dietrich.daniel, zahorsky.moritz, buck.christian
 alias position2     thoehle.ralf, mallach.paul
-alias integration   kyas.marcel, stahl.karsten, steffen.martin
+alias pp            kraus.oliver, labenda.holger
+alias integration   kyas.marcel, stahl.karsten, steffen.Martin
+
 
 
 alias javamist editor,\
@@ -63,6 +68,7 @@ alias javamist editor,\
 	       position1,\
 	       position2,\
                check,\
+	       pp,\
 	       integration
 
 
