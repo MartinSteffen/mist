@@ -485,14 +485,16 @@ public class GUI extends javax.swing.JFrame {
 	    // Editor starten mit dem aktuellen workProgram
 	    if (actualeditor == null) // Editor wurde noch nie gestartet
 		actualeditor = new editor.Editor(actualsession.workProgram);
-	    if (actualeditor != null) // Dem Editor das refresh-Signal senden
+	    else if (actualeditor != null) // Dem Editor das refresh-Signal senden
 		actualeditor.refresh(actualsession.workProgram);
 	    
-	    redrawProcessTable(actualeditor.getProcessIds());
 	    // GUI anpassen
 	    editorMenu.setEnabled(true);
 	    toolsMenu.setEnabled(true);
 	    projNameTextField.setText(actualsession.name);
+	    
+	    redrawProcessTable(actualeditor.getProcessIds());
+
 	
 	}
     }
@@ -580,8 +582,8 @@ public class GUI extends javax.swing.JFrame {
      */
     public void RemoveProcess(String id) {
 	int row = 0;
-	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
-		&& (row < projBrowserTableModel.getRowCount()))
+	while ( (row < projBrowserTableModel.getRowCount()) && 
+		!(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id)))
 	    row++;
 	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
 	    projBrowserTableModel.removeRow(row);
@@ -592,8 +594,8 @@ public class GUI extends javax.swing.JFrame {
      */
     public void OpenProcess(String id) {
 	int row = 0;
-	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
-		&& (row < projBrowserTableModel.getRowCount()))
+	while ((row < projBrowserTableModel.getRowCount())
+	       && !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id)))
 	    row++;
 	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
 	    projBrowserTableModel.setValueAt(new Boolean(true), row, 1);
@@ -604,18 +606,18 @@ public class GUI extends javax.swing.JFrame {
      */
      public void CloseProcess(String id) {
 	 int row = 0;
-	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
-		&& (row < projBrowserTableModel.getRowCount()))
-	    row++;
-	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
-	    projBrowserTableModel.setValueAt(new Boolean(false), row, 1);
+	 while ( (row < projBrowserTableModel.getRowCount()) 
+		 && !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id)))
+	     row++;
+	 if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
+	     projBrowserTableModel.setValueAt(new Boolean(false), row, 1);
      }
 
     private void redrawProcessTable(String [] ids) {
 	// Alle Eintraege wegnehmen ...
 	while(projBrowserTableModel.getRowCount() > 0)
 	    projBrowserTableModel.removeRow(0);
-
+	
 	// ... und neu zeichen
 	for (int i=0; i < ids.length; i++) {
 	    projBrowserTableModel.addRow(new Object[] {
