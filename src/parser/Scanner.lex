@@ -6,11 +6,15 @@ import java.io.IOException;
  * Klasse Scanner - automatisch generiert von JLex aus Scanner.lex
  *
  * @author Andreas Scott &amp; Alexander Hegener 
- * @version $Id: Scanner.lex,v 1.1 2000-07-11 11:31:36 unix01 Exp $
+ * @version $Id: Scanner.lex,v 1.2 2000-07-11 20:28:36 unix01 Exp $
  * @see <a href="../../Scanner.lex">Scanner.lex</a>
  *
  * <!-- Log ==========
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2000/07/11 11:31:36  unix01
+ * Umbenennung von Parser.lex in Scanner.lex - einfacher fuer die anderen
+ * Gruppen
+ *
  * =============== -->
  *
  */
@@ -34,6 +38,7 @@ import java.io.IOException;
 
 %{
   Token token;
+  boolean debug = true;
 
   /**
    * zaehlt die Zeilen
@@ -60,52 +65,101 @@ import java.io.IOException;
    * @throws IOException falls kein Token mehr gelesen werden kann
    * @throws ParseException falls ein Syntax-Fehler aufgetreten ist
    */
-  protected void buildProgram() throws IOException, ParseException{
-	  token = nextToken();
-	  
-	  /* NAME erwartet */
-	  if (token.type == Token.NAME){
-		  System.out.println ("Programm "+token.textValue);
-	  } else 
-		  lexerror ("Identifikator (Programmname) erwartet.");
+  protected absynt.Program buildProgram() throws IOException, ParseException{
+      absynt.Program     program   = null;
+      absynt.ChandecList channels  = null;
+      absynt.ProcessList processes = null;
+      String progname = null;
 
-	  /* { erwartet */
-	  token = nextToken();
-	  if (token.type == Token.LBRACE){
-		  
-		  /* 'process' oder 'channel' erwartet */
-		  token = nextToken();
-		  while ((token.type == Token.CHANNEL) || (token.type == Token.PROCESS)){
-			  if (token.type == Token.CHANNEL){
-				  buildChannel();
-			  } else if (token.type == Token.PROCESS) {
-				  buildProcess();
-			  } else 
-				  lexerror ("'channel' oder 'process' erwartet.");
-			  token = nextToken();
-		  }
+      /* aktueller Token-Typ: Token.PROGRAM */
+      if (token.type != Token.PROGRAM)
+	  lexerror("Parserfehler");
+
+
+      /* naechstes Token: NAME erwartet */
+      token = nextToken();
+      if (token.type != Token.NAME)
+	  lexerror ("Identifikator (Programmname) erwartet.");
+      progname = token.textValue;  // setze Namen des Programms      
+
+      if (debug)
+	  System.out.println ("Programm "+token.textValue);
+
+      /* naechstes Token: { erwartet */
+      token = nextToken();
+      if (token.type != Token.LBRACE)
+	  lexerror ("'{' erwartet.");
+
+      /* naechstes Token: 'process' oder 'channel' erwartet */
+      token = nextToken();
+      while ((token.type == Token.CHANNEL) || (token.type == Token.PROCESS)){
+	  if (token.type == Token.CHANNEL){
+	      channels =  new absynt.ChandecList(
+				new absynt.Chandec(buildChannel()), channels);
+	  } else if (token.type == Token.PROCESS) {
+	      buildProcess();
 	  } else 
-		  lexerror ("'{' erwartet.");
-	  
+	      lexerror ("'channel' oder 'process' erwartet.");
+
+	  /* aktueller Token: ';' oder '}' */
+
+	  /* naechster Token */
 	  token = nextToken();
-	  if (token.type == Token.RBRACE){
-		  System.out.println("Ende Programm.");
-	  } else
-		  lexerror("'}' erwartet.");
+      }
+      
+      if (token.type != Token.RBRACE)
+	  lexerror("'}' erwartet.");
+
+      /* Programm erzeugen */
+      program = new absynt.Program(channels, processes);
+      program.name = progname;
+
+      if(debug)
+	  System.out.println("Ende Programm.");
+      
+      return program;
+  }/* Ende buildProgram() */
+  
+
+
+  /**
+   * Methode um ein Objekt der Klasse absynt.Channel zu erzeugen
+   * @returns absynt.Channel
+   * @throws IOException falls kein Token mehr gelesen werden kann
+   * @throws ParseException falls ein Syntax-Fehler aufgetreten ist
+   */
+  private absynt.Channel buildChannel() throws IOException, ParseException{
+      /* aktueller Token-Typ: Token.CHANNEL */
+      if (token.type != Token.CHANNEL)
+	  lexerror("Parserfehler");
+      absynt.Channel channel;
+
+      /* naechstes Token: NAME erwartet */
+      token = nextToken();
+      if (token.type != Token.NAME)
+	  lexerror("Identifikator (Channelname) erwartet");
+      channel = new absynt.Channel(token.textValue);
+//        /* naechstes Token: TYPE erwartet */
+//        token = nextToken();
+//        if (token.type != Token.TYPE)
+//  	  lexerror("Typ (Channeltyp) erwartet");
+//        if (token.intValue == Token.BOOL)
+//  	  channel.m_type = new absynt.M_Bool();
+//        else
+//  	  channel.m_type = new absynt.M_Int();
+
+
+      /* naechstes Token: SEMICOL erwartet */
+      token = nextToken();
+      if (token.type != Token.SEMICOL)
+	  lexerror("';' erwartet");
+
+//        if (debug)
+//  	  System.outprintln("channel: "+channel.m_type+" "+channel.name);
+      return channel;
   }
   
-  private void buildChannel() throws IOException, ParseException{
-	  if (token.type == Token.NAME)
-		  System.out.println("  channel "+token.textValue);
-	  else
-		  lexerror("Identifikator (Channelname) erwartet");
-	  token = nextToken();
 
-	  if (token.type != Token.SEMICOL)
-		  lexerror("';'erwartet");
-
-	  token = nextToken();
-  }
 
   protected void buildProcess() throws IOException, ParseException{
 	  /* Name erwartet */
@@ -199,6 +253,8 @@ name	= ({letter}({letter}|{digit})*)
 "channel"           { return new Token(Token.CHANNEL)         ; }
 "process"           { return new Token(Token.PROCESS)         ; }
 "while"             { return new Token(Token.WHILE)           ; }
+"bool"              { return new Token(Token.TYPE, Token.BOOL); }
+"int"               { return new Token(Token.TYPE, Token.INT) ; }
 "if"                { return new Token(Token.IF)              ; }
 "put"               { return new Token(Token.PUT)             ; }
 "get"               { return new Token(Token.GET)             ; }

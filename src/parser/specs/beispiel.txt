@@ -1,5 +1,7 @@
-====================================================================
-// simples Mist-Programm program HelloWorld {
+//====================================================================
+// simples Mist-Programm 
+
+program HelloWorld {
 
   // ein Prozess
   process p1{
@@ -19,18 +21,18 @@
   }                             // s2
 
 } // Ende von HelloWorld
-====================================================================
-Prozess p1 
-Bed.    Zustand   Action    Zustand
-(true)    s0   -> x=0       ->  s1
-(true)    s1   -> y=1       ->  s2
-(x<3)     s2   -> tau       ->  s3
-(true)    s3   -> x=x+y     ->  s4
-(true     s4   -> put(c1,x) ->  s2
-(!(x<3)   s2   -> tau       ->  s5
+//====================================================================
+//Prozess p1 
+//Bed.    Zustand   Action    Zustand
+//(true)    s0   -> x=0       ->  s1
+//(true)    s1   -> y=1       ->  s2 
+//(x<3)     s2   -> tau       ->  s3
+//(true)    s3   -> x=x+y     ->  s4
+//(true     s4   -> put(c1,x) ->  s2
+//(!(x<3)   s2   -> tau       ->  s5
     
-Prozess p2
-Bed.	Zustand	  Action	Zustand
-(true)	  s0   -> z=0		->  s1
-(z<3)	  s1   -> get(c1,z)	->  s1
-!(z<3)	  s1   -> tau		->  s2
+//Prozess p2
+//Bed.	Zustand	  Action	Zustand
+//(true)	  s0   -> z=0		->  s1
+//(z<3)	  s1   -> get(c1,z)	->  s1
+//!(z<3)	  s1   -> tau		->  s2

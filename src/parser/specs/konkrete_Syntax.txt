@@ -1,15 +1,22 @@
-$Id: konkrete_Syntax.txt,v 1.3 2000-07-09 17:36:45 unix01 Exp $
+$Id: konkrete_Syntax.txt,v 1.4 2000-07-11 20:28:37 unix01 Exp $
 $Log: not supported by cvs2svn $
+Revision 1.3  2000/07/09 17:36:45  unix01
+oops? Wiederum keine Aenderung...?
+
 Revision 1.2  2000/07/08 14:45:15  unix01
 keine Aenderung der Syntax, nur testen des CVS-logging
 
 
 ---------------------------------------------------------------------
 
-Program     ::= "program" Id "{" ProcessList "}" 
+Program     ::= "program" Id "{" DecList "}" 
 
-ProcessList ::= Process ProcessList 
-            |   Process
+DecList	    ::= Process DecList 
+	    |	ChanDec DecList
+	    |	Process 
+	    |	ChanDec
+
+ChanDec	    ::= "channel" Type Id ";"
 
 Process     ::= "process" Id "{" Statement "}" 
 
@@ -18,10 +25,13 @@ Statement   ::= Statement ";" Statement             // Hintereinander
             |   "if" "(" Expr ")" Statement         // Bed. Anweisung
             |   "if" "(" Expr ")" Statement "else" Statement    
             |   "while" "(" Expr ")" Statement      // Schleife
-            |   Identifier "=" Expr                 // Zuweisung
+            |    Type Id "=" Expr                 // Zuweisung
             |   "put" "(" Id "," Expr ")"           // Senden
             |   "get" "(" Id "," Identifier ")"     // Empfangen
-			
+	    |	"assert" Expr			
+
+Type	    ::= "int" | "bool"
+
 Expr        ::= Constval                            // Konstante
             |   Id                                  // Variable
             |   Op Expr                             // Vorz./Negation
@@ -31,6 +41,8 @@ Expr        ::= Constval                            // Konstante
 Op          ::= And   | Or    | Div   | Eq  | Geq  | Greater 
             |   Leq   | Less  | Minus | Neg | Plus | Times 
             |   Neq                                 // fehlt !!
+
+
 
 And         ::= "&&"
 Or          ::= "||"
