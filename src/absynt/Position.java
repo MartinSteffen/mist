@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Position, fuer die Graphische Darstellung. Momentan x/y Koordinaten
  *
  * @author Initially provided by Martin Steffen.
- * @version $Id: Position.java,v 1.4 2000-07-16 20:59:00 unix01 Exp $
+ * @version $Id: Position.java,v 1.5 2000-07-18 22:12:14 unix01 Exp $
  */
 
 
@@ -19,7 +19,8 @@ public class Position implements Serializable{
   }
 
   public Position() {
-  }
+	  this.x = -1;
+	  this.y = -1;  }
 
   /**
   * tests, if the two positions are near each other
@@ -40,9 +41,12 @@ public class Position implements Serializable{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Position.java,v 1.4 2000-07-16 20:59:00 unix01 Exp $
+//	$Id: Position.java,v 1.5 2000-07-18 22:12:14 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2000/07/16 20:59:00  unix01
+//	neuer Algorithmus zum Test auf schneiden von Linien. Funktioniert immmer noch nicht korrekt. Vielleicht sollte ich doch lieber selbst was programmieren? Code reuse hat auch seine Grenzen. :-)
+//	
 //	Revision 1.3  2000/07/10 08:39:05  unix01
 //	Ich kann diese Konstruktoren gebrauchen. Sollte sonst keine Probleme geben.
 //
