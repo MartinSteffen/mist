@@ -65,7 +65,7 @@ public class PrettyPrint {
 	if(absyn instanceof U_expr)
 	    output((U_expr)absyn);
 	if(absyn instanceof Transition)
-	    output((Transition)absyn);
+	  output((Transition)absyn);
 	/*if(absyn instanceof Astate)
 	  output((Astate)absyn);
 	if(absyn instanceof State)
@@ -200,7 +200,7 @@ public class PrettyPrint {
 	}
     }
     
-    public void output(Variable variable){
+    public void print(Variable variable){
 	if(variable !=null){
 	    System.out.println(whiteSpace(column) + "[Variable] " + 
 			       variable.name);
@@ -351,7 +351,7 @@ public class PrettyPrint {
 	    prettyprint.print(transition.lab);
 	}
     }
-
+    
     private void print(Astate astate){
 	if(astate !=null){
 	    System.out.println(whiteSpace(column) + "[Astate] " +
@@ -372,6 +372,7 @@ public class PrettyPrint {
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(state.assert);
 	    prettyprint.print(state.pos);
+	    
 	}
     }
 
@@ -379,6 +380,7 @@ public class PrettyPrint {
      * wird. Bei allen "tab" Abstaenden drucken
      * wir ein | anstelle eines Leerzeichen
      */
+    
     private String whiteSpace(int i) {
         String s = "";
         for(int j = 0; j < i; j++)
