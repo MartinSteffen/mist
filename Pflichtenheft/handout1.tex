@@ -1,5 +1,5 @@
 
-\newif\ifweb\webtrue %%%%%% htmlonly geht irgendwie nicht
+\newif\ifweb\webfalse %%%%%% htmlonly geht irgendwie nicht
 
 \documentclass[11pt]{article}
 
@@ -21,7 +21,7 @@
 \ifweb
 \htmlfoot{\copyright Public License}
 \renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
-\title{Pflichtenheft(3):  \Mist}
+\title{Pflichtenheft(4):  \Mist}
 \else
 \fi
 
@@ -59,6 +59,7 @@
 
 \input{syntax}
 \input{absynt}
+\input{semantik}
 
 
 %\input{literatur}

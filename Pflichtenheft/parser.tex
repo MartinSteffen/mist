@@ -25,12 +25,18 @@ Die Implementierung wird \textsl{JLex} und \textsl{CUP} verwenden, welche
 auf \texttt{\home{unix01}} installiert sind.
 
 \subsubsection*{Schnittstelle}
-Mit der Gui. Es wird eine Methode \texttt{parse\_file} zur Verfügung
-gestellt; Parameter: ein String, welcher die Datei bezeichnet, die das
-Programm enthält.  Die Dateien sollen als Standard-extension
-\texttt{.mist}-besitzen. Der Parser kann die Ausnahme
-\texttt{Parser\_Exception} werfen. Wünschenswert ist, wenn der Parser
-zumindest die Zeilennummer des Fehlers in der Ausnahme zurückgibt.
+Mit der Gui (Abschnitt~\ref{sec:gui}). Es wird eine Methode
+\texttt{parse\_file} zur Verfügung gestellt. Der Parameter ist ein String,
+welcher die Datei bezeichnet, die das Programm enthält.  Die Dateien sollen
+als Standard-Extension \texttt{.mist}-besitzen. Der Parser kann die
+Ausnahme \texttt{Parser\_Exception} werfen. Wünschenswert ist, wenn der
+Parser zumindest die Zeilennummer des Fehlers in der Ausnahme zurückgibt.
+
+Eine weitere Schnittstelle ist vom \emph{Editor}
+(Abschnitt~\ref{sec:editor}) gefordert: Das Parserpaket soll für den Editor
+das \emph{parsen} eines \emph{Ausdruckes} (also einer \texttt{absynt.Expr})
+bereitstellen. Die Eingabe soll ein \emph{String} sein. Bei Fehlschlag soll
+eine Ausnahme geworfen werden.
 
 
 

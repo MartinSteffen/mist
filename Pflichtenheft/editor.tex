@@ -30,29 +30,31 @@ implementiert werden. Er soll folgende Eigenschaften besitzen:
 
 \subsubsection*{Designentscheidungen der Editorgruppe/Gui-Gruppe/Graphplatzierungsgruppe:}
 \begin{itemize}
-\item Es wird \emph{ein} Fenster pro Prozess gezeichnet, mit anderen
-  Worten, das komplette Programm (bestehend aus mehreren Prozessen, bleibt
-  bei der Gui).
-\item Es wird vorläufig mit Swing gearbeit, um ein einheitliches
-  \textit{schau-und-fühl} zu bekommen. Falls es Probleme mit der Effizienz
-  gibt, wird es nicht schwer sein, auf AWT umzusatteln.\footnote{Bemerkung
-    (ms): glaube ich nicht; selbst wenn es stimmt, am Ende des Projektes
-    wird niemand schnell irgendwohin umsatteln wollen.}
+\item Es wird dem Editor ein \emph{gesamtes Programm} (Klasse
+  \texttt{absynt.Program}) übergeben, welches der Editor anzuzeigen
+  hat.\footnote{In einer früheren Version des Pflichtenheftes (siehe
+    Version 3) wurde dem Editor nur einzelne Prozesse übergeben. Um die
+    Schnittstellen nicht zu verkomplizieren, wurde die Entscheidung
+    zurückgenommen}.
+\item Es wird mit \emph{Swing} gearbeit, um ein einheitliches
+  \textit{Schau-und-fühl} zu bekommen. Falls es Probleme mit der Effizienz
+  gibt, wird es nicht schwer sein, auf AWT umzusatteln.
 \item Koordinaten werden relativ genommen, und zwar in Fließkommawerten
   \textbf{zwischen $0$ und $1$}. Dies sind die Werte die für Zustände die
   Position relativ zur Umgebenden Fläche bestimmen.
-\item Speichern und laden wird von der Gui übernommen.
+\item Speichern und laden wird von der Gui übernommen.???
 \item Schnittstellen: Gui ruft Editor auf. 
 \end{itemize}
 
 
 
-
-
-
-
-
-
+\paragraph{Temporäre Vereinbarung}
+Der Parser (Abschnitt~\ref{sec:parser}) soll dem Editor ein Methode/Klasse
+zur Verfügung stellen, die es erlaubt, Expresssions zu parsen (für die
+Transitionen).  Solange diese noch nicht bereitgestellt ist, werden diese
+Fälle als \texttt{absynt.Constval} eingegeben (d.h., ein möglicherweise
+eingegebener String wird ignoriert, da der Konstruktor
+\texttt{absynt.Constval} nur boolsche Werte oder Integerwerte akzeptiert.
 
 \subsubsection*{Schnittstelle}
 
@@ -72,10 +74,9 @@ Die Wahl muß mit dem Simulator oder der Gui vereinbart werden, abhängig
 davon, wer die Methode aufruft.
 
 Eine \emph{wichtige} Schnittstelle (wie bei allen) ist die abstrakte
-Syntax. \textbf{Noch ungeklärt:} sollen die Graphischen Koordinaten in die
-abstakte Syntax mit aufgenommen werden, oder sollen sie davon getrennt
-gehalten werden (durch eine geeignete, um Graphik-Information erweiterte
-Datenstrukturen.
+Syntax. Um das Zeichnen zu unterstützen, wurde in die abstrakte Syntax
+\emph{Koordinaten} mit aufgenommen.
+
 
 %%% Local Variables: 
 %%% mode: latex
