@@ -6,7 +6,7 @@ import absynt.*;
  * Eine Liste von Modelchecker-Zustaenden (init oder nicht)
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: ModstateList.java,v 1.1 2000-06-29 14:37:50 unix01 Exp $
+ * @version $Id: ModstateList.java,v 1.2 2000-07-10 13:54:22 unix01 Exp $
  */
 
 

@@ -23,7 +23,7 @@ public class MCheckException extends Exception {
      * Methode zur Rueckgabe der Fehlermeldung, ueberschreibt java.Exception
      * @return Fehlermeldung
      */
-    public String getMessage() { return "";
+    public String getMessage() { return "Fehler im Modcheck aufgetreten!";
     } 
 
     /**
