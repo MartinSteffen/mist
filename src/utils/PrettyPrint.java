@@ -81,6 +81,8 @@ public class PrettyPrint {
 	    output((Tau_action)absyn);
 	if(absyn instanceof Constval)
 	    output((Constval)absyn);
+	/*if(absyn instanceof M_Type)
+	  output((M_Type)absyn);*/
     }
 		   
 
@@ -135,6 +137,7 @@ public class PrettyPrint {
 	    System.out.println(whiteSpace(column) +"[Chandec] ");
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(chandec.chan);
+	    prettyprint.print(chandec.type);
 	}
 
     }
@@ -144,6 +147,7 @@ public class PrettyPrint {
 	    System.out.println(whiteSpace(column) +"[Channel] "
 			       +channel.name);
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    //prettyprint.print(channel.type);
 	}
     }
 
@@ -197,6 +201,7 @@ public class PrettyPrint {
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(vardec.var);
 	    prettyprint.print(vardec.val);
+	    prettyprint.print(vardec.type);
 	}
     }
     
@@ -205,6 +210,7 @@ public class PrettyPrint {
 	    System.out.println(whiteSpace(column) + "[Variable] " + 
 			       variable.name);
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    //prettyprint.print(variable.type);
 	}
     }
     
@@ -213,6 +219,7 @@ public class PrettyPrint {
 	    System.out.println(whiteSpace(column) + "[Constval] " + 
 			       constval.val);
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    //prettyprint.print(constval.type);
 	}
     }
     
@@ -284,6 +291,7 @@ public class PrettyPrint {
 	    prettyprint.print(bexpr.left_expr);
 	    prettyprint.print(bexpr.op);
 	    prettyprint.print(bexpr.right_expr);
+	    //prettyprint.print(bexpr.type);
 	}
 	
     }   
@@ -294,7 +302,7 @@ public class PrettyPrint {
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(uexpr.sub_expr);
 	    prettyprint.print(uexpr.op);
-	    
+	    //prettyprint.print(uexpr.type);
 	}
     }
     
@@ -357,6 +365,14 @@ public class PrettyPrint {
 	}
     }
     
+    public void output(M_Chan mchan){
+	if(mchan!=null){
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    System.out.println(whiteSpace(column) + "[Carried] ");
+	    prettyprint.print(mchan.carried);
+	}
+    }
+	
     public void output(Astate astate){
 	String string;
 	string="[Astate] ";
@@ -376,7 +392,27 @@ public class PrettyPrint {
 	}
     }
     
-    
+    private void print(M_Type mtype){
+	String string;
+	string="[M_Type] ";
+	if(mtype !=null){
+	    if(mtype instanceof M_AType)
+		string="[M_AType] ";
+	    if(mtype instanceof M_AtomType)
+		string="[M_AtomType] ";
+	    if(mtype instanceof M_Bool)
+		string="[M_Bool] ";
+	    if(mtype instanceof M_Chan){
+		output((M_Chan)mtype);
+		return ;
+	    }
+	    if(mtype instanceof M_Int)
+		string="[M_Int] ";
+	    System.out.println(whiteSpace(column) + string);
+	}	    
+	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+    }
+ 
     
     /* Hier wird festgelegt, wie weit die Ausgabe eingerueckt
      * wird. Bei allen "tab" Abstaenden drucken
