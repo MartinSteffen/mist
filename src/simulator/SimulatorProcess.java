@@ -1,6 +1,6 @@
 package simulator;
 
-import java.util.ArrayList;
+import java.util.*;
 import absynt.*;
 
 /** Klasse zum Darstellen eines Prozesszustandes

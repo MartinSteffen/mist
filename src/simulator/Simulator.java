@@ -44,6 +44,12 @@ public class Simulator {
      */
     private SimulatorProgram sProg;
 
+    /**
+     * Referenz zur aufrufenden GUI lokal merken
+     */
+
+    private GUI guiRef;
+
     /** 
      * Schafft ein neues Objekt vom Typ Simulator
      * 
@@ -51,6 +57,7 @@ public class Simulator {
      */
     public Simulator(GUI gui) {
 	this.active = false;
+	guiRef = gui;
     }
 
 
@@ -76,7 +83,7 @@ public class Simulator {
     public String[] start(Program program) {
 	this.p = program;
 	this.active = true; 
-	this.sProg = new SimulatorProgram(this.p); 
+	this.sProg = new SimulatorProgram(this); 
 	String[] result= new String[3];
 	result[0]="first debugmessage from start(Program program)";
 	result[1]="second debugmessage from start(Program program)";

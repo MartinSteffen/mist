@@ -1,7 +1,7 @@
 package simulator;
 
 import absynt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * class SimulatorProgramState - Klasse die den Zustand eines im Ablauf befindlichen
@@ -22,6 +22,12 @@ public class SimulatorProgram {
      */
     protected ArrayList channelList;
 
+    /** 
+     *Referenz auf oberste Klasse "Simulator"
+     */
+
+    protected Simulator sim;
+
     /** Instanzfeld , das die Referenz auf das zu simulierende Programm 
      * enthält.
      */
@@ -31,8 +37,9 @@ public class SimulatorProgram {
     /** Konstruktor für ein SimulatorProgramm 
      * @param _program  Referenz auf zu simulierendes Programm
      */
-    protected SimulatorProgram (Program _program) {
-	progProgram = _program ; 	// Referenz auf zu simulierendes Programm setzen  
+    protected SimulatorProgram (Simulator _sim) {
+        sim = _sim;
+	progProgram = sim.p ; 	// Referenz auf zu simulierendes Programm setzen  
       	processList = this.makeProcessList();
 	channelList = this.makeChannelList();
     }
