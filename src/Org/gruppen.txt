@@ -1,5 +1,5 @@
 ######################################################
-# $Id: gruppen.txt,v 1.4 2000-06-09 11:14:02 unix01 Exp $
+# $Id: gruppen.txt,v 1.5 2000-06-28 05:44:48 unix01 Exp $
 ######################################################
 ## Gruppeneinteilung + Mailadressen der Teilnehmer: .mailrc-Syntax
 ##
@@ -36,7 +36,7 @@ alias Lukosch.Andreas	 stu38212@mail.uni-kiel.de
 alias Mallach.Paul	 pmallach@gmx.de
 alias Neumann.Frank	 frank.all@gmx.de
 alias Nimser.Michael	 stu32548@mail.uni-kiel.de
-alias Nitsche.Andree	 haifischbar@t-online.de
+alias Nitsche.Andree	 tex.murphy@t-online.de
 alias Schuemann.Broder   std10273@dial.techfak.uni-kiel.de
 alias Schulz.Eike	 std10421@dial.techfak.uni-kiel.de
 alias Scott.Andreas	 scott@ki.tng.de
