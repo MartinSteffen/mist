@@ -1,5 +1,5 @@
 ##################################################
-## $Id: Status,v 1.4 2000-06-26 10:14:16 unix01 Exp $
+## $Id: Status,v 1.5 2000-06-26 14:24:11 unix01 Exp $
 ##################################################
 
 
@@ -115,5 +115,36 @@ o parser        scott.andreas, hegener.alexander
     	     Da pp f"ur alle n"utzlich ist, bitte bezeiten sich and den Code setzen.
 
      
+========= Hier eine Kurz"ubersicht
+C = Kompilierbar
+M = Makefile
+F = Fortschritt seit letzter Woche (soweit eingecheckt)
+Q = Fragen die mehr als ein Paket betreffen, die aufgetreten sind (numeriert)
 
+
+             C  M  F Q
+gui         [+] -  +
+editor       +  -  + 1
+simulator    +  +  - 
+modcheck     +  -  -   
+parser      --  -  -
+checks1      -  -  -  
+checks2      -  -  -
+position1    +  +  - 
+position2    +  +  -
+integration  o  +  - 
+absynt       +  +  o
+utils/pp     +  +  -
+     
+
+
+1)  Editor will transitionen zeichnen, darin kommen expressions vor =>
+    der Parser soll eine Funktion bereitstellen, die eine Expression
+    parsen kann, d.h. einen Sting bekommt und daraus einen expression
+    zur"uckliefert, bzw eine Exception. Namen der Klassen und Methoden
+    sind noch festzulegen.
+
+
+    
+	
 
