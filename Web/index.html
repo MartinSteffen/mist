@@ -88,14 +88,11 @@ Entwicklungsschritten aufgefrischt.
 
 Für einen ersten Eindruck der HTML-Dokumentation: hier der momentane Status
 der <a href="absynt/">abstrakten Syntax</a> (Status: kompilierbar,
-allerding noch nicht fertig)
+allerdings noch nicht fertig.)
 
 
 
 <h3> Das Repositorium </h3>
-
-
-
 
 
 <h4> Vorraussetzungen </h4>
@@ -110,41 +107,42 @@ Repositorium zugreifen zu können:
 
 Für den ersten Punkt bzw. ssh: so geht man vor:
 
-<blockquote>
-
 Den ssh-Schlüssel an <a
 href="mailto:unix01@ap.informatik.uni-kiel.de">unix01@ap.informatik.uni-kiel.de</a>
 mailen. Der Schlüssel liegt typischerweise unter
-<tt>~/.ssh/identity.pub</tt> und wer ihn bereits hat, soll mir dieses File
-schicken, dazu den Rechner/Domain von dem man zu arbeiten wünscht.
+<tt>~/.ssh/identity.pub</tt>, wer ihn bereits hat, soll mir dieses File
+schicken.
 
 
 
-Wer einen solchen Schlüssel nicht hat, muß ihn sich generieren, und zwar mittels
+Wer einen solchen Schlüssel nicht hat, muß ihn sich generieren, und zwar
+mittels
 <center>
-	     ssh-keygen
+     ssh-keygen
 </center>
-</blockquote>
 
 
-Für das das korrekte funktionnieren braucht man noch folgendes (bash-Syntax): 
-
+Für das das korrekte funktionieren braucht man noch folgendes (bash-Syntax): 
+<blockquote>
 <listing>
 
 export CVSROOT=unix01@gimli.ap.informatik.uni-kiel.de:/home/unix01/cvsroot 
 export CVS_RSH=ssh
 export CVSEDITOR=emacsclient
 
-export CLASSPATH=/home/[workingdirectory]/Mist/src:
+export CLASSPATH=[workingdirectory]/Mist/src:
 
 </listing>
+</blockquote>
 
-
-Die ersten drei Zeilen sind zum korrekten Steuern von cvs gedacht. (man
-kann cvs auch anders steuern, z.b. über <tt>.cvsrc</tt>, bei Bedarf bitte
-selbst im Manual nachschlagen). Anstelle <tt>emacsclient</tt> kann man auch
-<tt>emacs</tt> oder den editor seiner Wahl nehmen.
-
+wobei <tt>[workingdirectory]</tt> ein <em>Platzhalter</em> für das
+Verzeichnis ist, in dem man Arbeiten will.  Die ersten drei Zeilen sind zum
+korrekten Steuern von cvs gedacht. (man kann cvs auch anders steuern,
+z.b. über <tt>.cvsrc</tt>, bei Bedarf bitte selbst im Manual
+nachschlagen). Anstelle <tt>emacs</tt> kann man auch <tt>emacsclient</tt>
+oder den editor seiner Wahl nehmen. <tt>emacsclient</tt> sollte man dann
+nehmen, wenn man ohnehin emacs verwendet und beim starten des emacs' ein
+<tt>(server-start)</tt> ausgeführt wird. 
 
 
 Die letzte Zeile hat mit ssh/cvs nichts zu tun, sondern hat mit dem
@@ -152,22 +150,136 @@ Java-projekt selbst zu tun. ist nur für das Javaprojekt zu tun.
 
 <p>
 
-<b>Beispiel:</b> Im Beispiel findet alles im Verzeichnis <tt>~/Projekt</tt>
-statt will. (d.h. <tt>[workingdirectory]</tt> = <tt>~/Projekt</tt>). So
-startet man.
+<h4> Beispiel </h4>
 
+Im Beispiel findet alles im Verzeichnis <tt>~/Projekt</tt>
+statt, d.h. <tt>[workingdirectory]</tt> = <tt>~/Projekt</tt>).
+
+
+<ul>
+<li> <b>Auschecken:</b>
+
+So bekommt man zum ersten Mal seine Arbeitskopie des Mist-Projektes:
+
+<blockquote>
 <listing>
 cd ~
 mkdir Projekt
 cd Projekt
-cvs checkout Mist/src
+cvs <b>checkout</b> Mist/src
 </listing>
+</blockquote>
+Macht man
+
+<blockquote>
+<listing>
+cvs checkout Mist/Org
+</listing>
+</blockquote>
+bekommt man die Gruppeneinteilung. Macht man nur
+
+<blockquote>
+<listing>
+cvs checkout Mist
+</listing>
+</blockquote>
+
+so bekommt man <em>alles</em> zum Mist-Projekt, einschließlich der Quellen
+des <em>Pflichtenheftes</em> und der <em>Web-seite</em>.
+<li>
+<b>Zurückspeichern:</b>
+
+Wenn man mit den Änderungen durch ist, kann man den gesamten <em>
+Verzeichnisbaum</em> zurückspeichern:
+
+
+<blockquote>
+<listing>
+cd [workingdirectory]/Mist
+cvs commit 
+</listing>
+</blockquote>
+
+Danach wird man aufgefordert, einen Kommentar bezüglich seiner Änderungen
+anzugeben.  Falls der Kommentar nur kurz ist, kann man schneller auch
+
+<blockquote>
+<listing>
+cvs commit -m"Anmerkungen zu den Änderungen"
+</listing>
+</blockquote>
+
+    verwenden.
 
 
 
+<li><b>Updaten:</b>
+    Den Baum seines Arbeitsverzeichnisses auf den neuesten Stand bringen,
+    geht auf zweierlei Weise:
 
-<h3> Arbeitsgruppen </h3>
+    <blockquote>
+    <listing>
+    cd [workingdirectory]/Mist
+    cvs update
+    </listing>
+    </blockquote>
 
+    oder 
+    
+
+    <blockquote>
+    <listing>
+    cd [workingdirectory]
+    cvs checkout Mist
+    </listing>
+    </blockquote>
+
+    mit den Variante, wie oben geschildert. Man beachte den
+    <em>Unterschied</em> der <em>Verzeichnisse</em> bei beiden Varianten!
+    Das <tt> checkout</tt> geht weiter als ein bloßes Update, da es einem
+     auch <em>neu hinzugekommene Verzeichnisse</em> gibt.
+
+    <li><b>Neue Dateien + Verzeichnisse:</b>
+	Das geht mit
+	
+	<blockquote>
+	<listing>
+	cvs add [filename]
+	</listing>
+	</blockquote>
+	entfernen mit <tt>cvs remove [filename]</tt>. Anstelle eines
+        Filenames kann man auch ein Verzeichnis hinzufügen, oder auch
+	alle neuen java-files mit <tt>cvs add *.java</tt>.
+</ul>
+
+
+<h3> Strategie und Spielregeln </h3>
+
+Versionskontrolle garantiert kein reibungsloses Arbeiten, es unterstützt
+dies, wenn man gewisse Disziplin wahrt. Folgende Daumenregeln:
+
+<ul>
+  <li> Änderen von globalen Paketen/Paketen von anderen Gruppen: nur nach
+       reiflicher Überlegung/Rücksprache mit der betroffenen Gruppe.
+  <li> Nur <em>kompilierbare</em> Versionen einchecken, d.h. der eigene
+      Teil muß mittel <tt>make all</tt> ohne Fehlermeldungen sich kompilieren
+      lassen (dies gilt noch nicht für die Anlaufphase, bis es zum ersten Mal
+      integriert ist). Änderung, die die <b>Schnittstelle</b> mit einem
+      anderen Pakte betreffen (insbesondere mit der GUI) sollten
+      <em>angekündigt</em> werden, zum Beispiel in den Besprechungen.
+      Daneben sind die Mailadressen der einzelnen Gruppen unter
+<tt>Org/gruppen.txt</tt> vorhanden.
+  <li> Makefiles und Readmes sind hilfreich (im Paket <tt>absynt</tt>
+      finden sich Beispiele)
+  <li> bitte den Code sinnvoll mittels <em>Javadoc</em> kommentieren.
+      Zumindest der Author/die Autoren soll dokumentiert sein.
+      In Paket <tt>absynt</tt> kann man sich anschauen, wie man,
+      wenn man will, auch cvs-logs documentieren lassen kann (z.B. in dem
+      man das File <tt>absynt/template.txt</tt> verwendet/anpaßt.)
+
+</ul>      
+
+      <h3> Arbeitsgruppen </h3>
 
 <ol>
   <li> <b>GUI/Integration</b>:     Helge Kraas/ Schümann (unix22) 
@@ -197,6 +309,13 @@ Die Mailadressen der Teilnehmner finden sich unter
     des Kurses. Weitere für die Projektarbeit wichtige
     Links hier:
 <ul>
+  <li> Lexer und Yaccer:
+      <ul>
+	<li> <a href="http://www.cs.princeton.edu/~appel/modern/java/JLex/">JLex</a>,
+	    <tt>CLASSPATH</tt> muß <tt>/home/unix01/jlex:</tt> (im A-Pool) enthalten!	    
+	<li> <a href="http://www.cs.princeton.edu/~appel/modern/java/CUP/">CUP</a>,
+	    <tt>CLASSPATH</tt> muß <tt>/home/unix01/cup:</tt> (im A-Pool) enthalten!
+      </ul>
   <li> <em> Concurrent version control:</em>  die Verwendung von CVS ist
   im zweiten Teil für alle verpflichtend! Eine gute, lokale Informationsquelle
   sind die <em>Info-Seiten</em> im emacs.
@@ -228,7 +347,7 @@ Martin Steffen</a>
 </address>
 <!-- hhmts start -->
 <font size=1>
-Last modified: Mon Jun  5 08:55:07 MET DST 2000
+Last modified: Wed Jun  7 08:37:03 MET DST 2000
 </font>
 <!-- hhmts end -->
 </body> </html>
