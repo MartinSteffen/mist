@@ -12,27 +12,36 @@ import absynt.*;
 
 public class checks {
 
-  public checks() {
+  ProcessList pl;
+  VardecList vl;
+  TransitionList tl;
+  AstateList al;
+  ChandecList cl;
+
+
+  public checks(Program p) {
+  cl=p.chans;
+  pl=p.procs;
+  absynt.Process proc=pl.head;
+  tl=proc.steps;
+  vl=proc.vars;
+  al=proc.states;
   }
 
-public void start_check() {}  
+  public checks() {}
 
-public String ChannelCheck(Program p) {
-    /* Diese Methode testet, ob die im Programm p benutzten Channels deklariert
-    sind, d.h. in einer ChandecList enthalten sind*/
 
-    //noch nicht implementiert
-    return "Es sind keine Fehler aufgetreten\n";
-    }
 
-  public String TransitionCheck(Program p) {
-  /* Diese Methode testet, ob alle im Programm p vorkommenden Transitionen definiert
-  sind.  noch nicht implementiert! */
-  return "Es sind keine Fehler aufgetreten\n";}
+  public void start_check() {
+   System.out.println("Check gestartet...");
+   channelCheck cc=new channelCheck();
+   System.out.println(channelCheck.start_check(cl,tl));
+   varCheck vc=new varCheck();
+   System.out.println(varCheck.start_check(vl,tl));
+   stateCheck sc=new stateCheck();
+   System.out.println(stateCheck.start_check(al,tl));
+ }
 
-  public String StateCheck(Program p){
-  /* diese Methode testet, ob alle im Programm vorkommenden Zustände auch wirklich
-  vorhanden sind. Diese Methode soll also Fehler finden, die evtl. beim Löschen
-  von Transitionen entstehen können. Noch nicht implementiert!*/
-  return "Es sind keine Fehler aufgetreten\n";}
+
+
 }

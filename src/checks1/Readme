@@ -1,0 +1,20 @@
+#######################################################
+# $Id: Readme,v 1.1 2000-07-03 11:29:43 unix01 Exp $
+#######################################################
+
+In dieser Version der Checks werden 3 Tests aufgerufen (State,- Channel- und Variablen-Checks), die jeweils testen, ob die benutzten Objekte auch deklariert wurden. Die Ergebnisse werden, je nach Zugehoerigkeit) in einem eigenen Fenster ausgegeben.
+
+todo:
+-	Die Ausgabefenster sollen noch um eine Funktion ergaenzt werden, die das Drucken 	der Ergebnisse ermoeglichen.
+-	Ausgabe, welche Objekte nicht verwendet werden
+
+
+           
+
+
+	   
+
+	               
+	                
+        
+

@@ -9,14 +9,14 @@
  * @author André Nitsche
  * @version 1.0
  */
-package Checks1;
+package checks1;
 import java.awt.*;
 import java.awt.event.*;
 
-public class CheckWindow extends Frame{
+public class checkWindow extends Frame{
   public TextArea text;
 
-  public CheckWindow(String name) {
+  public checkWindow(String name) {
   super(name);
   setSize(250,250);
   text=new TextArea(10,30);
@@ -26,7 +26,7 @@ public class CheckWindow extends Frame{
       public void actionPerformed(ActionEvent e) {
           hide();
           dispose();
-          System.exit(0);
+          //System.exit(0);
               }
         });
   Button print=new Button("Drucken");
