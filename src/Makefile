@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.16 2000-07-10 17:58:07 unix01 Exp $
+# $Id: Makefile,v 1.17 2000-07-17 07:31:35 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -56,7 +56,7 @@ jar:
 	    ./position2/*.class \
 
 jarinstall: 
-	cp mist_v*.jar $(BASELINEDIR)
+	cp mist_v*.jar $(BASELINESDIR)
 
 
 clean:
