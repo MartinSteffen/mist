@@ -18,6 +18,7 @@ import editor.*;
 public class GUI extends javax.swing.JFrame {
 
     Session actualsession = null;
+    gui.SimUI mySimUI = null;
     
     /** Creates new form GUI */
     public GUI() {
@@ -309,6 +310,8 @@ public class GUI extends javax.swing.JFrame {
     
     private void simulatorMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simulatorMenuItemActionPerformed
 	// Add your handling code here:
+	mySimUI = new gui.SimUI(new simulator.Simulator(this));
+	mySimUI.show();
     }//GEN-LAST:event_simulatorMenuItemActionPerformed
     
     private void closeEdMenuItemActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEdMenuItemActionPerformed
