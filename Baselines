@@ -1,0 +1,15 @@
+##################################################
+## $Id: Baselines,v 1.1 2000-07-10 08:04:46 unix01 Exp $
+##################################################
+
+
+Liste von Snapshots: Konvention: die Baselines werden einfach durchnumeriert.
+
+
+
+        Baseline2: 10 Juli: kompilierbar, keine Fortschritte, was die
+	                    globale Integration betrifft.
+
+	Baseline1: 5 Juli: kompilierbar, Gui/Editor/Prettyprinter integriert.
+
+
