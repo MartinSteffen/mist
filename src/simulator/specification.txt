@@ -9,9 +9,9 @@ Spezifikation des Simulators
    a) Wie wird eine Simulation ablaufen ?
 
       I) Start der Simulation :
-	 - Aufruf per Start(..) (aS1)
+	 - Aufruf per Start() (aS1)
 	 - Wir benötigen zum Starten der Simulation ein Objekt vom Typ Program, welches ähnlich zu dem 
-	   Beispielprogramm aus der abstrakten Syntax gebildet wurde und uns mit dem Aufruf von StartSim
+	   Beispielprogramm aus der abstrakten Syntax gebildet wurde und uns mit dem Aufruf von Start
 	   übergeben wird. 
 			    ==> SCHNITTSTELLE (aS1) anbieten
 	 - das Übergebene Programm p wird "gescannt" und hieraus werden die benötigten Datenstrukturen für 
@@ -21,7 +21,7 @@ Spezifikation des Simulators
 			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS1) benötigt
 
       II) schrittweises Simulieren :
-	 - Aufruf per Stepp(..) (aS2) 
+	 - Aufruf per Stepp() (aS2) 
 			    ==> SCHNITTSTELLE (aS2) anbieten
 	 - Für jeden Prozess werden aus dem akt. Zustand die konzessionierten Transitionen bestimmt, d.h 
 	   alle Transitionen die unter dem gegenwärtigen Zustand feuern dürfen (deren Guards zu true 
@@ -49,9 +49,7 @@ Spezifikation des Simulators
 			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS5) benötigt
 			    ==> SCHNITTSTELLE zum EDITOR oder GUI (aS3) anbieten
 	 b) aktives Ende :
-	    - Durch den Aufruf von StartSim soll ein bisher nicht beendetes Programm beendet werden.
-	    - aktives zurücksetzen (stoppen) durch Schaltfläche des Editors ermöglichen ???
-			    ==> SCHNITTSTELLE zum EDITOR oder GUI (aS4) anbieten ???
+	    - Durch den Aufruf von Start() soll ein bisher nicht beendetes Programm beendet werden.
 
 
 2. Schnittstellen zu und Anforderungen an andere Pakete von MIST
@@ -73,10 +71,10 @@ Spezifikation des Simulators
    B) Schnittstellen
       Aus dem obigen ergeben sich die bisher folgendenden : 
       a) angebotene Schnittstellen (= aS)
-         -  (aS1) : public void Start(Program program) 
-	 -  (aS2) : public void Step(Program program)
-	 -  (aS3) : public boolean IsProgamRunning(Program program)
-	 (-  (aS4) : public void Stop(Program program))
+	 -  (aS0) : public Simulator(Program program) - Konstruktor
+         -  (aS1) : public void Start() 
+	 -  (aS2) : public void Step()
+	 -  (aS3) : public boolean IsProgamRunning()
       b) benötigte Schnittstellen und deren Skelette (= bS)
 	 -  (bS1) : editor.highlightState(absynt.Astate state, absynt.Process process, 
 							       absynt.Program program)
