@@ -1,0 +1,167 @@
+
+\section{Abstrakte Syntax}
+\label{sec:AbstrakteSyntax}
+
+\begin{tabular}{rclcl}
+  program & \bnfdef & 
+  chans &\of & chandec list
+  \\
+  & &
+  procs
+  & \of &
+  process list
+  \\
+  process & \bnfdef &
+  vars & \of & vardec list 
+  \\
+  & &
+  body & \of & transition list
+  \\
+  transition & \bnfdef &
+  source & \of & astate
+  \\
+  & &
+  target & \of & astate
+  \\
+  & &
+  lab & \of &   label
+  \\
+  label & \bnfdef &
+  guard & \of & expr
+  \\
+  & &
+  act & \of & action
+  \\
+  action
+  & \bnfdef &
+  & &
+  tau
+  \\
+  & \bnfbar &
+  & & input\_action
+  \\
+  & \bnfbar &
+  & & output\_action
+  \\
+  & \bnfbar &
+  & &
+  assign\_action
+  \\
+  astate
+  & \bnfdef &
+  & &
+  initstate
+  \\
+  &\bnfbar & 
+  &  &
+  state
+  \\
+  state & \bnfdef & 
+  name &\of & string
+  \\
+  & & 
+  assert & \of &  expr
+  \\
+  initstate
+  & \bnfdef  & 
+  name &\of & string
+  \\
+  & & 
+  assert & \of &  expr
+  \\
+  expr & \bnfdef &
+  & &
+  b\_expr
+  \\
+  & \bnfbar & 
+  & &
+  u\_expr
+  \\
+  & \bnfbar &
+  & &
+  constval
+  \\
+  & \bnfbar &
+  & &
+  variable
+  \\
+  b\_expr
+  & \of &
+  left\_expr & \of & expr 
+  \\
+  & &
+  right\_expr & \of & expr
+  \\
+  & & op
+  & \of & operand
+  \\
+  u\_expr
+  & \of &
+  sub\_expr & \of & expr 
+  \\
+  & & op & \of & operand
+  \\
+  operand
+  & \bnfdef &
+  PLUS 
+  \bnfbar
+  MINUS
+  \bnfbar
+  TIMES
+  \bnfbar
+  DIV
+  \\
+  & \bnfbar &
+  AND
+  \bnfbar
+  OR
+  \bnfbar
+  NEG
+  \\
+  input\_action
+  & \bnfdef &
+  chan &\of & string
+  \\
+  & &
+  var & \of & variable
+  \\
+  &\bnfbar&
+  \\
+  output\_action
+  & \bnfdef &
+  chan &\of & string
+  \\
+  & & 
+  val  & \of & expr
+  \\
+  assign\_action
+  & \bnfdef &
+  var
+  &\of &
+  variable
+  \\
+  & \bnfbar &
+  val
+  &\of &
+  expr
+  \\
+  vardec &\bnfdef &
+  var  & \of & variable
+  \\
+  chandec & \bnfdef & chan & \of & string
+  \\
+  variable & \bnfdef & name & \of & string
+  \\
+  constval & \bnfdef & & & b\_val
+  \\
+  & \bnfbar & &  & i\_val
+  \\
+  b\_val &\bnfdef &  & & bool
+  \\
+  i\_val &\bnfdef  & & & int
+\end{tabular}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "handout1"
+%%% End: 
