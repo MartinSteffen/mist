@@ -1,12 +1,14 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.3 2000-06-26 17:56:29 unix01 Exp $
+# $Id: Makefile,v 1.4 2000-06-27 08:02:40 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
 
 WEBDOCDIR     =/home/info/www/inf/deRoever/SS00/Java/Mist/Doc
-LOCALDOCDIR=Doc
+LOCALDOCDIR = Doc
+PACKAGEDIRS = absynt  utils editor gui checks1 parser\
+	      modcheck simulator position1 position2
 
 ################################################
 
@@ -26,6 +28,7 @@ packets:
 	(cd ./parser; make)
 	(cd ./modcheck; make)
 	(cd ./position1; make)
+	(cd ./simulator; make)
 #	(cd ./position2; make) -> compilation error
 
 
@@ -39,6 +42,7 @@ clean:
 #	(cd ./checks2; make clean) 
 	(cd ./parser; make clean)
 	(cd ./modcheck; make clean)
+	(cd ./simulator; make clean)
 	(cd ./position1; make clean)
 	(cd ./position2; make clean)
 
@@ -50,29 +54,13 @@ clean:
 
 
 doc:	;
-	javadoc  -version -author -d $(WEBDOCDIR) absynt\
-	                                        utils\
-	                                        editor\
-	                                        gui\
-	                                        checks1\
-	                                        parser\
-	                                        modcheck\
-	                                        position1\
-	                                        position2
+	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
+	cp ./simulator/specification.txt $(WEBDOCDIR)
 
 localdoc:	;
-	javadoc  -version -author -d $(LOCALDOCDIR) absynt\
-	                                        utils\
-	                                        editor\
-	                                        gui\
-	                                        checks1\
-	                                        parser\
-	                                        modcheck\
-	                                        position1\
-	                                        position2
+	javadoc  -version -author -d $(LOCALDOCDIR) $(PACKAGEDIRS)
+	cp ./simulator/specification.txt $(LOCALDOCDIR)
 
-www:
-	cp $(LOCALDOCDIR)/*.html $(WEBDOCDIR)
 
 
 
