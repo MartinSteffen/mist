@@ -1,23 +1,35 @@
 ######################################################
-## $Id: Status,v 1.18 2000-07-10 17:55:14 unix01 Exp $
+## $Id: Status,v 1.19 2000-07-11 05:45:49 unix01 Exp $
 ######################################################
 
 
 
-Stand: Montag 10. Juli, morgens, vor 8
+Stand: Dienstag 11. Juli, morgens
 =======================================
 
 
 o absynt: 
 
-      bis auf die (m"oglicherweise noch kommenden "Anderungsw"unsche)
-      momentan stabil.
+      [?] Typen eingefuegt auf Anregung der modelcheckgruppe und
+	  der simulator Gruppe. Dies wird "Anderungen 
+	  ein weiteren Paketen nach sich ziehen. Die Best"atigung von
+	  seiten der Modcheck/simulatorleute,
+	  ob die "Anderung den W"unschen gem"a"s passiert ist,
+	  steht noch aus.
 
-      [?] model-check Gruppe hat Wunsch nach Klonierbarkeit angemeldet.
+      [?] Beispiel mu"s nachgezogen werden.
+	  
 
-      [?] Enumerator nicht-standardgem"a"s verwendet. 
+      [?] model-check Gruppe hat clone()-methoden eingef"ugt,
+          bisher scheint sich niemand dar"uber beklagt zu haben,
+	  dh. die "Anderungen scheinen f"ur den Rest transparent.
+	  
+
+      [?] Enumerator nicht-standardgem"a"s verwendet =>
+	   beim n"achsten Kurs anders machen.
 
 o  gui           kraas.helge, schuemann.broder
+
 
 
    [?] momentan im Prinzip stabil, die Gruppe braucht noch R"uckmeldung 
@@ -38,7 +50,11 @@ o  gui           kraas.helge, schuemann.broder
    	 - Namen der Teilnehmer?
    	 - Wie l"ost man das gif/jar-Problem?
 	 - Vorlesung + Folien? etc
-	
+
+     [?] Gui-Leute wollen sich Gedanken mache, wie man als
+	 Benutzer des endg"utligen Jarfiles keine Gro"sen Klimmz"uge
+	 machen mu"s um das Ding zum laufen zu bringen.
+
 o   editor        jacobs.finn, eckloff.alexander
 
      - einige (viele) Funktionalit"aten bereits vorhanden, einiges fehlt
@@ -52,7 +68,8 @@ o   editor        jacobs.finn, eckloff.alexander
 
     - Integration mit dem PrettyPrinter zum Debuggen vorhanden.
 
-    [?] Was wurde aus dem Wunsch, expressions zu parsen? [-> Parsergruppe]
+    [?] Was wurde aus dem Wunsch, expressions zu parsen? [-> Parsergruppe
+	bisher keine R"uckmeldung von der Parsergruppe]
 
     [?] Schnittstelle mit einer Ausgabefunktion noch offen, feature
         request an die utils/gruppe?
@@ -65,35 +82,40 @@ o simulator     goemann.michael, nimser.michael
 
     - Spezifikation vorhanden
 
-    [?] etwas hinter dem eigenen Zeitplan (vor einer Woche, laut eigenen Angaben)
+    [?] hinter dem eigenen Zeitplan (laut eigenen Angaben,
+	sie haben den Wunsch angemeldet, in den Semesterferiend
+	an Ihrem Problem weiterzuarbeiten)
 
-    [?] was sind die Fortschritte seit letzter Woche?
 	
     [?] gibt es W"unsche an die checks-Gruppe? Wenn es nun keine
 	gibt ist es eh zu sp"at.
 
-    [?] Zeitplan?
 
 
 o modcheck      neumann.frank, kuemper.aneta, schulz.eike
+
+
+    - eingebunden in die Gui (zumindest als Knopf)
+
 
     - ein wenig Code vohanden, aber noch nicht integriert
 
     - Planung f"ur Datenstrukturen
 
-    [?] Momentan Plan f"ur Model-checking eines Prozesses
+    [?] Momentan Plan f"ur Model-checking eines Prozesses (noch aktuell?)
 
-    [?] Feature request => absynt: das Zeug soll cloneable sein (zumindest
-	VarDec)
-  
+    -  absynt: die VarDec wurde Klonierbar gemacht, es scheint
+	       kompatibel mit dem Rest des Tools 
+
     [?] Fortschritte seit letzter Woche? Zumindest keine Ver"anderung
 	im Code
 
-    [?] W"unsche an die checks-Gruppe? 
+    [?] W"unsche an die checks-Gruppe?,
+	die checksgruppe hat sich anscheindend nicht ger"uhrt.
 
-    [?] Ist das mit den U_Expr gekl"art (Frage auch an die  Parserleute)
+    -  Die Sache mit den U_Expr ist gekl"art
 
-    [?] Zeitplan
+    [?] Zeitplan?
 
 
 o parser        scott.andreas, hegener.alexander
@@ -111,16 +133,18 @@ o parser        scott.andreas, hegener.alexander
      - Feature-Request von der editor-Gruppe ausstehend. Da Espression so
        oder so geparst werden mu"ssen, sollte das kein extra-Auffwand sein.
 
-     - Zeitplan?
+     [?] Zeitplan?
 
+
+     [?] keine R"uckmeldung und keine Anwesenheit bei der gestrigen
+         Besprechung, dh. Ausma"s des Fortschritts/Status nicht ganz 
+	 transparent.
 
      [?] Beispieldatei zum Testen des parsers?
 
      [?] Token.java: ist das so standard? mit den ganzen integers?
 	 Vergleiche das mit der Dok und dem Parserbuch?
 	 oder ist das generiert
-
-
 
 
 o  check1         nitsche.andree
@@ -140,16 +164,21 @@ o  check1         nitsche.andree
 	     es W"usche gibt, bitte nicht in der allerletzen Woche damit
 	     rausr"ucken...)
 
+      [?]  email-Anfrage bzgl. das Status des Pakets losgeschickt,
+	   bisher keine Antwort.
+
 
  position1     dietrich.daniel, zahorsky.moritz, buck.christian
  position2     thoehle.ralf, mallach.paul
 
-      + teilweise code vorhanden
+      - teilweise code vorhanden, teilweise funktional
 
-      + gemeinsames interface der beiden gruppen
+      - gemeinsames interface der beiden gruppen, d.h.
+	gute Kooperation
 
-      + Ansonsten habe ich keine konkreten Eindruck, wie es 
-	so vorangeht.
+      - Beide Gruppen: relativ selbst"andig verschiedene Ans"atze 
+	erarbeitet/recherchiert. 
+
 
 position1:
          -  integriert
@@ -171,24 +200,27 @@ position2:
 
  utils/pp     kraus.oliver, labenda.holger
 
-	  +  Pp scheint im Gro"sen und Ganzen funktionsf"ahig
-          +  bereits im Editor integriert (zum debuggen)
+	  -  Pp scheint im Gro"sen und Ganzen funktionsf"ahig
+          -  bereits im Editor integriert (zum debuggen)
 
-          + Feature request von Editor -> pp/utils-gruppen
+          - Feature request von Editor -> pp/utils-gruppen
 
 	    Funktionalit"at "ahnich wie beim PP erw"unscht, Umwandlung
 	    Absynt.Expr -> String (ist das korrent, Editor?), nur nicht
 	    Zeilenweise.  Idealerweise sollte die Ausgabe f"ur diesen
 	    Zweck mit der konkreten Syntax (parser-Gruppe) "ubereinstimmen.
 
-==============
+	  - Feature request: ausgabe der neuen Syntax-bestandteile.
 
-``Kurzfassung'':
+
+
+	
+
 
  
 
 
-========= Hier eine Kurz"ubersicht
+========= Hier eine Kurz"ubersicht (Stand 10. 7 morgens)
 C = Kompilierbar
 M = Makefile
 F = Fortschritt seit letzter Woche (soweit eingecheckt)
@@ -217,11 +249,4 @@ utils/pp     +   ?
     parsen kann, d.h. einen Sting bekommt und daraus einen expression
     zur"uckliefert, bzw eine Exception. Namen der Klassen und Methoden
     sind noch festzulegen.
-
-2) - Modcheck hat fragen in Bezug auf Un"are operationen
-   - Clonen von (Teilen der) abstrakten Syntax?
-
-
-    
-	
 
