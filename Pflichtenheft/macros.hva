@@ -1,0 +1,27 @@
+
+\newcommand{\many}     {\ast}
+\newcommand{\to}       {\rightarrow}
+\newcommand{\ocaml}    {\textsc{Ocaml}}
+\newcommand{\Terms}[1] {T_{#1}}
+\newcommand{\T}        {\mathcal{T}}
+\newcommand{\Tmany}             {\mathcal{T}^\ast}
+\newcommand{\Tmanyprefix}[1]    {\mathcal{T}^{\leq n}}
+
+\usepackage{hevea}
+
+
+\newcommand{\marginpar}[1]{}
+\newcommand{\finish}[1]{}
+\newcommand{\status}[1]{{\marginpar{\tiny #1}}}
+
+\newcommand{\epsfbox}[1]{%
+  \begin{toimage}
+%    \epsfbox{#1}
+  \end{toimage}
+  \imageflush
+  }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% $Id: macros.hva,v 1.1 2000-05-19 14:47:01 softtech Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

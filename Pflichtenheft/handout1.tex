@@ -1,0 +1,151 @@
+\documentclass[11pt]{article}
+
+\usepackage[english, german]{babel}
+\usepackage{hevea}
+\usepackage{handout}
+
+\begin{latexonly}
+  \uebungfalse
+  \handoutfalse
+  \freeformtrue
+\end{latexonly}
+
+\begin{htmlonly}
+\htmlfoot{\copyright Public License}
+\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
+\title{Pflichtenheft}
+\end{htmlonly}
+
+\input{../tex/inputs/macros}
+
+
+
+\begin{document}
+\begin{latexonly}
+  \ausgabe{Mai 2000}
+  \maketitle{1}{Pflichtenheft: \Mist}
+\end{latexonly}
+\begin{htmlonly}
+  \maketitle{}
+\end{htmlonly}
+
+
+\thispagestyle{empty}
+
+
+\appendix
+
+
+\section{Konkrete Syntax}
+\label{sec:KonkreteSyntax}
+
+
+\begin{tabular}{rcll}
+  program
+  & \bnfdef &
+  processes
+  \\
+  processes 
+  & \bnfdef &
+  process
+  \\
+  & \bnfbar &
+  processes process
+  \\
+  process & \bnfdef &
+  'Process' vardec \{ stmt \}
+  \\
+  expr
+  &
+  \bnfdef
+  &
+  const
+  \\
+  &
+  \bnfbar
+  &
+  expr
+  '+'
+  expr
+  \\
+  &
+  \bnfbar
+  &
+  expr
+  '-'
+  expr
+  \\
+  &
+  \bnfbar
+  &
+  expr
+  '*'
+  expr
+  \\
+  &
+  \bnfbar
+  &
+  expr
+  '/'
+  expr
+  \\
+  &
+  \bnfbar
+  &
+  '('expr')'
+  \\
+  stmt
+  & \bnfdef &
+  varref 
+  ':='
+  expr
+  \\
+  & \bnfbar &
+  ASSERT expr
+  \\
+  & \bnfbar &
+  stmt ';' stmt
+  \\
+  &\bnfbar&
+  '\{' stmt '\}'
+  \\
+  & \bnfbar &
+  stop
+  \\
+  &\bnfbar&
+  IF options FI
+  \\
+  & \bnfbar &
+  DO options OD
+  \\
+  & \bnfbar &
+  BREAK 
+  \\
+  options
+  &\bnfdef &
+  option
+  \\
+  &\bnfbar &
+  option options
+  \\
+  option
+  &\bnfdef&
+  '::' cond '-$>$' stmt
+\end{tabular}
+
+
+\section{Abstrakte Syntax}
+\label{sec:AbstrakteSyntax}
+
+\begin{tabular}{rcll}
+  Program :: events
+
+\end{tabular}
+\input{literatur}
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%ende blatt1.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
