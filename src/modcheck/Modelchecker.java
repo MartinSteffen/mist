@@ -9,7 +9,7 @@ import absynt.Process;
  * Modelchecker-Klasse.
  *
  * @author Initially provided by Frank Neumann, Aneta Kuemper, Eike Schulz
- * @version $Id: Modelchecker.java,v 1.6 2000-07-17 13:01:25 unix01 Exp $
+ * @version $Id: Modelchecker.java,v 1.7 2000-07-17 13:47:56 unix01 Exp $
  */
 
 
@@ -17,12 +17,11 @@ import absynt.Process;
 
 /**
  * Modelchecker-Klasse.
- * es besteht aus u.a. Anfangszustand -- Initstate
- *    --"--            Liste der Prozesse  -- ProcessList
- *    --"--            Liste uebergebenen, erreichten Zustaende -- AstateList
- *    --"--            Liste   zu betrachtenden Zustaende  -- ModstateList 
- *    --"--            gerade zu betrachtende Transition  -- Transition
- *    --"--            gerade zu betrachtendes Label -- Label
+ * es besteht aus u.a. Anfangszustand -- Initstate,
+ * es besteht aus Liste uebergebenen, erreichten Zustaende -- AstateList,
+ * Liste   zu betrachtenden Zustaende  -- ModstateList, 
+ * gerade zu betrachtende Transition  -- Transition,
+ * gerade zu betrachtendes Label -- Label,
  */
 
 public class Modelchecker {
@@ -201,7 +200,7 @@ public class Modelchecker {
  }
 
 
-         while (((next.hasMoreElements())==true) && (zaehler <20))  {
+         while (((next.hasMoreElements())==true) && (zaehler <300))  {
 
          System.out.println("Neuer Zustand betrachtet");
          next=next.next;
