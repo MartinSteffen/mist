@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+
+
+
+\usepackage[english,german]{babel}
+
+
+\usepackage{handout}
+
+
+\input{xy}
+\xyoption{arrow}
+\xyoption{matrix}
+\xyoption{curve}
+\xyoption{frame}
+
+
+\input{macros}
+
+
+\newcommand{\state}     [1]{*++[o][F-]{#1}}
+\newcommand{\initstate} [1]{ *++[o][F-]{#1}}
+\newcommand{\finalstate}[1]{*++[o][F=]{#1}}
+\newcommand{\inout}[2]     {#1/#2}
+\newcommand{\xyinout}[2]   {{^{{#1}}_{{#2}}}}
+\newcommand{\xloop}[3]   {}
+
+
+
+
+
+
+
+
+
+
+\uebungfalse
+\handouttrue
+
+\ausgabe{8.~Mai 2000}
+\abgabe{22.~Mail 2000}
+
+
+\begin{document}
+
+\maketitle{6}{Prototyp}
+
+
+\thispagestyle{empty}
+
+\noindent%
+Die Programmieraufgabe dieses Semesters ist die Entwicklung und
+Implementierung eines \emph{graphischen Werkzeugs} zur Modellierung, und
+Untersuchung reaktiver, paralleler Systeme. 
+
+Die Aufgabe wird in verschiedene Teile zerlegt werden, wobei jede der
+Arbeitsgruppen f"ur einen Teil verantwortlich sein wird. Aufgaben werden
+beispielsweise Teile einer Oberfl"ache sein, die graphische Eingabe,
+Anbindung an andere Tools, Implementierung einer Zwischensprache, ein
+Parser, Speichern der Modelle im Dateisystem und | je nach Anzahl der
+Gruppen | anderes mehr.
+
+Wie angek"undigt, zerf"allt das Praktikum in zwei Teile:
+\begin{enumerate}
+\item Implementieren eines \emph{Prototyps} und
+\item Entwickeln und Implementieren des gesamten \textsc{Pest}.
+\end{enumerate}
+
+
+
+F"ur den ersten Teil der Aufgabe sind f"ur die 8-st"undigen Teilnehmer)
+\emph{2 Wochen} vorgesehen.  Er dient unter anderem zum Aufw"armen,
+allerdings ist ein lauff"ahiger Prototyp Bestandteil f"ur den 8-st"undigen
+Schein, nicht alleine die gew"ahlte Teilaufgabe am Ende. Mit Aufw"armen,
+beziehungsweise Prototyping ist Folgendes gemeint: die Phase dient dazu,
+sich mit der etwas gr"o"seren Aufgabe vertraut zu machen. Am Ende der der
+ersten Phase sollte man neben einem vorf"uhrbaren Prototyp Folgendes
+erreicht haben:
+\begin{itemize}
+\item Beherrschen der Programmierumgebung,\footnote{Ausgenommen CVS, damit
+    starten wir erst im zweiten Teil.} das ist ohnehin offensichtlich.
+\item Falls notwendig, Vertrautheit im Umgang mit Java, insbesondere soll
+  man nach dem ersten Teil die Verwendung von \emph{Paketen} und der
+  unterschiedlichen \emph{Sichtbarkeitsstufen} zur Modularisierung und
+  Strukturierung gr"o"serer Aufgaben beherrschen, denn die eigentliche
+  Aufgabe wird, neben der feineren Gliederung in Klassen, in einzelne
+  Pakete unterteilt werden.
+\item grobes Bild von der Gesamtaufgabe (es wird dazu noch eine Besprechung
+  geben).
+\end{itemize}
+
+Der erste Teil des Praktikums wird durch eine \emph{Projektbesprechung}
+abgeschlossen. Das Ergebnis der Besprechung wird die Unterteilung der
+Aufgabe sein.
+
+\begin{namedaufgabe}{Prototyp}
+  F"ur den \emph{Prototyp} \iffalse von \Pest{}\fi nehmen wir uns den Teil
+  der Aufgabe vor, der am schnellsten zumindest sichtbare Ergebnisse
+  bringt.\footnote{Das ist ein Grundgedanke des Prototypingansatzes bei der
+    Softwareentwicklung.} In unserem Fall ist das der graphische Teil, also
+  die Herstellung einer prototypischen \emph{graphischen Oberfl"ache}.
+  Diese Aufgabe ist f"ur jeder der Gruppen die selbe.
+  
+  Was die Gestaltung der Oberfl"ache betrifft (Kn"opfe, Menues, etcetc.),
+  sind der Phantasie keine Grenzen gesetzt. Da es sich um einen Prototyp
+  handelt, kann es sich dabei teilweise um noch nicht funktionale
+  Interaktionsm"oglichkeiten handeln. Aber bitte im Auge behalten, da"s
+  Phantasie kein Synonym f"ur Ergonomie ist\ldots
+  
+  Auch wenn die Gestaltung der Oberfl"ache ist in der ersten Phase relativ
+  freigestellt ist, sollen folgende Interaktionsm"oglichkeiten
+  \emph{funktionsf"ahig} sein.
+  \paragraph{Graphische Eingabe}
+  Viele Editoren heutzutage bieten | ob zum Vorteil des Benutzers sei
+  dahingestellt| die M"oglichkeit, graphisch zu arbeiten (UML, SDL, \ldots)
+  Wie wollen einfache reaktive Programme als
+  \emph{Zustands-"Ubergangsdiagramme} darstellen, f"ur den Prototyp stelle
+  man sich eine einfache automatenartige Notation vor:
+
+  \begin{diagram}
+    \xymatrix @=5.0pc{
+      \ar@{.>}[r]
+      &
+      \initstate{1}
+      \ar[r]^{ x:= 5}
+      &
+      \state{2}
+      \ar[r]^{ x > 6}
+      &
+      \finalstate{3}
+      \ar@(lu,ru)[]^{ x := x+1}
+      \ar@/^/[l]
+      }
+  \end{diagram}
+  Das Diagramm ist ein unverbindlicher Vorschlag, was die Gestaltung
+  betrifft, haben Sie Freiheit. 
+
+  
+  Der Teil beinhaltet das Zeichnen von
+  \begin{itemize}
+  \item Zust"anden
+  \item "Uberg"angen
+  \item Anfangszust"anden.
+  \end{itemize}
+  "Uberg"ange und Zust"ande sollen beschriftet sein. In dem Bild sind die
+  Zust"ande mit Zahlen beschriftet, es sollen auch Identifier m"oglich
+  sein. Es sollen mehrere derartige Transitionsdiagramme (z.B.
+  nebeneinander) gezeichnet werden k"onnen.\footnote{eine Aufwendigere
+    L"osung w"are, f"ur jedes ein einzelnes Fenster aufzumachen.} Eine
+  Nichtl"osung ist, dem Benutzer ein Kritzelapplet zur Verf"ugung zu
+  stellen, mit anderen Worten, die genannten graphischen Elemente sollen in
+  irgendeiner Form als eigenst"andige graphische Elemente auf die
+  Oberfl"ache zu bekommen sein.
+  \paragraph{Speichern}
+  Es soll m"oglich sein, das Ergebnis in eine vom Benutzer angegebene Datei
+  zu speichern. Diese Dateien sollen zur weiteren Bearbeitung in den Editor
+  eingelesen werden k"onnen.
+  \paragraph{Sonstiges}
+  Daneben soll Ihr L"osungsvorschlag folgende eher formale Anforderungen
+  erf"ullen:
+  \begin{itemize}
+  \item Das Tool soll stand-alone laufen k"onnen, also nicht (nur) als ein
+    Applet im Browser
+  \item Es soll aus mindestens zwei Java-\emph{Paketen} bestehen.
+    "Uberlegen sie sich dazu eine sinnvolle Unterteilung.
+  \item "`Vervollst"andigen"' Sie die Oberfl"ache mit weiteren Vorschl"agen
+    f"ur die Interaktion mit dem Werkzeug. Diese Teile brauchen nicht
+    funktional sein. 
+  \end{itemize}
+  Wer will, kann auch folgenderma"sen vorgehen und (bei geschickter
+  Unterteilung) Arbeit sparen: es ist m"oglich, da"s sich \emph{je zwei
+    Arbeitsgruppen} von \emph{8st"undigen Teilnehmer} zusammenarbeiten,
+  geschickterweise wird man dann jede Gruppe ein Paket programmieren
+  lassen. Der Zusammenschlu"s zu 4-er Gruppen f"ur den Prototyp ist
+  optional.
+  
+  \paragraph{Anmerkung} 
+  Die genannten Aufgaben lassen sich nat"urlich auf vielf"altige Weise
+  l"osen.  Eine gute L"osung bedenkt, da"s der erste Prototyp nicht alles
+  sein wird, was wir machen werden. Sie k"onnten beispielsweise bedenken,
+  da"s man am Ende nicht nur Zeichnen will, sondern beispielsweise auch
+  selektiv l"oschen, da"s man allgemein eine Zeichnung "andern k"onnen
+  will. Wie geeignet ist die L"osung in Hinblick auf die Tatsache, da"s das
+  Tool nicht nur zeichnen soll, sondern beispielsweise auch die Automaten
+  simulieren?
+  
+  F"ur diese Aufgabe sind speziell \texttt{java.awt} und auch
+  \texttt{java.awt.events} aus der Javabibliothek relevant (siehe auch
+  Kapitel 7 und 8 aus \cite{flanagan:javanutshell}, bzw.~Lektion 8 und 9
+  aus dem Java-Praktikum des letzten Semesters).
+
+  \paragraph{Arbeitsstil.} Gehen Sie die Entwicklung des Prototypen
+  {\em systematisch\/} an. Bedenken Sie, da"s die Gruppenarbeit bei
+  der Entwicklung von {\sc Pest} von Ihnen vor allem {\em
+  Selbst"andigkeit und Verl"a"slichkeit\/} erfordert. Am besten
+  stellen Sie sich bei der Entwicklung des Prototypen darauf ein. Dazu
+  gehen Sie bitte folgendermassen vor:
+  \begin{enumerate}
+  \item Machen Sie einen Plan! Gliedern Sie die Aufgabe in
+    Teilaufgaben und machen Sie einen Terminplan dazu. Schreiben Sie
+    es auf!
+  \item L"osen Sie die Teilaufgaben und erf"ullen Sie dabei den
+    Terminplan. 
+  \end{enumerate}
+  Hier ist ein nicht verbindlicher Vorschlag zum Plan.
+  \begin{description}
+  \item[Milestone 1.]  Machen Sie sich u.a.\ folgende Fragen klar: Welche
+    Features soll der Editor unterst"utzen? Welche Datentypen brauchen Sie
+    um die graphischen Objekte intern darstellen zu k"onnen? Wie werden die
+    Diagramme gespeichert gespeichert?
+    
+    {\bf Resultat.} Definitionen von zwei Paketen, die die Datentypen
+    definieren und Methoden auflisten, die die Funktionalit"at zur
+    Verf"ugung stellen. Diese Methoden sind \emph{Stubs:} Funktionen mit
+    Namen, Parametern und R"uckgabetyp, aber ohne Inhalt, der die
+    Funktionalit"at zur Verf"ugung stellt.
+    
+    \textbf{\bf Zeit.} 5 Tage
+    
+  \item[Milestone 2.] Programmieren Sie den Prototypen. Dazu erg"anzen
+    Sie die Stubs aus dem ersten Punkt mit Code, der die
+    Funktionalit"at implementiert.
+    
+    {\bf Resultat.} Kompilierf"ahiger Javacode des Prototypen.
+
+    {\bf Zeit.} 5 Tage    
+
+  \item[Milestone 3.] Testen Sie den Prototypen. 
+
+    {\bf Resultat.} Fertiger Prototyp.
+
+    {\bf Zeit.} 5 Tage
+  \end{description}
+  
+  Bitte bedenken Sie, da"s Sie w"ahrend der Gruppenarbeit selbst "ahnlichen
+  Plan erstellen m"ussen und da"s wir nach dem gleichen Muster vorgehen
+  werden. Zum Beispiel, werden Sie aufgefordert, Stubs zur Verf"ugung zur
+  stellen, die die Schnittstelle zur anderen Gruppen darstellen. Es wird
+  von Ihnen erwartet, da"s Sie die Stubs rechtzeitig implementieren, damit
+  noch Zeit f"ur den Test des Gesamtsystems bleibt.
+\end{namedaufgabe}
+
+
+
+\input{literatur}
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+

@@ -1,4 +1,13 @@
-# $Id $
+#############################################
+# $Id: Todo,v 1.2 2000-05-28 15:00:33 unix01 Exp $
+#############################################
 
 
-	o Wie sollen die Coordinaten gespeichert werden: Diskussion!
+        o Dringend
+           
+
+           - Warnungen: bei javadoc bez"uglich serializable
+
+	   - Wie sollen die Coordinaten gespeichert werden: Diskussion!
+
+	
