@@ -108,7 +108,7 @@ public class SimulatorProgram {
 	while (go) {
 	    
 	    /* Neuen Channel in die Liste hinzufügen */
-	    //result.add( new SimulatorProcess(pointer.head) );
+	    result.add( new SimulatorChannel(pointer.head.chan) );
 
 	    /* Der Kanal wurde nun in die ArrayList aufgenommen,
 	       also weiter ....

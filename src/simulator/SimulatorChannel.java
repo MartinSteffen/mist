@@ -1,6 +1,7 @@
 package simulator;
 
 import absynt.*;
+import java.util.*;
 
 /** Klasse zur Simulation von Channels
  * @author Michael Gömann
@@ -17,8 +18,22 @@ public class SimulatorChannel {
     protected Channel progChannel;
 
     /** Feld als Array fuer */
-    SimulatorProcess[] writerList; 
-    SimulatorProcess[] readerList; 
+    protected ArrayList writerList; 
+    protected ArrayList readerList; 
     
-    
+    protected SimulatorChannel (Channel _progChannel){
+    progChannel = _progChannel;
+    }
+
+    /** 
+     * Methoden zum eintragen der Writers / Readers
+     */
+
+    protected void addWriter(Transition writerTrans){
+	writerList.add(writerProcess);
+    }
+
+    protected void addReader(Transition readerTrans){
+	readerList.add(readerProcess);
+    }
 }
