@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.24 2000-07-12 05:23:48 unix01 Exp $
+## $Id: Status,v 1.25 2000-07-12 05:24:21 unix01 Exp $
 ######################################################
 
 
@@ -17,8 +17,6 @@ o absynt:
 	  ob die "Anderung den W"unschen gem"a"s passiert ist,
 	  steht noch aus.
 
-      [?] Beispiel mu"s nachgezogen werden.
-	  
 
       [?] model-check Gruppe hat clone()-methoden eingef"ugt,
           bisher scheint sich niemand dar"uber beklagt zu haben,
