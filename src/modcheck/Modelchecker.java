@@ -13,10 +13,10 @@ private Initstate init; //Anfangszustand
 private ProcessList pl; // List der Prozesse
 private Process pr;
 private VardecList vars;
-private boolean ok_l;
+private boolean ok_l, in, checkok;
 private TransitionList steps, akt;  
 private AstateList states;   // Liste uebergebenen, erreichten
-private ModstateList modstates, next;  // und zu betrachtenden Zustaende
+private ModstateList modstates, next, start;  // und zu betrachtenden Zustaende
 private Modstate  nextstate,modstate;
 private Transition step;		// gerade zu betrachtende Transition
 private Label label;			// gerade zu betrachtendes Label    
@@ -24,15 +24,59 @@ private Label label;			// gerade zu betrachtendes Label
      * @param Program p
      */
 
-private boolean check_label(Label l, Modstate m) { // ueberprüft, ob Transition benutzt werden kann
-Modstate mod;
-Label lab;
-boolean ok;
-ok=true;
-mod=m;
-lab=l;
-return ok;
+  private boolean check_label(Label _l, Modstate _m) {
+
+    // ueberprüft, ob Transition benutzt werden kann
+
+    boolean  ok  = true; // Rueckgabewert.
+
+    return ok;
+  }
+
+
+  // --------------- ^ Felder und Methoden fuer "check_label" ^ ---------------
+
+
+private VardecList after_trans(Label l, Modstate m) {
+  Modstate mod;
+  Label lab;
+  mod=m;
+  lab=l;
+  VardecList varlist;
+  varlist=mod.vars;
+  return varlist;
 }
+
+private boolean in_list(ModstateList ml, Modstate m) {
+  boolean in;
+  Modstate mstate, liststate;
+  ModstateList mlist;
+  in=false;
+  mlist=ml;
+  mstate=m;
+  liststate=mlist.head;
+  if (liststate.vars==mstate.vars && liststate.state==mstate.state)
+  { in=true;}
+  
+  while (mlist.hasMoreElements()==true && in==false)
+  {
+    mlist=mlist.next;
+    liststate=mlist.head;
+    if (liststate.vars==mstate.vars && liststate.state==mstate.state)
+    { in=true;}
+  }
+  return in;
+}
+
+private boolean check_state(Modstate m ) {
+  Modstate mstate;
+  boolean ok;
+  mstate=m;
+  ok=true;
+  
+  return ok;
+}
+  
 
     public void start_modcheck (Program p)
 	throws MCheckException {
@@ -52,6 +96,10 @@ modstates = new ModstateList(modstate,null);
 next=modstates;
 
 modstate=next.head;
+checkok=check_state(modstate);
+if (checkok==false) {
+// Behandlung falls der Zustand nicht korrekt ist  
+}
 
 akt=steps;
 step=akt.head;   // Betrachte Zustand und zugehoerige Transitionen
@@ -60,12 +108,18 @@ if(step !=null && modstate.state==step.source)
 { 
     label=step.lab; 
 ok_l=check_label(label,modstate);
+
     // Behandlung des Labels
 if (ok_l==true)
 {
+  vars=after_trans(label,modstate);
     nextstate=new Modstate(step.target,vars);
+   in=in_list(start,nextstate);
+    if(in==false)
+    {
     modstates=modstates.next;
     modstates.head=nextstate;
+  }
   }
 } //Ende if
 
@@ -80,10 +134,14 @@ ok_l=check_label(label, modstate);
     // Behandlung des Labels
 
 if(ok_l==true) {
-  
+  vars=after_trans(label,modstate);
     nextstate=new Modstate(step.target,vars);
+    in=in_list(start,nextstate);
+    if(in==false)
+    {
     modstates=modstates.next;
     modstates.head=nextstate;
+  }
   }
   } //Ende if
 
@@ -96,6 +154,11 @@ while (next.hasMoreElements()==true)
 next=next.next;
 modstate=next.head;
 
+checkok=check_state(modstate);
+if (checkok==false) {
+  // Behandlung falls Modstate nicht korrekt
+}
+
 akt=steps;
 step=akt.head;   // Betrachte Zustand und zugehoerige Transitionen
 if(step !=null && modstate.state==step.source) 
@@ -106,9 +169,14 @@ ok_l=check_label(label, modstate);
     // Behandlung des Labels
 if(ok_l==true)
 {
+  vars=after_trans(label,modstate);
     nextstate=new Modstate(step.target,vars);
+   in=in_list(start,nextstate);
+    if(in==false)
+    {
     modstates=modstates.next;
     modstates.head=nextstate;
+  }
   }
 } //Ende if
 
@@ -123,10 +191,14 @@ ok_l=check_label(label, modstate);
     // Behandlung des Labels
 if (ok_l==true)
 {
-  
+  vars=after_trans(label,modstate);
 nextstate=new Modstate(step.target,vars);
+   in=in_list(start,nextstate);
+    if(in==false)
+    {
     modstates=modstates.next;
     modstates.head=nextstate;
+  }
   }
 } //Ende if
 
@@ -134,12 +206,17 @@ nextstate=new Modstate(step.target,vars);
 
     } // Ende while
  
-if(pl.hasMoreElements()==true) pl=pl.next;
+    
+    // checke die weiteren Processe
+while (pl.hasMoreElements()==true){
+  System.out.println("Neuer Process betrachtet");
+  pl=pl.next;
 
-
-
+  // kopiere hierhin das Checken des 1. Processes
+  
+  
 	// hier kommt der Code `rein.
-
+}
     } // method start_modcheck
 
 
