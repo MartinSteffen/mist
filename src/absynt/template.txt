@@ -1,0 +1,30 @@
+
+
+package absyn;
+
+import java.io.Serializable;
+
+
+/**
+ * <Klasse> Tr.
+ * Bla
+ * @author Initially provided by Martin Steffen.
+ * @version $Id: template.txt,v 1.1 2000-05-28 09:17:14 unix01 Exp $
+ */
+
+
+public class <xxxx> extends ...{ 
+}
+
+
+
+
+//----------------------------------------------------------------------
+//	Abstract Syntax for Mist Programs
+//	------------------------------------
+//
+//	\$Id: template.txt,v 1.1 2000-05-28 09:17:14 unix01 Exp $
+//
+//	\$Log: not supported by cvs2svn $
+//---------------------------------------------------------------------
+
