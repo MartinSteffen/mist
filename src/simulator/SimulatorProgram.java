@@ -1,26 +1,26 @@
 package simulator;
 
 import absynt.*;
-
+import java.util.ArrayList;
 
 /**
  * class SimulatorProgramState - Klasse die den Zustand eines im Ablauf befindlichen
  * <b>Mist-Programms</b> modelliert.
  * @author Michael Goemann
  * @author Michael Nimser 
- * @version  1.2, 07/03/2000
+ * @version  1.3, 07/03/2000
  */
 
 
 public class SimulatorProgram {
     
-    /** Instanzfeld für die Prozesse und deren Zustände eines Programms als Array
+    /** Instanzfeld für die Prozesse und deren Zustände eines Programms als ArrayListe
      */
-    protected SimulatorProcess[] processList;
+    protected ArrayList processList;
 
-    /** Instanzfeld für die Channel eines Programms als Array
+    /** Instanzfeld für die Channel eines Programms als ArrayListe
      */
-    protected SimulatorChannel[] channelList;
+    protected ArrayList channelList;
 
     /** Instanzfeld , das die Referenz auf das zu simulierende Programm 
      * enthält.
@@ -35,6 +35,90 @@ public class SimulatorProgram {
 	progProgram = _program ; 	// Referenz auf zu simulierendes Programm setzen  
       	processList = null;
 	channelList = null;
+    }
+
+    /** Methode zum Generieren der Prozess-Liste 
+     */
+    protected ArrayList makeProcessList () {
+
+	/* pointer zeigt auf den aktuell zu scannenden Prozess des Programms  */
+	ProcessList pointer = this.progProgram.procs ;
+
+	/* ArrayList in der die Prozesse generiert werden,
+	   ist Rückgabewert dieser Methode */
+	ArrayList result = new ArrayList();
+
+	/* boolesche Variable für while-Schleifen-Logik */
+	boolean go = false;
+
+	if (pointer != null) // checken, ob ein Prozess in der Prozessliste existiert
+	    go = true;
+
+	while (go) {
+	    
+	    /* Neuen Prozess in die Liste hinzufügen */
+	    result.add( new SimulatorProcess(pointer.head) );
+
+	    /* Der Prozess wurde nun in die ArrayList aufgenommen,
+	       also weiter ....
+	    */
+
+	    if (pointer.hasMoreElements()) {
+		// wenn es noch einen Prozess hinter dem aktuellen gibt
+		pointer = pointer.next;
+		// dann pointer auf Nachfolger versetzen
+	    }
+	    else
+		/* Abbruchbedingung für While-Schleife setzen */
+		go = false;
+
+	}// ------ end while -------
+
+	return result;
+	
+    }
+
+
+
+
+    /** Methode zum Generieren der Kanal-Liste
+     */
+    protected ArrayList makeChannelList () {
+
+	/* pointer zeigt auf den aktuell zu scannenden CHannel des Programms  */
+	ChandecList pointer = this.progProgram.chans ;
+
+	/* ArrayList in der die Kanäle generiert werden,
+	   ist Rückgabewert dieser Methode */
+	ArrayList result = new ArrayList();
+
+	/* boolesche Variable für while-Schleifen-Logik */
+	boolean go = false;
+
+	if (pointer != null) // checken, ob ein Channel in der Channelliste existiert
+	    go = true;
+
+	while (go) {
+	    
+	    /* Neuen Channel in die Liste hinzufügen */
+	    //result.add( new SimulatorProcess(pointer.head) );
+
+	    /* Der Kanal wurde nun in die ArrayList aufgenommen,
+	       also weiter ....
+	    */
+
+	    if (pointer.hasMoreElements()) {
+		// wenn es noch einen Kanal hinter dem aktuellen gibt
+		pointer = pointer.next;
+		// dann pointer auf Nachfolger versetzen
+	    }
+	    else
+		/* Abbruchbedingung für While-Schleife setzen */
+		go = false;
+
+	}// ------ end while -------
+
+	return result;
     }
 
 

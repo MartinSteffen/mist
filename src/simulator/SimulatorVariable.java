@@ -11,6 +11,11 @@ import absynt.*;
 
 public class SimulatorVariable{
     
+    /** Instanzfeld, mit Referenz auf den Prozeßkontext der Variablen
+     */
+    private SimulatorProcess process;
+
+
     /** Instanzfeld fuer Namen der Variable, muss identisch zu entsprechenden 
      * Variablennamen aus abstrakter Syntax sein.
      */
@@ -21,9 +26,14 @@ public class SimulatorVariable{
      */
     private Variable progVariable;
 
-    /** Boolesches Instanzfeld , zeigt an, ob der Typ der Variablen feststeht.
+    /** Boolesches Instanzfeld , zeigt an, von welchem Typ die
+	Variable ist.
      */
-    private boolean typeSet;
+    private boolean isBool;
+
+    /** Boolesches Instanzfeld , was aussagt, ob die Variable einen Wert hat
+     */
+    private boolean hasValue;
 
     /** Boolesches Instanzfeld , für den Fall, daß die Variable vom Typ boolean ist. 
      */
@@ -34,54 +44,60 @@ public class SimulatorVariable{
     private int intValue;
 
 
-    /** Konstruktor fuer INITIALISIERUNG einer neuen Variablen mit INTEGERwert
-     * @param _name Name der Variablen 
-     * @param _wert zuzuweisender Integerwert 
-     * @param _variable Referenz auf Variable aus zu simulierendem Program
-     */
-    protected SimulatorVariable (String _name, Variable _variable, int _wert) {
-       this.name = _name;
-       this.progVariable = _variable;
-       this.typeSet = true;
-       this.intValue = _wert;
-    }
 
-    /** Konstruktor fuer INITIALISIERUNG einer neuen Variablen mit BOOLESCHEM Wert
-     * @param _name Name der Variablen 
-     * @param _wert zuzuweisender Integerwert 
-     * @param _variable Referenz auf Variable aus zu simulierendem Program
+    /** Konstruktor, um eine in Absynt deklarierte Variable im Simulator handhabbar zu machen
+     *
+     * @param _vardec Variablendeklaration in Absynt
      */
-    protected SimulatorVariable (String _name, Variable _variable, boolean _wert) {
-       this.name = _name;
-       this.progVariable = _variable;
-       this.typeSet = true;
-       this.boolValue = _wert;
-    }
+    protected SimulatorVariable (SimulatorProcess _process, Vardec _vardec) {
 
-    /** Konstruktor fuer DEKLARATION einer Variablen 
-     * @param _name Name der Variablen 
-     * @param _variable Referenz auf Variable aus zu simulierenden Programm
-     */
-    protected SimulatorVariable (String _name, Variable _variable) {
-       this.name = _name;
-       this.progVariable = _variable;
-       this.typeSet = false;
-    }
+	process = _process ;
 
-    /** Methode zum ZUWEISEN eines Integer-Wertes an eine existierende Variable
-     * @param _wert zuzuweisender Integer-Wert
-     */
-    protected void setVariable (int _wert) {
-	this.intValue = _wert;	
-        this.typeSet = true;
-    }
- 
-    /** Methode zum ZUWEISEN eines booleschen Wertes an eine existierende Variable
-     * @param _wert zuzuweisender Integer-Wert
-     */
-    protected void setVariable (boolean _wert) {
-	this.boolValue = _wert;
-        this.typeSet = true;
-    }
+	progVariable = _vardec.var ;
+
+	name = _vardec.var.name;
+	
+	if (_vardec.type.equals(new M_Bool() )) {
+	    /* Variable ist vom Typ Boolean */
+
+	    isBool = true;
+	    if (_vardec.val != null) {
+		/* es gibt einen booleschen Ausdruck zu evaluieren , nach
+		 Konvention handelt es sich hierbei (im Deklarationsfall) um einen
+		 Ausdruck, der frei von anderen Variablen des Prozesskontextes ist */
+
+		SimulatorBoolEvaluator boolExpr = new SimulatorBoolEvaluator(_vardec.val);
+		boolValue = boolExpr.giveResult();
+		hasValue = true;
+	    }
+	    else {
+		/* es gibt keinen booleschen Ausdruck zu evaluieren */
+		hasValue = false ;
+	    }
+
+	}
+	else {
+	    /* Variable ist vom Typ Integer */
+
+	    isBool = false;
+	    if (_vardec.val != null) {
+		/* es gibt einen Integer-Ausdruck zu evaluieren , nach
+		 Konvention handelt es sich hierbei (im Deklarationsfall) um einen
+		 Ausdruck, der frei von anderen Variablen des Prozesskontextes ist */
+
+		SimulatorIntEvaluator intExpr = new SimulatorIntEvaluator(_vardec.val);
+		intValue = intExpr.giveResult();
+		hasValue = true;
+	    }
+	    else {
+		/* es gibt keinen booleschen Ausdruck zu evaluieren */
+		hasValue = false ;
+	    }
+	}
+
+
+
+    } // --------------  Ende Konstruktor --------------
+
 
 }

@@ -4,10 +4,6 @@ import absynt.*;
 
 /** Klasse zum Auswerten von Expressions in einem Prozess
  * Alles noch nicht so recht ausgebrütet,
- * Problem, da Variablen nicht getypt sind, somit kann erst zur
- * Zeit der Auswertung der Expression der Ergebnisstyp bestimmt werden.
- * Hat unschöne Auswirkungen in der Benutzung dieser Klasse.
- * Vielleicht nochmal überdenken.
  * @author Michael Goemann
  * @author Michael Nimser 
  * @version  1.1, 07/06/2000
@@ -16,7 +12,8 @@ import absynt.*;
 public class SimulatorExprEvaluator {
 
     /** Instanzfeld für Referenz auf den Prozess, in dem der Ausdruck ausgewertet
-	werden soll , nötig für den Variablenkontext 
+	werden soll , nötig für den Variablenkontext, wenn eine Auswertung außerhalb
+	von der Variablendeklaration erfolgen soll.
     */
     private SimulatorProcess process;
 
@@ -37,7 +34,7 @@ public class SimulatorExprEvaluator {
     private int intVal;
 
     
-    /** Konstruktor für einen Expression Evaluator
+    /** Konstruktor für einen Expression Evaluator, der in einem Prozesskontext arbeitet
      * 
      * @param _process Referenz auf den SimulatorProcess, in dem evaluiert werden soll 
      * @param _expr Referenz auf die zu evaluierende Expression

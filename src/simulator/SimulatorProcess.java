@@ -57,46 +57,14 @@ public class SimulatorProcess{
 	/* boolesche Variable für while-Schleifen-Logik */
 	boolean go = false;
 
-	if (pointer != null) // checken, ob Variable in VardecList existiert
+	if (pointer != null) // checken, ob eine Variable in VardecList existiert
 	    go = true;
 
 	while (go) {
 	    
-	    if (pointer.head.val == null) {
-		/* Variable als SimulatorVariable ins Leben rufen und nur DEKLARIEREN,
-		   da es hier keine auszuwertende (und zuzuweisende) Expression
-		   gibt. Man weiß hier auch noch nichts über den Typ der Variablen,
-		   da in Absynt nur ungetypte Variablen vorkommen.
-		 */
-		result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var) );
-	    }
-	    else {
-		/* Die Variable wird nicht nur deklariert sondern auch initialisiert,
-		   also muß die Expression der Initialisierung ausgewertet und der 
-		   Variablen zugeordnet werden.
-		   Die Auswertung einer Expression muß noch realisiert werden in
-		   Klasse SimulatorExprEvaluator.
-		*/
+	    /* Neue Variable in die Liste hinzufügen */
+	    result.add( new SimulatorVariable(this, pointer.head) );
 
-		SimulatorExprEvaluator exprEval = new SimulatorExprEvaluator(this, pointer.head.val);
-		// Objekt fuer Ausdrucksauswertung ins Leben rufen
-		exprEval.evalExpression();  // Ausdruck auswerten
-
-		/* Wegen den ungetypten Variablen und somit Ausdrücken, kann erst zur nach 
-		   der Auswertung eines Ausdrucks dessen Datentyp festgestellt werden.
-		   Unschön, aber somit Fallunterscheidung notwendig :
-		*/
-
-		if (exprEval.isInt()){
-		    /* Ausdruck evaluiert zu einem Integerwert */
-		       result.add( new SimulatorVariable(pointer.head.var.name, pointer.head.var, exprEval.getIntVal() ) );
-		}
-		else {
-		    /* Ausdruck evaluiert zu einem booleschen Wert */ 
-		    result.add( new SimulatorVariable(pointer.head.var.name,pointer.head.var, exprEval.getBoolVal() ) );
-		}
-
-	    } 
 	    /* Die Variable wurde nun in die ArrayList der Prozessvariablen aufgenommen,
 	       also weiter ....
 	    */
