@@ -1,5 +1,5 @@
 #######################################################
-## $Id: Readme,v 1.2 2000-07-12 07:19:20 unix01 Exp $
+## $Id: Readme,v 1.3 2000-07-12 08:05:36 unix01 Exp $
 #######################################################
 
 
@@ -19,4 +19,8 @@ o Einige Beispiele zum testen der Positionierung.
 
      - position1.1.blob:   10 verschiedene Zust"ande
      - position1.2.blob:   20 verschiedene Zust"ande
+    
 
+   + Ein Prozess, lauter tau-"Uberg"ange
+
+     - position2.1.blob:   10 verschiedene Zust"ande
