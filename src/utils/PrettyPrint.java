@@ -67,6 +67,8 @@ public class PrettyPrint {
 	    output((Transition)absyn);
 	if(absyn instanceof Astate)
 	    output((Astate)absyn);
+	if(absyn instanceof State)
+	    output((State)absyn);
 	if(absyn instanceof Label)
 	    output((Label)absyn);
 	if(absyn instanceof Action)
@@ -77,7 +79,11 @@ public class PrettyPrint {
 	    output((Output_action)absyn);
 	if(absyn instanceof Assign_action)
 	    output((Assign_action)absyn);
-    }
+	if(absyn instanceof Constval)
+	    output((Constval)absyn);
+	
+
+}
 		   
 
     public void output(Program program) {
@@ -186,6 +192,14 @@ public class PrettyPrint {
 	}
     }
     
+    public void output(Constval constval){
+	if(constval !=null){
+	    System.out.println(whiteSpace(column) + "[Constval] " + 
+			       constval.val);
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	}
+    }
+    
     public void output(Label label){
 	if(label !=null){
 	    System.out.println(whiteSpace(column) + "[Label] ");
@@ -244,11 +258,10 @@ public class PrettyPrint {
 	if(uexpr !=null){
 	    System.out.println(whiteSpace(column) + "[U_Expr] ");
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
-	    /*
-	    prettyprint.print(u_expr.sub_expr);
-	    prettyprint.print(u_expr.op);
-	    */
-	    }
+	    prettyprint.print(uexpr.sub_expr);
+	    prettyprint.print(uexpr.op);
+	    
+	}
     }
     
     private void print(int op){
@@ -334,15 +347,26 @@ public void output(Initstate initstate){
 
     public void output(Astate astate){
 	if(astate !=null){
-	    System.out.println(whiteSpace(column) + "[Astate] " + 
-			       astate.name);
+	    System.out.println(whiteSpace(column) + "[Astate] ");
+			       
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(astate.assert);
 	    prettyprint.print(astate.pos);
+	    
 	}
     }
     
     
+    public void out(State state){
+	if(state !=null){
+	    System.out.println(whiteSpace(column) + "[State] " + 
+			       state.name);
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	    prettyprint.print(state.assert);
+	    prettyprint.print(state.pos);
+	}
+    }
+
     private String whiteSpace(int i) {
         String s = "";
         for(int j = 0; j < i; j++)
@@ -352,8 +376,6 @@ public void output(Initstate initstate){
     }      
     
 }
-
-
 
 
  

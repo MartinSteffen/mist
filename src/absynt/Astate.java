@@ -6,14 +6,16 @@ import java.io.Serializable;
  * Abstrakte Klasse f"ur Zustand
  *
  * @author Initially provided by Martin Steffen.
- * @version $Id: Astate.java,v 1.5 2000-06-19 17:17:38 unix01 Exp $
+ * @version $Id: Astate.java,v 1.6 2000-06-29 19:45:43 unix01 Exp $
  */
 
 
 public abstract class Astate extends Absyn implements Serializable { 
-  public String name;
-  public Expr   assert;
-  public Position pos;
+    
+    public String name;
+    public Expr   assert;
+    public Position pos;
+    
 }
 
 
@@ -23,9 +25,14 @@ public abstract class Astate extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Astate.java,v 1.5 2000-06-19 17:17:38 unix01 Exp $
+//	$Id: Astate.java,v 1.6 2000-06-29 19:45:43 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2000/06/19 17:17:38  unix01
+//	-  Zus"atzliche "uberladene Konstruktoren eingef"ugt
+//	
+//	-  Felder f"ur State/Initstate nach  Astate verschoben.
+//	
 //	Revision 1.4  2000/06/19 17:06:44  unix01
 //	Die abstrakte Syntax angepa"st (gem"a"s den heutigen Entscheidungen)
 //	
