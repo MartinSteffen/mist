@@ -22,27 +22,29 @@ public class SimulatorPermTransitions {
 
     }
 
-    /* Methode checkPermission, soll eine Transition mit hilfe des ExpressionEvaluators auf konzession
-     * zum feuern abchecken. 
+    /* Methode checkPermission, soll eine Transition mit hilfe des ExpressionEvaluators
+     * auf konzession zum feuern abchecken. 
      * Rueckgabewert: ist boolean, true bedeutet: hat Konzession zum feuern.
      */
 
     protected boolean checkPermission (){
 
-	/* SimulatorBoolEvaluator ins leben rufen, um im uebergebenen Prozesskontext den Guard der zu pruefenden
-	 * Transition auswerten zu koennen.
+	/* SimulatorBoolEvaluator ins leben rufen, um im uebergebenen Prozesskontext den 
+	 *  Guard der zu pruefenden Transition auswerten zu koennen.
 	 */
 
 	SimulatorBoolEvaluator boolExpr = new SimulatorBoolEvaluator (simProc, simProc.progProcess.steps.head.lab.guard);
 
-	/* Ueberpruefen, ob der Ausgangszustand der zu checkenden Transition mit dem aktuellen Zustand uebereinstimmt.
-	 * Anderenfalls hat die Transition keine Konzession zum feuern, daher dann false zurueckgeben.
+	/* Ueberpruefen, ob der Ausgangszustand der zu checkenden Transition mit dem 
+	 * aktuellen Zustand uebereinstimmt. Anderenfalls hat die Transition keine Konzession 
+	 * zum feuern, daher dann false zurueckgeben.
 	 */
 
 	if (actTrans.source == simProc.activeState)
 
-	    /* Falls also diese Transition vom aktuellen Zustand ausgeht, bestimmt der boolesche Wert der Guard-Expression,
-	     * ob Konzession zum feuern besteht: ist Guard false, dann keine Konzession, ist er True, dann Konzession.
+	    /* Falls also diese Transition vom aktuellen Zustand ausgeht, bestimmt der boolesche 
+	     * Wert der Guard-Expression, ob Konzession zum feuern besteht: ist Guard false, 
+	     * dann keine Konzession, ist er True, dann Konzession.
 	     */
 
 	     return ( boolExpr.giveResult() );  

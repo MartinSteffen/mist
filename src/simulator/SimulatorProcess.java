@@ -80,7 +80,7 @@ public class SimulatorProcess{
 		go = false;
 
 	}// ------ end while -------
-
+	result.trimToSize(); // Array-Größe einfrieren bessere Performance !!!
 	return result;
     }// ---------- end makeVarList() -----------------------
 
@@ -118,8 +118,8 @@ public class SimulatorProcess{
 	    /* Neue Transition evtl. in die Liste hinzufügen */
 		result.add(dummy);
 	    }
-	    /* Die Transition wurde gecheckt und evtl. in die ArrayList der permitted Transitions aufgenommen,
-	       also weiter ....
+	    /* Die Transition wurde gecheckt und evtl. in die ArrayList der permitted Transitions 
+	       aufgenommen, also weiter ....
 	    */
 
 	    if (pointer.hasMoreElements()) {
@@ -215,6 +215,28 @@ public class SimulatorProcess{
 
 	return result;
     }// ---------- end() -----------------------
+
+
+    /** Methode, die einem die zu einer absynt-Variable die entsprechende
+     * SimulatorVariable aus der Arrayliste heraussucht.
+     * Anmerkung : Durch den Checker sollte gewährleistet sein, daß
+     * ein Prozess keine zwei Variablen mit gleichem Namen enthält !!!
+     */
+    protected SimulatorVariable getVariable (Variable var) {
+	SimulatorVariable dummy; 
+	int maxIndex = varList.size()-1;	
+	for (int count=0 ; count < maxIndex; count++) {
+	    dummy = (SimulatorVariable) varList.get(count);
+	    if (dummy.name == var.name) {
+		/* richtige Variable gefunden */
+		return dummy;
+	    }
+	}
+	/* Hier Platz für Exception, Variable konnte nicht in der
+	   Prozessumgebung gefunden werden => Abbruch */
+	return null ;
+    }
+
 
 
     /** Methode zum Loeschen der "permittedTransitions" */

@@ -25,8 +25,12 @@ public class SimulatorProgram {
     /** 
      *Referenz auf oberste Klasse "Simulator"
      */
-
     protected Simulator sim;
+
+    /** 
+     * Instanzfeld für Debugmeldung-Generation
+     */
+    protected SimulatorDebug debug;
 
     /** Instanzfeld , das die Referenz auf das zu simulierende Programm 
      * enthält.
@@ -40,9 +44,15 @@ public class SimulatorProgram {
     protected SimulatorProgram (Simulator _sim) {
         sim = _sim;
 	progProgram = sim.p ; 	// Referenz auf zu simulierendes Programm setzen  
+	debug = new SimulatorDebug();
+	debug.addMsg("# Starting to generate processList ...",1);
       	processList = this.makeProcessList();
+	debug.addMsg("# processList built up ...",1);
+	debug.addMsg("# Starting to generate channelList ...",1);
 	channelList = this.makeChannelList();
+	debug.addMsg("# channelList built up ...",1);
     }
+
 
     /** Methode zum Generieren der Prozess-Liste 
      */
@@ -127,6 +137,7 @@ public class SimulatorProgram {
 
 	return result;
     }
+
 
     /**
      * Fuer jeden Prozess werden die Transitionen, Welche lesend oder
