@@ -510,9 +510,10 @@ public class GUI extends javax.swing.JFrame {
 		
 	// Editor starten mit dem aktuellen workProgram
 	if (actualeditor == null) // Editor wurde noch nie gestartet
-	    actualeditor = new editor.Editor(actualsession.workProgram);
+	    actualeditor = new editor.Editor(this, actualsession.workProgram);
 	if (actualeditor != null) // Dem Editor das refresh-Signal senden
 	    actualeditor.refresh(actualsession.workProgram);
+	actualeditor.show();
 
 	redrawProcessTable(actualeditor.getProcessIds());
 	// GUI anpassen
@@ -523,12 +524,12 @@ public class GUI extends javax.swing.JFrame {
     
     private void exitMenuItemActionPerformed (java.awt.event.ActionEvent evt) {
 	saveMenuItemActionPerformed(evt);
+	if (actualeditor != null)
+	    actualeditor.dispose();
 	System.exit (0);
     }
     
-    // Is nich ...
     private void exitForm(java.awt.event.WindowEvent evt) {
-	// System.exit (0);
     }
     
     
@@ -563,44 +564,50 @@ public class GUI extends javax.swing.JFrame {
 	actualeditor.highlightTransition( transition,  process,  program);
     }
 
-
-    /*
-      // Methoden zur Verwaltung der Editoren
-      public void addEditor() {
-	    
-	    EdInterface ei = new EdInterface("New Process" + projBrowserTableModel.getRowCount());
-	    editorinterfaces.addElement(ei);
-	    projBrowserTableModel.addRow(new Object[] {
-		new String("New Process" + projBrowserTableModel.getRowCount()), 
-		new Boolean(true), new Boolean(false), new Boolean(true) });
-	}
+    /**
+     * einen neuen Process in die ProcessTable aufnehmen
+     */
+    public void NewProcess(String id) {
+	projBrowserTableModel.addRow
+	    (new Object[] { id, new Boolean(true), new Boolean(false), new Boolean(true) });
+    }
     
-	public void closeEditors(Vector names) {
-	    for (int i = 0; i < names.size(); i++) {
-		if (containsEdInterface((String) names.elementAt(i))) {
-		    EdInterface ie = getEdInterface((String) names.elementAt(i));
-		    if(! editorinterfaces.contains(ie)) 
-			System.err.println("Session.closeEditors: didn't found EdInterface in Vector.");
-		    else {
-			// EdInterface aus dem Vector werfen
-			ie.destroyEditor();
-			editorinterfaces.removeElement(ie);
-		    }
-		}
-	    }
-	}
+    /**
+     * einen Process aus der ProcessTable entfernen
+     */
+    public void RemoveProcess(String id) {
+	int row = 0;
+	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
+		&& (row < projBrowserTableModel.getRowCount()))
+	    row++;
+	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
+	    projBrowserTableModel.removeRow(row);
+    }
 
-	public void modifyEditors(String name, Boolean visible, Boolean inproject) {
-	    // diese Methode wird von einem Listener in projBrowserTableModel aufgerufen
-	    if (containsEdInterface(name)) {
-		EdInterface ie = getEdInterface(name);
-		ie.setVisible(visible);
-		ie.setInProject(inproject);
-	    }
-	    
-	}
-	*/
+    /**
+     * einen Process in der ProcessTable als visible markieren
+     */
+    public void OpenProcess(String id) {
+	int row = 0;
+	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
+		&& (row < projBrowserTableModel.getRowCount()))
+	    row++;
+	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
+	    projBrowserTableModel.setValueAt(new Boolean(true), row, 1);
+    }
     
+    /**
+     * einen Process in der ProcessTable als hidden markieren
+     */
+     public void CloseProcess(String id) {
+	 int row = 0;
+	while ( !(((String) projBrowserTableModel.getValueAt(row, 0)).equals(id))
+		&& (row < projBrowserTableModel.getRowCount()))
+	    row++;
+	if ( ((String)projBrowserTableModel.getValueAt(row, 0)).equals(id)) // sicher ist sicher
+	    projBrowserTableModel.setValueAt(new Boolean(false), row, 1);
+     }
+
     private void redrawProcessTable(String [] ids) {
 	// Alle Eintraege wegnehmen ...
 	while(projBrowserTableModel.getRowCount() > 0)
