@@ -1,6 +1,7 @@
 package simulator;
 
 import absynt.*;
+import gui.*;
 
 /**
  * class Simulator zum schrittweisen Simulieren von <b>Mist</b>-Programmen.
@@ -27,13 +28,18 @@ public class Simulator {
     protected boolean active;
     
 
+    /**
+     * Instanzfeld fuer den Debuglevel 
+     * Wert nur von 0 bis 4 zulaessig
+     */
+    protected int debugLvl;
+
     /** 
      * Schafft ein neues Objekt vom Typ Simulator
      * 
-     * @param program das Program, das simuliert werden soll
+     * @param gui Referenz auf die aufrufende Gui-Instanz
      */
-    public Simulator(Program program) {
-	this.p = program;
+    public Simulator(GUI gui) {
 	this.active = false;
     }
 
@@ -43,9 +49,12 @@ public class Simulator {
      *
      * Initialisiert die zur Berechnung der Simulation benötigten Felder und
      * setzt den Initialzustand.
+     * @param program Parameter fuer das zu simulierende Programm 
      */
-    public void Start() {
+    public String[] start(Program program) {
+	this.p = program;
 	this.active = true;
+	return (null) ;
     }
 
     /**
@@ -54,12 +63,12 @@ public class Simulator {
      * Berechnet aus dem aktuellen Zustand den Nachfolgezustand und 
      * setzt diesen.
      */
-    public void Step() {
+    public String[] step() {
 	if (this.active) {
-	    Debug("Step","stepped to next state - still active");
+	    return (null) ;
 	}
 	else {
-	    Debug("Step","no stepping possible - inactive");	    
+	    return (null );	    
 	}
     }
 
@@ -68,14 +77,23 @@ public class Simulator {
      *
      * Aktiv heißt hier, daß das Programm noch nicht terminiert ist.
      */
-    public boolean IsProgamRunning() {
+    public boolean isProgamRunning() {
 	return (this.active);
+    }
+
+    /** 
+     * Methode zum Einstellen des Debuglevels 
+     * 
+     * Je hoeher der Debuglevel desto ausfuehrlicher sind die generierten Ausgaben
+     * @param _debugLvl Integerwert fuer den Debuglevel
+     */
+    public void setDebugLvl(int _debugLvl){
     }
 
     /**
      * Methode zum Erzeugen von Debugmeldungen
      */
-    protected void Debug(String pos,String mes) {
+    protected void debug(String pos,String mes) {
 	System.out.println("################## debug ##################"); 
 	System.out.println("# Position : "+pos); 	
 	System.out.println("# Message  : "+mes); 
