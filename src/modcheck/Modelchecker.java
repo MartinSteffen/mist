@@ -11,9 +11,9 @@ public class Modelchecker {
 
     /**
      * Methode zum Starten des Modelcheckers
-     * @param Anfangszustand, Transitionsliste
+     * @param Program p
      */
-    public void start_modcheck (Initstate _is, TransitionList _tl)
+    public void start_modcheck (Program p)
 	throws MCheckException {
 
 	// hier kommt der Code `rein.
