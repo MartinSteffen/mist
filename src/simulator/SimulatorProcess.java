@@ -38,7 +38,7 @@ public class SimulatorProcess{
 	progProcess = _process ;
 	varList = this.makeVarList();
 	activeState = null;
-	permittedTransitions = null;
+	permittedTransitions = this.generatePermittedTransList();
     }
     
     /** Methode um für einen Prozess die benötigten Variablen und evtl. deren Werte
@@ -84,13 +84,59 @@ public class SimulatorProcess{
     }// ---------- end makeVarList() -----------------------
 
 
+
     /** Methode zum Generieren der Liste von konzessionierten Transitionen eines Prozesses
      * in einem Zustand. 
      * Dieses geschieht auf Prozessebene, d.h. Prozessübergreifende Channelkonflikte
      * sollen hier nicht brücksichtigt werden.
      */
-    protected void generatePermittedTransList() {
-    }
+    protected ArrayList generatePermittedTransList() {
+
+	/* pointer zeigt auf aktuell zu scannende Transition des Prozesses  */
+	TransitionList pointer = progProcess.steps;
+
+	/* ArrayList in der die Transitionen generiert werden,
+	   ist Rückgabewert dieser Methode */
+	ArrayList result = new ArrayList();
+
+	/* boolesche Variable für while-Schleifen-Logik */
+	boolean go = false;
+
+	if (pointer != null) // checken, ob eine Transition in der Transitionsliste existiert
+	    go = true;
+
+	while (go) {
+	    
+	    /* Die Klasse SimulatorPermTransition testet die hier uebergebene Transition
+	     * ( pointer.head ) im ebenfalls uebergebenen Kontext ( this ) auf konzessionierung 
+	     * zum feuern
+	     */
+
+	    SimulatorPermTransitions dummy = new SimulatorPermTransitions(this, pointer.head);
+	    if (dummy.checkPermission()) {
+	    /* Neue Transition evtl. in die Liste hinzufügen */
+		result.add(dummy);
+	    }
+	    /* Die Transition wurde gecheckt und evtl. in die ArrayList der permitted Transitions aufgenommen,
+	       also weiter ....
+	    */
+
+	    if (pointer.hasMoreElements()) {
+		// wenn es noch eine Transition hinter der aktuellen gibt
+		pointer = pointer.next;
+		// dann pointer auf Nachfolger versetzen
+	    }
+	    else
+		/* Abbruchbedingung für While-Schleife setzen */
+		go = false;
+
+	}// ------ end while -------
+
+	return result;
+    }// ---------- end() -----------------------
+
+
+ 
 
     /** Methode zum Loeschen der "permittedTransitions" */
     private void clearPermittedTransList () {

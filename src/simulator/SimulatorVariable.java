@@ -94,10 +94,11 @@ public class SimulatorVariable{
 		hasValue = false ;
 	    }
 	}
-
-
-
     } // --------------  Ende Konstruktor --------------
+
+
+    
+    
 
 
 }

@@ -59,6 +59,15 @@ public class SimulatorBoolEvaluator {
      * Bisher noch KEINE echte Funktionalität !!!
      */
     private boolean evalExpression (Expr expr){
+	/* Typ der Expression abchecken und je nachdem weiter */
+	if (expr instanceof B_expr) {	
+	}
+	if (expr instanceof U_expr) {
+	}
+	if (expr instanceof Variable) {
+	}
+	if (expr instanceof Constval) {
+	}
 	return true;
     }
 

@@ -44,40 +44,6 @@ public class SimulatorExprEvaluator {
 	expr = _expr;
     }
 
-    /** Methode zur Auswertung Expression
-     * @return Ergebnis vom Typ java.lang.Object eigentlich nur int oder boolean
-     * NOCH KEINE ECHTE FUNKTIONALITÄT !!!
-     * bisher nur ein Fake, hier soll 
-     * a) das Ergebnis und
-     * b) der Ergebnistyp 
-     * berechnet und gesetzt werden.
-     */
-    protected void evalExpression() {
-	boolVal = false;
-	intVal = 42;
-	isAnInt = true;
-    }
-
-    /** Methode zum Abfragen, welcher Art der Wert ist.
-     * @return Boolescher Wert, wenn true => Ergebnis ist vom Typ integer, boolescher Wert sonst
-     */
-    protected boolean isInt() {
-	return isAnInt;
-    }
-
-    /** Methode, die den Integerwert des evaluierten Ausdrucks zurückgibt 
-     * @return berechneter Integerwert
-     */
-    protected int getIntVal() {
-	return intVal;
-    }
-
-    /** Methode, die den booleschen Wert des evaluierten Ausdrucks zurückgibt 
-     * @return berechneter boolescher Wert
-     */
-    protected boolean getBoolVal() {
-	return boolVal;
-    }
 
 }
 
