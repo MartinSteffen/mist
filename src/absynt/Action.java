@@ -3,14 +3,15 @@ import java.io.Serializable;
 
 
 /**
- * <Klasse> 
- * Bla
+ * Abstrakte Klasse für Aktionen (tau, Input, Output, Zuweisung)
+ *
  * @author Initially provided by Martin Steffen.
- * @version $Id: <dollar>	
+ * @version $Id: Action.java,v 1.1 2000-05-28 11:11:21 unix01 Exp $
  */
 
 
-public class <xxxx> extends ...{ 
+public abstract class Action extends Absyn implements Serializable { 
+  
 }
 
 
@@ -20,9 +21,9 @@ public class <xxxx> extends ...{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: <dollar>
+//	$Id: Action.java,v 1.1 2000-05-28 11:11:21 unix01 Exp $
 //
-//	$Log: <dollar>
+//	$Log: not supported by cvs2svn $
 //	
 //---------------------------------------------------------------------
 

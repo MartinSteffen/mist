@@ -1,16 +1,19 @@
+
 package absyn;
+
 import java.io.Serializable;
 
 
 /**
- * <Klasse> 
- * Bla
+ * Kommunikation: Eingabe
+ * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: <dollar>	
+ * @version $Id: Input_action.java,v 1.1 2000-05-28 11:11:26 unix01 Exp $
  */
 
 
-public class <xxxx> extends ...{ 
+public class Input_action  extends Action implements Serializable { 
+
 }
 
 
@@ -20,9 +23,9 @@ public class <xxxx> extends ...{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: <dollar>
+//	$Id: Input_action.java,v 1.1 2000-05-28 11:11:26 unix01 Exp $
 //
-//	$Log: <dollar>
+//	$Log: not supported by cvs2svn $
 //	
 //---------------------------------------------------------------------
 

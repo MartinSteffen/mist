@@ -3,14 +3,15 @@ import java.io.Serializable;
 
 
 /**
- * <Klasse> 
- * Bla
+ * Zustand (au"ser initialem Zustand)
+ * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: <dollar>	
+ * @version $Id: State.java,v 1.1 2000-05-28 11:11:31 unix01 Exp $
  */
 
 
-public class <xxxx> extends ...{ 
+public class State extends  Astate implements Serializable { 
+
 }
 
 
@@ -20,9 +21,10 @@ public class <xxxx> extends ...{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: <dollar>
+//	$Id: State.java,v 1.1 2000-05-28 11:11:31 unix01 Exp $
 //
-//	$Log: <dollar>
+//	$Log: not supported by cvs2svn $
 //	
 //---------------------------------------------------------------------
+
 

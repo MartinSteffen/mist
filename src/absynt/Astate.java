@@ -3,14 +3,15 @@ import java.io.Serializable;
 
 
 /**
- * <Klasse> 
+ * Abstrakte Klasse f"ur Zustand
  * Bla
  * @author Initially provided by Martin Steffen.
- * @version $Id: <dollar>	
+ * @version $Id: Astate.java,v 1.1 2000-05-28 11:11:22 unix01 Exp $
  */
 
 
-public class <xxxx> extends ...{ 
+public abstract class Astate extends Absyn implements Serializable { 
+  
 }
 
 
@@ -20,9 +21,9 @@ public class <xxxx> extends ...{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: <dollar>
+//	$Id: Astate.java,v 1.1 2000-05-28 11:11:22 unix01 Exp $
 //
-//	$Log: <dollar>
+//	$Log: not supported by cvs2svn $
 //	
 //---------------------------------------------------------------------
 
