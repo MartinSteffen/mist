@@ -2,7 +2,7 @@
 #	Parser for Mist
 #	------------------------------------
 #
-#	$Id: Makefile,v 2.0 2000-07-17 10:45:22 unix01 Exp $
+#	$Id: Makefile,v 2.1 2000-07-17 12:44:01 unix01 Exp $
 #
 #----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ PACKAGE = parser
 ################################################
 
 all:	Scanner.cup	Scanner.lex
-	java java_cup.Main -parser Parser -nonterms -package $(PACKAGE) Scanner.cup >$(CUPLOGFILE)
+	java java_cup.Main -parser Parser -nonterms -package $(PACKAGE) < Scanner.cup >$(CUPLOGFILE)
 	java JLex.Main Scanner.lex >$(LEXLOGFILE)
 	mv Scanner.lex.java Yylex.java
 	javac Parser.java sym.java Yylex.java
@@ -36,6 +36,9 @@ www:
 
 # -----------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 2.0  2000/07/17 10:45:22  unix01
+#	Umstellung auf CUP
+#	
 #	Revision 1.5  2000/07/14 10:09:55  unix01
 #	Tippfehler beseitigt (Scott)
 #	
