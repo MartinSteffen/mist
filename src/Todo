@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Todo,v 1.4 2000-06-26 14:47:42 unix01 Exp $
+# $Id: Todo,v 1.5 2000-06-27 08:27:36 unix01 Exp $
 #######################################################
 
       
@@ -34,6 +34,8 @@ parser:
 
 checks1:    
 
+	- Kompilationsfehler!
+
 checks2:  
 
 	- R"uckmeldung der Teilnehmer?
@@ -41,13 +43,16 @@ checks2:
 
 position1:
 
-position2:   
+position2: 
+
+	- Kompilationsfehler!
+	  status: email an die Gruppe
 
 absynt:    
 
 utils/pp  
         - Wir brauchen bald Code!
-	  status: keine R"uckmeldung
+	  status: bis Mittwoch Code angek"indigt
 
 
 
