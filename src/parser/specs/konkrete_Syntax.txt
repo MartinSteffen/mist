@@ -1,5 +1,8 @@
-$Id: konkrete_Syntax.txt,v 1.7 2000-07-14 10:09:56 unix01 Exp $
+$Id: konkrete_Syntax.txt,v 1.8 2000-07-17 10:41:05 unix01 Exp $
 $Log: not supported by cvs2svn $
+Revision 1.7  2000/07/14 10:09:56  unix01
+Tippfehler beseitigt (Scott)
+
 Revision 1.6  2000/07/13 20:21:00  unix01
 weiter mit den Statements
 
@@ -18,66 +21,69 @@ keine Aenderung der Syntax, nur testen des CVS-logging
 
 ---------------------------------------------------------------------
 
-Program     ::= "program" Id "{" DecList "}" 
+Program	      ::= "program" NAME "{" dec_list "}"
 
-DecList	    ::= Process DecList 
-			|	ChanDec DecList
-			|	Process 
-			|	ChanDec
+dec_list	  ::= process  dec_list
+			  |	  chan_dec dec_list
+			  |	  process
+			  |	  chan_dec
 
-ChanDec	    ::= "channel" Type Id ";"
+chan_dec	  ::= "channel" type NAME ";"
 
-Process     ::= "process" Id "{" Statement "}" 
+process		  ::= "process" NAME "{" stmt_list "}"
 
-Statement   ::= Statement ";" Statement              // Hintereinander
-            |   "{" Statement "}"                    // Blockbildung
-            |   "if" "(" Expr ")" "{" Statement "}"  // Bed. Anweisung
-            |   "if" "(" Expr ")" 
-		     "{" Statement "}" 
-		 "else" 
-		     "{" Statement "} "    
-            |   "while" "(" Expr ")" Statement      // Schleife
-            |    Id "=" Expr                        // Zuweisung
-            |    Type Id "=" Expr                   // Deklaration
-            |   "put" "(" Id "," Expr ")"           // Senden
-            |   "get" "(" Id "," Id ")"     // Empfangen
-	    |	"assert" Expr			
-	    |	
+stmt_list	  ::= stmt stmt_list	
+			  |	  stmt
 
-Type	    ::= "int" | "bool"
+stmt		  ::= "{" stmt_list "}"
+			  |	  "if" "(" expr ")" stmt
+			  |	  "if" "(" expr ")" stmt "else" stmt
+			  |	  "while" "(" expr ")" stmt
+			  |	  output
+			  |	  input
+			  |	  assignment
+			  |	  assertion
+			  |	  var_dec
 
-Expr        ::= Constval                            // Konstante
-            |   Id                                  // Variable
-            |   Op Expr                             // Vorz./Negation
-            |   "(" Expr ")"                        // Klammerung
-            |   Expr Op Expr                        // "Schachtelung"
+output		  ::= "put "(" NAME "," expr ")" ";"
 
-Op          ::= And   | Or    | Div   | Eq  | Geq  | Greater 
-            |   Leq   | Less  | Minus | Neg | Plus | Times 
-            |   Neq                                 // fehlt !!
+input		  ::= "get "(" NAME "," NAME ")" ";"
 
+assertion	  ::=  "assert" "(" expr ")" ";"
 
+var_dec		  ::= type NAME "=" expr ";"
 
-And         ::= "&&"
-Or          ::= "||"
-Div         ::= "/"
-Eq          ::= "=="
-Geq         ::= ">="
-Greater     ::= ">"
-Leq         ::= "<="
-Less        ::= "<"
-Minus       ::= "-"
-Neg         ::= "!"
-Plus        ::= "+"
-Times       ::= "*"
-Neq         ::= "!="                                 // fehlt !!
+type		  ::= "int"
+			  |	  "bool"
 
-Id          ::= ([a-zA-Z_]([a-zA-Z_]|[0-9])*)        // z.B. "var_1"
-Constval    ::= [0-9]+                               // reichen ints?
-            |   "true"
-            |   "false"
+expr		  ::= NUMBER
+			  |	  "true"
+			  |	  "false"
+			  |	  NAME
+			  |	  op expr
+			  |	  "(" expr ")"
+			  |	  expr op expr
+
+op			  ::= "&&"
+			  |	  "/"
+			  |	  "=="
+			  |	  ">="
+			  |	  ">"
+			  |	  "<="
+			  |	  "<"
+			  |	  "-"
+			  |	  "!"
+			  |	  "!="
+			  |	  "||"
+			  |	  "+"
+			  |	  "*"
+
+NAME		  ::= ([a-zA-Z_]([a-zA-Z_]|[0-9])*)
+
+NUMBER		  ::= [0-9]+
 
 Comment     ::= "//".*
+ 
 Zusaetzlich sollten Kommentare erlaubt sein, wir wissen leider nicht,
 wie man diese in die BNF-Syntax einbaut
 

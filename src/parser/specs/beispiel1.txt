@@ -1,0 +1,31 @@
+// simples Mist-Programm 
+
+program HelloWorld {
+
+	channel int arsch;
+  // ein Prozess
+	process p1{
+		int x = 9;
+		x = 0;                     
+		y = 1;                     
+		while (x < 3){                           
+		  x = x + y;             
+		  put (c1, x);
+		}
+		
+		if (x){
+		  x = 1;
+		} else {
+		  x = 18;
+		}		
+	}     
+
+	// und noch einer
+	process p2{
+		bool nix=false;
+		z = 0;                      
+		while (z < 3)
+		  get(c1, z);   
+		                           
+	}
+} // Ende von HelloWorld

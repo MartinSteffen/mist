@@ -1,0 +1,7 @@
+program Hallo{
+	
+	process p1{
+		bool jau = true;
+		jau = false;
+	}
+}

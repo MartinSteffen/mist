@@ -1,27 +1,7 @@
-// simples Mist-Programm 
+$Id: beispiel.txt,v 1.6 2000-07-17 10:41:03 unix01 Exp $
 
-program HelloWorld {
+verschiedene Beispiele zum Mist-Parser
 
-  // ein Prozess
-	process p1{
-		x = 0;                     
-		y = 1;                     
-		while (x < 3){                           
-			x = x + y;             
-			put (c1, x)
-		};
-		if (x){
-			x = 1  
-		} else {
-			x = 18
-				};		
-	}     
+===================================
+$Log: not supported by cvs2svn $
 
-	// und noch einer
-	process p2{
-		z = 0;                      
-		while (z < 3){
-			get(c1, z)   
-		}                           
-	}
-} // Ende von HelloWorld
