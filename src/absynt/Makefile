@@ -1,10 +1,13 @@
 #----------------------------------------------------------------------
-#	Abstract Syntax for PEST Statecharts
+#	Abstract Syntax for Mist
 #	------------------------------------
 #
-#	$Id: Makefile,v 1.3 2000-05-30 15:25:10 unix01 Exp $
+#	$Id: Makefile,v 1.4 2000-06-26 16:04:28 unix01 Exp $
 #
 #	$Log: not supported by cvs2svn $
+#	Revision 1.3  2000/05/30 15:25:10  unix01
+#	Gruppeneinteilung (+ mail geschrieben)
+#	
 #	Revision 1.2  2000/05/28 08:51:48  unix01
 #	ok
 #	
