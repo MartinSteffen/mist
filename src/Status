@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Status,v 1.30 2000-07-14 05:28:45 unix01 Exp $
+## $Id: Status,v 1.31 2000-07-17 13:52:55 unix01 Exp $
 ######################################################
 
 
@@ -74,7 +74,7 @@ o   editor        jacobs.finn, eckloff.alexander
     [?] Commandline interface
 
 
-    [?] Array exception beim `Remove' eines Editors, von der 
+    [?] Array exception beim `Remove' und leider auch 'Close' eines Editors, von der 
 	Gui aus aufgerufen.
 
 	Situation: zwei Prozesse, der zweite ist im Editorfenster
