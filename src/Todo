@@ -1,14 +1,15 @@
 #######################################################
-# $Id: Todo,v 1.7 2000-06-27 08:28:46 unix01 Exp $
+# $Id: Todo,v 1.8 2000-06-27 09:02:12 unix01 Exp $
 #######################################################
 
       
-Eine Liste von Dingen, die getan werden mu"s.
+Eine Liste von Dingen, die getan werden m"ussen.
+
 
 
 o integration:     
 
-   -globales makefile, das alles kompiliert.
+   - globales makefile, das alles kompiliert.
 
       status:  im prinzip vorhanden, einzelpakete sind aber noch
 	       nicht kompilierbar
