@@ -15,7 +15,7 @@ import gui.*;
  * class Editor zum Bearbeiten eines ubergebenen Projects
  * bis jetzt nur roh
  * @author Alexander Eckloff, Finn Jacobs.
- * @version  $Id: Editor.java,v 1.4 2000-06-25 17:43:32 unix01 Exp $
+ * @version  $Id: Editor.java,v 1.5 2000-06-26 17:44:15 unix01 Exp $
  */
 
 public class Editor extends javax.swing.JFrame {
@@ -39,7 +39,6 @@ public class Editor extends javax.swing.JFrame {
       setSize(set_width, set_height);
       setLocation(set_x, set_y);
       setTitle(editorname);
-      // edinterface = null;
       setVisible(true);
       show();
     }
@@ -48,6 +47,17 @@ public class Editor extends javax.swing.JFrame {
       this("unnamed", program, 0, 0, 500, 500);
     }
     
+    public String [] getProcessIds() {
+	String[] a = new String[4];
+	a[0] = "Process1";
+	a[1] = "Process2";
+	a[2] = "Process3";
+	a[3] = "Process4";
+	return a;
+    }
+
+    public void refresh(absynt.Program program) {
+    }
     /**
      * Editor schliessen
      */
