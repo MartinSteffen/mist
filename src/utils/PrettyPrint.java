@@ -52,25 +52,18 @@ public class PrettyPrint {
 	    output((TransitionList)absyn);
 	if(absyn instanceof AstateList)
 	    output((AstateList)absyn);
-	/*
-	if(absyn instanceof Initstate)
-	output((Initstate)absyn); */
 	if(absyn instanceof Vardec)
 	    output((Vardec)absyn);
 	if(absyn instanceof Variable)
 	    output((Variable)absyn);
-	/*if(absyn instanceof Expr)
-	  output((Expr)absyn);*/
 	if(absyn instanceof B_expr)
 	    output((B_expr)absyn);
 	if(absyn instanceof U_expr)
 	    output((U_expr)absyn);
 	if(absyn instanceof Transition)
 	    output((Transition)absyn);
-	/*if(absyn instanceof Astate)
+	if(absyn instanceof Astate)
 	    output((Astate)absyn);
-	if(absyn instanceof State)
-	output((State)absyn);*/
 	if(absyn instanceof Label)
 	    output((Label)absyn);
 	if(absyn instanceof Action)
@@ -101,18 +94,19 @@ public class PrettyPrint {
     
     public void output(Program program) {
         if(program != null) {
-            System.out.println(whiteSpace(column) + "[Program] " + 
-			       program.name);
             
-	    /* Neuen Abstand erzeugen...die naechste Spalte ist einen
-	     * tab weiter
+	     System.out.println(whiteSpace(column) + "[Program] " + 
+			       program.name);
+	     /*	       
+	      * Neuen Abstand erzeugen...die naechste Spalte ist einen
+	      * tab weiter
 	     */
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
             prettyprint.print(program.chans);
             prettyprint.print(program.procs);
 	}
     }
-
+    
     public void output(ChandecList chandeclist) {
         if(chandeclist != null) {
             System.out.println(whiteSpace(column) + "[ChandecList] ");
@@ -348,6 +342,7 @@ public class PrettyPrint {
 
 
 
+    
     public void print(Initstate initstate){
 	if(initstate !=null){
 	    System.out.println(whiteSpace(column) + "[Initstate] " + 
@@ -369,11 +364,19 @@ public class PrettyPrint {
 	}
     }
     
-    public void print(Astate astate){
+    public void output(Astate astate){
 	if(astate !=null){
+	    if(astate instanceof State){
+		print((State)astate);
+		return;
+	    }
+	    if(astate instanceof Initstate){
+		print((Initstate)astate);
+		return;
+	    }
 	    System.out.println(whiteSpace(column) + "[Astate] " +
 			       astate.name);
-			       
+	    
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(astate.assert);
 	    prettyprint.print(astate.pos);
@@ -392,7 +395,7 @@ public class PrettyPrint {
 	    
 	}
     }
-
+    
     /* Hier wird festgelegt, wie weit die Ausgabe eingerueckt
      * wird. Bei allen "tab" Abstaenden drucken
      * wir ein | anstelle eines Leerzeichen
