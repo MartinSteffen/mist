@@ -1,0 +1,40 @@
+// simples Zaehlprogramm
+// Author: Andreas Scott & Alexander Hegener
+// Version: $Id: zaehlen.mst,v 1.1 2000-07-13 20:19:23 unix01 Exp $
+//
+// $Log: not supported by cvs2svn $ 
+//
+
+
+// Ein Prozess zaehlt bis 10, sendet an den naechsten Prozess, dieser
+// zaehlt den Zehnerzaehler eins rauf und gibt den aus 
+
+program zaehlen{
+  
+  channel bool zehn_voll;
+  channel int ausgabe; 
+
+  process einer{
+    int einer = 0;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    einer = einer + 1;
+    put (zehnvoll, true)
+  }
+
+  process zehner{
+    int zehner = 0;
+    bool weiter = false;
+    get (zehn_voll, weiter);
+    zehner = 1;
+    put (ausgabe, zehner) 
+  }
+  
+}  
