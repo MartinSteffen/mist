@@ -13,9 +13,9 @@ import gui.*;
 
 /**
  * class Editor zum Bearbeiten eines ubergebenen Projects
- *
+ * bis jetzt nur roh
  * @author Alexander Eckloff, Finn Jacobs.
- * @version  $Id: Editor.java,v 1.2 2000-06-16 09:41:40 unix01 Exp $
+ * @version  $Id: Editor.java,v 1.3 2000-06-16 09:51:59 unix01 Exp $
  */
 
 public class Editor extends javax.swing.JFrame {
