@@ -30,12 +30,12 @@ public class PositionFR implements position2.Position {
      * Anzahl der durchzuführenden Iterationen
      *
      */
-    public int iterations = 10;
+    public int iterations = 100;
 
     /**
      * "Temperatur"
      */
-    private float t=1;
+    private float t=10000;
 
     public PositionFR () {
     }
@@ -52,9 +52,9 @@ public class PositionFR implements position2.Position {
 
 	anzZustaende = stateList.size();
 	k = (float)Math.sqrt(1.0/anzZustaende);
-	AusgangsPosition(stateList);
+       	AusgangsPosition(stateList);
 	for (int j=1;j<=iterations;j++){
-	    System.out.println("Schleifendurchlauf Nr.: " + j);
+	    //	    System.out.println("Schleifendurchlauf Nr.: " + j);
 	    for (int i=0;i<stateList.size();i++){
 		erwAstate v = (erwAstate) stateList.elementAt(i);
 		v.disp.x=0;
@@ -120,7 +120,7 @@ public class PositionFR implements position2.Position {
      * (welche Funktion hier gute Ergebnisse liefert muß noch geteste werden)
      */
     float cool(float t){
-	return (t/2);
+	return ((float)Math.sqrt(t/4));
     }
 
     /**
@@ -171,6 +171,8 @@ public class PositionFR implements position2.Position {
 	    maxX = Math.max(maxX,state.pos.x);
 	    maxY = Math.max(maxY,state.pos.y);
 	}
+	maxX += 0.2;
+	maxY += 0.2;
 	for(int i=0;i<list.size();i++){
 	    Astate state = ((erwAstate) list.elementAt(i)).astate;
 	    state.pos.x = state.pos.x/maxX;
