@@ -30,6 +30,11 @@ public class Simulator {
      */
     protected boolean active;
     
+    /**
+     * Instanzfeld, um Zugriff auf Debugfunktionen zu haben
+     */
+    protected SimulatorDebug debug;
+
 
     /**
      * Instanzfeld fuer den Debuglevel 
@@ -58,6 +63,7 @@ public class Simulator {
     public Simulator(GUI gui) {
 	this.active = false;
 	guiRef = gui;
+	debug = new SimulatorDebug(4);
     }
 
 
@@ -68,6 +74,7 @@ public class Simulator {
      */
     public Simulator() {
 	this.active = false;
+	debug = new SimulatorDebug(4);
     }
 
 
@@ -83,12 +90,10 @@ public class Simulator {
     public String[] start(Program program) {
 	this.p = program;
 	this.active = true; 
+	debug.addMsg(">> Simulator is starting ...",1);
 	this.sProg = new SimulatorProgram(this); 
-	String[] result= new String[3];
-	result[0]="first debugmessage from start(Program program)";
-	result[1]="second debugmessage from start(Program program)";
-	result[2]="third debugmessage from start(Program program)";
-	return (result) ;
+	debug.addMsg("<< Simulator is initialized, Pograms in their Start-States.",1);
+	return (debug.getWhole()) ;
     }
 
     /**
@@ -100,17 +105,14 @@ public class Simulator {
      * Debuglevel Debugmeldungen des letzten Programmschritts der Simulation enthaelt.
      */
     public String[] step() {
-	String[] result= new String[3];
-	result[1]="second debugmessage from step()";
-	result[2]="third debugmessage from step()";
+	debug.clear(); // Debugmeldungen löschen
 	if (this.active) {
-	    result[0]="first debugmessage from step() : stepped one step !";
-	    return (result) ;
+	    debug.addMsg(">> Simulator taking one step forwards ...",1);
 	}
 	else {
-	    result[0]="first debugmessage from step() : CANNOT step , haven't started yet !";
-	    return (result);	    
+	    debug.addMsg("# PRESS <Start> to start up Simulation of Program !!!",0);
 	}
+	return (debug.getWhole());	    
     }
 
     /**
@@ -131,16 +133,5 @@ public class Simulator {
      */
     public void setDebugLvl(int _debugLvl){
     }
-
-    /**
-     * Methode zum Erzeugen von Debugmeldungen
-     */
-    protected void debug(String pos,String mes) {
-	System.out.println("################## debug ##################"); 
-	System.out.println("# Position : "+pos); 	
-	System.out.println("# Message  : "+mes); 
-    }
-
-
 
 }

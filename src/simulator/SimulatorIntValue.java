@@ -4,14 +4,15 @@ import absynt.*;
 
 
 /**
- *   Klasse zur Darstellung einer Integer Variablen in dem Simulator
+ * Klasse zur Darstellung einer Integer Variablen in dem Simulator
+ * @author Michael Goemann 
  */
 
 public class SimulatorIntValue extends SimulatorValue {
 
     /** Integer Instanzfeld , für den Wert der Variablen. 
      */
-    private int value;
+    protected int value;
 
     protected SimulatorIntValue (int _value) {
 	value = _value;

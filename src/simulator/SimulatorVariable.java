@@ -5,7 +5,6 @@ import absynt.*;
 
 /** Klasse zum Darstellen von einer Prozessvariablen
  * @author Michael Goemann
- * @author Michael Nimser 
  * @version  1.2, 07/03/2000
 */
 
@@ -18,7 +17,7 @@ public class SimulatorVariable{
     /** Instanzfeld fuer Namen der Variable, muss identisch zu entsprechenden 
      * Variablennamen aus abstrakter Syntax sein.
      */
-    private String name;
+    protected String name;
 
     /** Instanzfeld für Referenz auf Variable aus zu simulierendem 
      * Prozess.
@@ -31,7 +30,7 @@ public class SimulatorVariable{
 
     /** Referenz auf den Wert der Variablen 
      */
-    private SimulatorValue value;
+    protected SimulatorValue value;
 
 
     /** Konstruktor, um eine in Absynt deklarierte Variable im Simulator handhabbar zu machen
@@ -56,7 +55,7 @@ public class SimulatorVariable{
 	    hasValue = true;
 	}
 	else {
-	    /* es gibt keinen booleschen Ausdruck zu evaluieren */
+	    /* es gibt keine Expression zu evaluieren */
 	    hasValue = false ;
 	    }
 
@@ -64,7 +63,5 @@ public class SimulatorVariable{
 
 
     
-    
-
-
+   
 }

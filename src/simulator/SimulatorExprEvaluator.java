@@ -2,10 +2,9 @@ package simulator;
 
 import absynt.*;
 
-/** Klasse zum Auswerten von Expressions in einem Prozess
- * Alles noch nicht so recht ausgebrütet,
+/** Klasse zum Auswerten von Expressions in einem Prozess, dient der Verzweigung
+ * zu den typspezifischen Expressionevaluatoren
  * @author Michael Goemann
- * @author Michael Nimser 
  * @version  1.1, 07/06/2000
 */
 
@@ -47,12 +46,12 @@ public class SimulatorExprEvaluator {
 	    SimulatorBoolEvaluator boolExpr = new SimulatorBoolEvaluator(process, expr);
 	    value = new SimulatorBoolValue ( boolExpr.giveResult() );
 	}
-	else {
+	if (expr.type instanceof M_Int) {
 	    // Expression ist eine zu Integer evaluierende, also :
 	    SimulatorIntEvaluator intExpr = new SimulatorIntEvaluator(process, expr);
-	    value = new SimulatorIntValue ( intExpr.giveResult() );
-	    
+	    value = new SimulatorIntValue ( intExpr.giveResult() );    
 	}
+	/* Platz für Exception, da Expression nicht oder falsch getypt */
     }
 
 
