@@ -1,13 +1,16 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.12 2000-07-05 07:19:01 unix01 Exp $
+# $Id: Makefile,v 1.13 2000-07-05 10:03:20 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
 
-WEBDOCDIR     =/home/info/www/inf/deRoever/SS00/Java/Mist/Doc
-LOCALDOCDIR = Doc
-PACKAGEDIRS = absynt  utils editor editor.einterface gui checks1 parser\
+
+WEBDIR        = /home/info/www/inf/deRoever/SS00/Java/Mist
+WEBDOCDIR     = $(WEBDIR)/Doc
+BASELINESDIR  = $(WEBDIR)/Baselines
+LOCALDOCDIR   = Doc
+PACKAGEDIRS   = absynt  utils editor editor.einterface gui checks1 parser\
 	      modcheck simulator position1 position2
 
 ################################################
@@ -51,6 +54,8 @@ jar:
 	    ./position1/*.class \
 	    ./position2/*.class \
 
+jarinstall: 
+	cp mist_v*.jar $(BASELINEDIR)
 
 
 clean:
