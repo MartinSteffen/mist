@@ -10,26 +10,27 @@ public class PrettyPrint {
     public static final int NORM_COLUMN = 0; 
     public static final int NORM_TAB = 4;
 
+    
     public PrettyPrint(int i, int j) {
         try {
             column = i >= 0 ? i - i % j : 0;
-            tab = j >= 0 ? j : 4;
+            tab = j >= 0 ? j : NORM_TAB;
             return;
         }
         catch(ArithmeticException _ex) {
-            column = i - i % 4;
+            column = i - i % NORM_TAB;
         }
-        tab = 4;
+        tab = NORM_TAB;
     }
 
     public PrettyPrint() {
-        this(0, 4);
+        this(NORM_COLUMN, NORM_TAB);
     }
     /* public print methode
      * Hier wird gecheckt welche Instanz das uebergebene Objekt hat
-     * und die zugehoerige output routine aufgerufen.
-     * Damit die Routinen einfach ausgewaehlt werden koennen
-     * typecasten wir auf den Typen der Instanz
+     * und output wird aufgerufen.
+     * Da wir auf die Instanz typecasten, reicht es aus
+     * output zu ueberladen
      */
     public void print(Absyn absyn) {
         if(absyn instanceof Program)
@@ -40,7 +41,7 @@ public class PrettyPrint {
 	    output((ProcessList)absyn);
 	if(absyn instanceof Chandec)
 	    output((Chandec)absyn);
-	/* Class name Process is ambigous ! */ 
+	/* Class name Process is ambiguous ! */ 
 	if(absyn instanceof absynt.Process)
 	    output((absynt.Process)absyn);
 	if(absyn instanceof Channel)
@@ -84,6 +85,9 @@ public class PrettyPrint {
     }
 		   
 
+    /* Position ist nicht vom Typ Absyn
+     * also ueberladen wir print
+     */
     private void print(Position position){
 	if(position !=null){
 	    System.out.println(whiteSpace(column) + "[Position] " + 
@@ -95,7 +99,11 @@ public class PrettyPrint {
     public void output(Program program) {
         if(program != null) {
             System.out.println(whiteSpace(column) + "[Program] ");
-            PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+            
+	    /* Neuen Abstand erzeugen...die naechste Spalte ist einen
+	     * tab weiter
+	     */
+	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
             prettyprint.print(program.chans);
             prettyprint.print(program.procs);
 	}
@@ -270,6 +278,8 @@ public class PrettyPrint {
 	}
     }
     
+    /* print wird hier ueberladen, da Op vom typ integer ist
+     */
     private void print(int op){
 	String string;
 	switch(op){
@@ -342,7 +352,8 @@ public class PrettyPrint {
 
     public void output(Astate astate){
 	if(astate !=null){
-	    System.out.println(whiteSpace(column) + "[Astate] ");
+	    System.out.println(whiteSpace(column) + "[Astate] " +
+			       astate.name);
 			       
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	    prettyprint.print(astate.assert);
@@ -352,7 +363,7 @@ public class PrettyPrint {
     }
     
     
-    public void out(State state){
+    public void output(State state){
 	if(state !=null){
 	    System.out.println(whiteSpace(column) + "[State] " + 
 			       state.name);
@@ -362,6 +373,10 @@ public class PrettyPrint {
 	}
     }
 
+    /* Hier wird festgelegt, wie weit die Ausgabe eingerueckt
+     * wird. Bei allen "tab" Abstaenden drucken
+     * wir ein | anstelle eines Leerzeichen
+     */
     private String whiteSpace(int i) {
         String s = "";
         for(int j = 0; j < i; j++)
