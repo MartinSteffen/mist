@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Abstrakte Klasse f"ur Ausdr"ucke
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.7 2000-07-10 17:55:15 unix01 Exp $
+ * @version $Id: Expr.java,v 1.8 2000-07-12 12:17:02 unix01 Exp $
  */
 
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 public abstract class Expr extends Absyn implements Serializable{ 
 
-  public M_AtomType mtype;;     // Ausdruecke sind typisert.
+  public M_AtomType type;;     // Ausdruecke sind typisert.
 
   public final  static int PLUS  = 0;
   public final  static int MINUS = 1;
@@ -41,9 +41,12 @@ public abstract class Expr extends Absyn implements Serializable{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.7 2000-07-10 17:55:15 unix01 Exp $
+//	$Id: Expr.java,v 1.8 2000-07-12 12:17:02 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.7  2000/07/10 17:55:15  unix01
+//	Genug fuer heute, es kompiliert [Steffen]
+//	
 //	Revision 1.6  2000/06/26 13:11:44  unix01
 //	
 //	
