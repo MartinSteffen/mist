@@ -1,10 +1,10 @@
 ######################################################
-## $Id: Status,v 1.26 2000-07-12 05:37:28 unix01 Exp $
+## $Id: Status,v 1.27 2000-07-12 08:14:46 unix01 Exp $
 ######################################################
 
 
 
-Stand: Dienstag 11. Juli, morgens
+Stand: Mittwoch 12. Juli, morgens
 =======================================
 
 
@@ -53,6 +53,8 @@ o  gui           kraas.helge, schuemann.broder
 	"uberlegen, was auf die CD kommt? 
 	 - Readme?  
 	 - Weitergehende Doku?
+	 - Besser noch: demo (d.h. ein etwas gr"o"seres Beispiel als das, 
+	                      was ich per Hand gemacht habe)
 	 - Jlex/Yacc (+ Copyright-Schriftst"uck)
    	 - Namen der Teilnehmer?
    	 - Wie l"ost man das gif/jar-Problem?
@@ -70,15 +72,24 @@ o   editor        jacobs.finn, eckloff.alexander
        noch (Eingabe der Var-liste, volle Funktionalit"at der Labels auf
        den Transitionen). 
 
+    [?] Commandline interface
 
+
+    [?] "Anderung von new-session: mist/blob
     [?] Ein paar Fragen zur Bedienung:
-
+         - Wie gibt man einem ``Program'' einen Namen, wie geht das rename?
 	 - Wie macht man das channel-edit fenster wieder zu?
 	 - Wie macht man den Editor wieder zu?
 	 - Was macht das close an der GUI
+	 - die Transitionen haben keine Spitzen
+	 - das redraw funktionniert nicht beim Transitionenzeichnen
+	 - kein redraw nach dem "Andern eines Zustands
+
+         - Was macht der erste Gr"une Pfeil, warum repositioniert er?
+	 - was machen die ersten beiden Icons?
 
 	 - Position1: graph (was macht das?
-	 - pos.2: graph: der bleibt stecken?
+	 - pos.2: graph: der bleibt stecken/Absturz
 
     [?] die Gif-bilder sind nicht portabel, Grund: ungekl"art, vielleicht
 	m"ussen die gif-bilder einfach in das current directory? geht
@@ -189,6 +200,9 @@ o  check1         nitsche.andree
  position1     dietrich.daniel, zahorsky.moritz, buck.christian
  position2     thoehle.ralf, mallach.paul
 
+
+
+
       - teilweise code vorhanden, teilweise funktional
 
       - gemeinsames interface der beiden gruppen, d.h.
@@ -197,6 +211,8 @@ o  check1         nitsche.andree
       - Beide Gruppen: relativ selbst"andig verschiedene Ans"atze 
 	erarbeitet/recherchiert. 
 
+
+       - position FR: unsch"ones Ergebnis
 
 position1:
          -  integriert
