@@ -2,7 +2,7 @@
 #	Parser for Mist
 #	------------------------------------
 #
-#	$Id: Makefile,v 2.3 2000-07-18 22:16:57 unix01 Exp $
+#	$Id: Makefile,v 2.4 2000-07-18 22:22:11 unix01 Exp $
 #
 #----------------------------------------------------------------------
 
@@ -11,7 +11,6 @@
 LOCALDOCDIR=Doc
 WEBDIR     = /home/info/www/inf/deRoever/SS00/Java/Mist/absynt/
 LEXLOGFILE = JLex.log
-CUPLOGFILE = cup.log
 PACKAGE = parser
 ################################################
 
@@ -25,7 +24,7 @@ Yylex.java:		Scanner.lex
 
 
 Parser.java:	Scanner.cup
-	java java_cup.Main -parser Parser -nonterms -package $(PACKAGE) Scanner.cup 2>&1 $(CUPLOGFILE)
+	java java_cup.Main -parser Parser -nonterms -package $(PACKAGE) Scanner.cup 
 
 
 
@@ -42,6 +41,10 @@ www:
 
 # -----------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 2.3  2000/07/18 22:16:57  unix01
+#	Nochmal in die Info zu Make geschaut und die "rules" und "targets" richtig
+#	gemacht :-) [Scott]
+#	
 #	Revision 2.2  2000/07/17 14:10:19  unix01
 #	Umstellung auf cup1.0k
 #	
