@@ -1,0 +1,92 @@
+Spezifikation des Simulators 
+
+0. Vorwort
+   Dieses Dokument soll als ein Überblick über das Paket Simulator dienen,
+   und kann als Diskussionsgrundlage angesehen werden.
+
+
+1. Überblick  
+   a) Wie wird eine Simulation ablaufen ?
+
+      I) Start der Simulation :
+	 - Aufruf per Start(..) (aS1)
+	 - Wir benötigen zum Starten der Simulation ein Objekt vom Typ Program, welches ähnlich zu dem 
+	   Beispielprogramm aus der abstrakten Syntax gebildet wurde und uns mit dem Aufruf von StartSim
+	   übergeben wird. 
+			    ==> SCHNITTSTELLE (aS1) anbieten
+	 - das Übergebene Programm p wird "gescannt" und hieraus werden die benötigten Datenstrukturen für 
+	   die Simulation der einzelnen Prozesse ins Leben gerufen und ggf entsprechend initialisiert.
+	 - Für jeden Prozess wird der jeweilige Startzustand berechnet und in der Datenstruktur festgehalten
+	 - Higlighten der Initialzustände : Die aktuell Initialzustände werden gehighlightet
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS1) benötigt
+
+      II) schrittweises Simulieren :
+	 - Aufruf per Stepp(..) (aS2) 
+			    ==> SCHNITTSTELLE (aS2) anbieten
+	 - Für jeden Prozess werden aus dem akt. Zustand die konzessionierten Transitionen bestimmt, d.h 
+	   alle Transitionen die unter dem gegenwärtigen Zustand feuern dürfen (deren Guards zu true 
+	   evaluiert werden).
+	 - Wenn es mehrere koexisitierende konzessionierte Transitionen in einem Prozesszustand gibt,
+	   sollen 2 Möglichkeiten zur Auflösung angeboten werden :
+		  1.) Benutzerentscheidung :
+		      - Highlighten der konzessionierten Transitionen, um Auswahl zu erleichtern.
+		            ==> SCHNITTSTELLE zum EDITOR oder GUI (bS2) benötigt
+		      - Benutzereingabe welche Transition feuern soll 
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS3) benötigt
+		      - Enthighlighten der Transitionen, die vorher zur Auswahl gehighlitet wurden.
+		            ==> SCHNITTSTELLE zum EDITOR oder GUI (bS4)  benötigt  
+		  2.) Entscheidung durch den Simulator
+	 - Enthighlighten der vorher noch aktiven Zustände	  
+		            ==> SCHNITTSTELLE zum EDITOR oder GUI (bS5) benötigt  
+	 - Zustandsübergang : Die aktuell neuen Zustände werden gehighlightet
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS1) benötigt
+
+      III) Ende einer Simulation
+         a) passives Ende :
+	    - Wenn in einem Programm kein Zustandsübergang mehr konzessioniert ist, dann gilt das Programm
+	      als beendet, der User sollte hiervon in Kenntniss gesetzt werden können und im Editor 
+	      sollte der Button zum schrittweisen Fortfahren deaktiviert werden.
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (bS5) benötigt
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (aS3) anbieten
+	 b) aktives Ende :
+	    - Durch den Aufruf von StartSim soll ein bisher nicht beendetes Programm beendet werden.
+	    - aktives zurücksetzen (stoppen) durch Schaltfläche des Editors ermöglichen ???
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (aS4) anbieten ???
+
+
+2. Schnittstellen zu und Anforderungen an andere Pakete von MIST
+
+   A) unsere sonstigen Anforderungen an
+      a) GUI oder EDITOR :
+	     - Bevor der Simulator gestartet wird, sollten alle Zustände und Transitionen von einem
+	       evtl. vorherigen Simulationslauf "entheighlightet" worden sein.
+	     - Die Schaltfläche zum schrittweisen Ausführen sollte erst nach dem Betätigen des
+	       Simulationsstart-Buttons benutzbar sein werden. Zum erfragen, ob ein Programm sich im
+	       "steppbaren" Zustand befindet, stellen wir eine Schnittstelle zur Verfügung
+			    ==> SCHNITTSTELLE zum EDITOR oder GUI (aS3)	       
+	     - Wenn eine Programmsimulation gestartet wurde und danach eine Veränderung an eben diesem
+	       Programm vorgenommen wird, müssen die Schaltflächen für den Simulatior 
+	       deaktiviert werden um die Konsistenz in der Kommunikation zwischen Editor und Simulator
+	       gewährleisten zu können.
+
+
+   B) Schnittstellen
+      Aus dem obigen ergeben sich die bisher folgendenden : 
+      a) angebotene Schnittstellen (= aS)
+         -  (aS1) : public void Start(Program program) 
+	 -  (aS2) : public void Step(Program program)
+	 -  (aS3) : public boolean IsProgamRunning(Program program)
+	 (-  (aS4) : public void Stop(Program program))
+      b) benötigte Schnittstellen und deren Skelette (= bS)
+	 -  (bS1) : editor.highlightState(absynt.Astate state, absynt.Process process, 
+							       absynt.Program program)
+	 -  (bS2) : editor.highlightTransition(absynt.Transition transition, absynt.Process process,
+										  absynt.Program program)
+	 -  (bS3) : <noch offen und noch nicht benötigt>
+	 -  (bS4) : editor.unhighlightTransition(absynt.Transition transition, absynt.Process process,
+										    absynt.Program program)
+	 -  (bS5) : editor.unhighlightState(absynt.Astate state, absynt.Process process, 
+								       absynt.Program program)
+
+	
+
