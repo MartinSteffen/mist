@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Liste brauchen wir vermutlich nicht.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: VardecList.java,v 1.1 2000-05-28 15:11:17 unix01 Exp $
+ * @version $Id: VardecList.java,v 1.2 2000-06-04 12:11:55 unix01 Exp $
  */
 
 
@@ -19,7 +19,7 @@ public class VardecList  extends Absyn implements java.util.Enumeration {
   Vardec     head;
 
   /**
-   * Ein Konstruktor mit Location is hier ueberfluessig
+   * Ein Konstruktor mit Location ist  ueberfluessig.
    */
   public VardecList(Vardec d, VardecList dl) {
     head = d;
@@ -43,9 +43,12 @@ public class VardecList  extends Absyn implements java.util.Enumeration {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: VardecList.java,v 1.1 2000-05-28 15:11:17 unix01 Exp $
+//	$Id: VardecList.java,v 1.2 2000-06-04 12:11:55 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2000/05/28 15:11:17  unix01
+//	ok
+//	
 //	
 //---------------------------------------------------------------------
 

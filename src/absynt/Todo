@@ -1,6 +1,8 @@
-#############################################
-# $Id: Todo,v 1.2 2000-05-28 15:00:33 unix01 Exp $
-#############################################
+#####################################################
+# $Id: Todo,v 1.3 2000-06-04 12:11:55 unix01 Exp $
+#####################################################
+
+
 
 
         o Dringend
@@ -8,6 +10,26 @@
 
            - Warnungen: bei javadoc bez"uglich serializable
 
-	   - Wie sollen die Coordinaten gespeichert werden: Diskussion!
+	   - Wie sollen die Koordinaten gespeichert werden: Diskussion!
 
-	
+
+	   - Die Spez. an die Implementierung anpassen:
+
+	      - Constval: ich habe die b_val und i_val entfernt!
+	        constval ist nun generisch
+
+	      -  Channel ist neu!
+	         Input/output action im Pflichtenheft aendern!
+              - Vardec geandert
+	      
+
+        o Un-Dringend:
+
+
+	   - javadoc: warum werden manche versionen mit @version
+             	      nicht angezeigt? vgl. z.B. U_expr vs VardecList.
+	              
+
+	o Zum Merken
+
+	   

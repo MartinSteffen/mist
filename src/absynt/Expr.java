@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Abstrakte Klasse f"ur Ausdr"ucke
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.4 2000-06-04 07:11:27 unix01 Exp $
+ * @version $Id: Expr.java,v 1.5 2000-06-04 12:11:54 unix01 Exp $
  */
 
 
@@ -23,8 +23,11 @@ public abstract class Expr extends Absyn implements Serializable{
   public final  static int AND   = 4;
   public final  static int OR    = 5;
   public final  static int NEG   = 6;
-  public final  static int TRUE  = 7;
-  public final static  int FALSE = 8;
+  public final  static int EQ    = 7;
+  public final  static int LESS  = 8;
+  public final  static int GREATER = 9;
+  public final  static int LEQ     = 10;
+  public final  static int GEQ     = 11;
 }
 
 
@@ -34,9 +37,12 @@ public abstract class Expr extends Absyn implements Serializable{
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.4 2000-06-04 07:11:27 unix01 Exp $
+//	$Id: Expr.java,v 1.5 2000-06-04 12:11:54 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2000/06/04 07:11:27  unix01
+//	TRUE/FALSE als 0-stellige operatoren himzigefuegt
+//	
 //	Revision 1.3  2000/06/02 07:47:40  unix01
 //	unimportant change
 //	

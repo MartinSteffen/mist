@@ -1,5 +1,5 @@
 ######################################################
-# $Id: gruppen.txt,v 1.1 2000-06-04 08:18:04 unix01 Exp $
+# $Id: gruppen.txt,v 1.2 2000-06-04 12:11:53 unix01 Exp $
 ######################################################
 ## Gruppeneinteilung + Mailadressen der Teilnehmer: .mailrc-Syntax
 ##
@@ -23,6 +23,7 @@ alias Buck.Christian     cbuck@computerlabor.math.uni-kiel.de
 alias Dagefoerde.Jonas   jd@softwareprojekt.de
 alias Dietrich.Daniel    daniel.dietrich@gmx.net
 alias Eckloff.Alexander	ataler@gmx.de
+alias Goemann.Michael 	 Michael@Goemann.de
 alias Hegener.Alexander	 std10239@dial.techfak.uni-kiel.de
 alias Jacobs.Finn	 finnjacobs@gmx.net
 alias Kraas.Helge	 hkraas@web.de
@@ -31,6 +32,7 @@ alias Kyas.Marcel        mkyas@gmx.net
 alias Lukosch.Andreas	 stu38212@mail.uni-kiel.de
 alias Mallach.Paul	 pmallach@gmx.de
 alias Neumann.Frank	 frank.all@gmx.de
+alias Nimser.Michael	 stu32548@mail.uni-kiel.de
 alias Nitsche.Andree	 haifischbar@t-online.de
 alias Schuemann.Broder   std10273@dial.techfak.uni-kiel.de
 alias Schulz.Eike	 std10421@dial.techfak.uni-kiel.de
@@ -44,6 +46,7 @@ alias Zahorsky.moritz    zahorsky@computerlabor.math.uni-kiel.de
 
 alias gui           kraas.helge, schuemann.broder
 alias editor        jacobs.finn, eckloff.alexander
+alias simulator     goemann.michael, nimser.michael
 alias modcheck      neumann.frank, kuemper.aneta, schulz.eike
 alias parser        scott.andreas, hegener.alexander
 alias check         dagefoerde.jonas, lukosch.andreas, nitsche.andree

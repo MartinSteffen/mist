@@ -6,11 +6,11 @@ import java.io.Serializable;
  * Konstante Werte (Integers und Boolesche Werte)
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Constval.java,v 1.3 2000-06-04 07:39:43 unix01 Exp $
+ * @version $Id: Constval.java,v 1.4 2000-06-04 12:11:53 unix01 Exp $
  */
 
 
-public class Constval  extends Absyn implements Serializable { 
+public class Constval  extends Expr implements Serializable { 
   /**
      Als konstante Werte sind Integers und boolesche Werte.
      Diese uebernehmen wir direkt aus Java.
@@ -37,9 +37,15 @@ public class Constval  extends Absyn implements Serializable {
 //	Abstract Syntax for Mist Programs
 //	------------------------------------
 //
-//	$Id: Constval.java,v 1.3 2000-06-04 07:39:43 unix01 Exp $
+//	$Id: Constval.java,v 1.4 2000-06-04 12:11:53 unix01 Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2000/06/04 07:39:43  unix01
+//	Die Klasse ist _nicht mehr abstrakt_! Die Klassen
+//	I_val und B_val sind nun ueberfluessig. Integer und
+//	boolesche konstante Werte werden als polymorph
+//	als Objekte gespeichert. [ms]
+//	
 //	Revision 1.2  2000/05/28 12:57:09  unix01
 //	Zwischenzustand, vor Reorganisation
 //	
