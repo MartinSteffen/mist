@@ -1,6 +1,10 @@
 ##################################################
-## $Id: Baselines,v 1.1 2000-06-04 12:11:51 unix01 Exp $
+## $Id: Baselines,v 1.2 2000-07-05 07:19:01 unix01 Exp $
 ##################################################
 
 
 Liste der Snapshots
+
+
+	Baseline1: 5 Juli: kompilierbar, Gui/Editor/Prettyprinter integriert.
+	

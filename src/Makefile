@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Mist project
-# $Id: Makefile,v 1.11 2000-07-05 05:22:37 unix01 Exp $
+# $Id: Makefile,v 1.12 2000-07-05 07:19:01 unix01 Exp $
 #----------------------------------------------------------------------
 
 ################################################
@@ -21,6 +21,8 @@ debug:	; make JAVACOPTS="-g" all
 run:	all
 	java gui.GUI
 
+
+
 packets:
 	(cd ./absynt; make)
 	(cd ./utils; make)
@@ -33,6 +35,21 @@ packets:
 	(cd ./modcheck; make)
 	(cd ./position1; make)
 	(cd ./position2; make)
+
+
+
+jar:
+	jar cvf mist.jar ./absynt/*.class \
+	    ./utils/*.class \
+	    ./editor/*.class \
+	    ./editor/einterface/*.class\
+	    ./gui/*.class \
+	    ./checks1/*.class \
+	    ./parser/*.class \
+	    ./simulator/*.class \
+	    ./modcheck/*.class \
+	    ./position1/*.class \
+	    ./position2/*.class \
 
 
 
