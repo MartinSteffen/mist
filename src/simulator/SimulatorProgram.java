@@ -11,11 +11,11 @@ package simulator;
  */
 
 
-public class SimulatorProgramState {
+public class SimulatorProgram {
     
     /** Instanzfeld für die Prozesszustände eines Programms als Array
      */
-    protected SimulatorProcessState[] processStateList;
+    protected SimulatorProcess[] processStateList;
 
     protected SimulatorChannel[] channelList;
 
@@ -24,8 +24,8 @@ public class SimulatorProgramState {
      * wiederspiegeln können soll. 
      */
 
-    SimulatorProgramState (int numberOfProcesses) {
-	processStateList = new SimulatorProcessState[numberOfProcesses];
+    SimulatorProgram (int numberOfProcesses) {
+	processStateList = new SimulatorProcess[numberOfProcesses];
     }
 
 
