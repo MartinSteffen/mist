@@ -1,5 +1,6 @@
 
 
+
 ** Abstract
 
 
@@ -18,8 +19,8 @@ package contains the following files and subdirectories:
   
 
     - [[,/Readme.org]]:        this file
-    - [[./Prototyp]]:          requirement spec for that
-    - [[./Pflichtenheft/]]     requirement specification
+    - [[./prototyp]]:          requirement spec for that
+    - [[./pflichtenheft/]]     requirement specification
     - [[./Baselines]]:         short description about major
                            development steps (CVS tags)
     - [[./examples]]:          for testing

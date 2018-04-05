@@ -1,0 +1,6 @@
+auto
+*.log
+*.dvi
+*.aux
+*~
+handout.handout
